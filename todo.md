@@ -1,7 +1,7 @@
 ## Plugin Information
 
-* Plugin um Einstellungen erweitern (Anzeige an/aus der Boxen für Posts, Pages, Custom Fields etc.),
+* Plugin um Einstellungen erweitern (Anzeige an/aus der Boxen f√ºr Posts, Pages, Custom Fields etc.),
 kann evtl. in die wp_options table
-* Default Farben (grün, gelb, rot)
-* EN/DE Übersetzung, bzw. Plugin übersetzungsfähig machen
+* Default Farben (gr√ºn, gelb, rot)
+* EN/DE √úbersetzung, bzw. Plugin √ºbersetzungsf√§hig machen
 * Evtl. noch andere Einstellungen, oder ein paar Usabilty Verbesserungen
