@@ -10,14 +10,14 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 
 ### More Info
 
-- to come
+- more to come...
 
 ***
 
 ## Installation
 
 1. Unzip the download package
-1. Upload `mark-box` to the `/wp-content/plugins/` directory
+1. Upload `mark-posts` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 To getting started with the plugin read more later.
