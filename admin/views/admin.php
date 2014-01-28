@@ -59,6 +59,7 @@ function validate_form() {
 // get all available post types
 function get_all_types() {
 	$all_post_types = get_post_types();
+
 	$option = get_option( 'mark_posts_settings' );
 	$mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
 
@@ -71,7 +72,7 @@ function get_all_types() {
             			echo ' checked="checked"';
             		endif;
             	endif;
-			echo ' /> ' . $one_post_type . '</p>';
+			echo ' /> ' . ucfirst( $one_post_type ) . '</p>';
 		}
 	}
 }
@@ -93,7 +94,7 @@ function show_settings() {
 
 	if(!empty($markers_terms)) {
 
-		echo '<h3 class="title">xxq' . __('Marker Categories', 'mark-posts') . '</h3>';
+		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
 
 		echo '<table class="form-table"><tbody>';
 
