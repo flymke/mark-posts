@@ -7,8 +7,8 @@
  *
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
+ * @contributor Sven Hofmann <info@hofmannsven.com>
  * @license   GPL-2.0+
- * @link
  * @copyright 2014 Michael Schoenrock
  */
 ?>
@@ -26,16 +26,16 @@ function validate_form() {
 
 	    //print_r($_POST);
 
-	    $markers = explode(",", $_POST['markers']);
+		// update marker posttypes
 		$markertypes = $_POST['markertypes'];
+		$get_mark_posts_settings = get_option( 'mark_posts_settings' );
+		$set_mark_posts_settings = $_POST['markertypes'];
+		$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
 
-		if($_POST['markertypes']) {
-			foreach($_POST['markertypes'] as $markertype) {
-				$update_marker_post_types = array_push($default_marker_post_types, $markertype);
-			}
-			update_option( 'default_mark_posts_posttypes', $update_marker_post_types );
-		}
+		update_option( 'mark_posts_settings', $get_mark_posts_settings );
 
+		// update marker terms
+	    $markers = explode(",", $_POST['markers']);
 	    foreach($markers as $marker) {
 			$marker = trim($marker);
 			wp_insert_term( $marker, 'marker' );
@@ -59,15 +59,18 @@ function validate_form() {
 // get all available post types
 function get_all_types() {
 	$all_post_types = get_post_types();
+	$option = get_option( 'mark_posts_settings' );
+	$mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
+
     foreach( $all_post_types as $one_post_type ) {
 		// do not show attachments, revisions, or nav menu items
 		if( !in_array( $one_post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ) {
 			echo '<p><input name="markertypes[]" type="checkbox" value="' . $one_post_type . '"';
-            	/*
-            	if( in_array( $mark_posts_post_type, $mark_posts_settings['post_types'] ) ) {
-					echo ' checked="checked"';
-				}
-				*/
+            	if ( isset( $option['mark_posts_posttypes'] ) ) :
+            		if ( in_array( $one_post_type, $option['mark_posts_posttypes'] ) ) :
+            			echo ' checked="checked"';
+            		endif;
+            	endif;
 			echo ' /> ' . $one_post_type . '</p>';
 		}
 	}
@@ -90,7 +93,7 @@ function show_settings() {
 
 	if(!empty($markers_terms)) {
 
-		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
+		echo '<h3 class="title">xxq' . __('Marker Categories', 'mark-posts') . '</h3>';
 
 		echo '<table class="form-table"><tbody>';
 

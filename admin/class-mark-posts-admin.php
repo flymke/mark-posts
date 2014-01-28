@@ -93,6 +93,8 @@ class Mark_Posts_Admin {
                  * ref: http://wp.tutsplus.com/tutorials/creative-coding/add-a-custom-column-in-posts-and-custom-post-types-admin-screen/
                  */
 
+				// todo: remove columns if post type is disabled in settings
+
                 // for posts and custom post types
                 add_filter('manage_posts_columns', array( $this, 'mark_posts_column_head' ));
                 add_action('manage_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2);
@@ -246,21 +248,20 @@ class Mark_Posts_Admin {
 		// @TODO: Define your filter hook callback here
 	}
 
-
         /**
         * Adds a box to the main column on the Post and Page edit screens.
         */
         public function mark_posts_add_meta_box() {
 
-           $screens = array( 'post', 'page' );
+			$get_mark_posts_setup = get_option( 'mark_posts_settings' );
+			$mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
 
-           foreach ( $screens as $screen ) {
-
+            foreach ( $mark_posts_posttypes as $mark_posts_posttype ) {
                add_meta_box(
                    'mark_posts_options',
-                   __( 'Mark Posts Options', 'mark-posts' ),
+                   __( 'Mark Posts Option', 'mark-posts' ),
                    array( $this, 'mark_posts_inner_meta_box' ),
-                   $screen,
+                   $mark_posts_posttype,
                    'side'
                );
            }

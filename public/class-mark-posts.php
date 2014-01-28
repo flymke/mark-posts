@@ -67,6 +67,9 @@ class Mark_Posts {
 		// Activate plugin when new blog is added
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
 
+		// Register settings
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+
 		// Load public-facing style sheet and JavaScript.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -230,6 +233,13 @@ class Mark_Posts {
 	 * @since    1.0.0
 	 */
 	private static function single_activate() {
+		add_option(
+			'mark_posts_settings',
+			array(
+				'mark_posts_posttypes' => array( 'post', 'page' )
+			)
+		);
+
 		// @TODO: Define activation functionality here
 		self::create_taxonomies();
 	}
@@ -256,6 +266,38 @@ class Mark_Posts {
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 
+	}
+
+	/**
+	 * Register settings
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_settings() {
+
+		$option_name = 'plugin_mark_posts_settings';
+
+		register_setting(
+			'general',
+			$option_name,
+			array( $this, 'settings_validate' )
+		);
+		add_settings_section(
+			$option_name,
+			__( 'Mark Posts Options', 'plugin_mark_posts_settings' ),
+			'__return_false'
+		);
+
+	}
+
+	/**
+	 * Validate settings.
+	 *
+	 * @since    1.0.0
+	 */
+	public function settings_validate( $input ) {
+		// todo: sanitize user input
+		return $input;
 	}
 
 	/**
