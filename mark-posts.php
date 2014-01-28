@@ -5,21 +5,23 @@
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 Michael Schoenrock
  *
  * @wordpress-plugin
  * Plugin Name:       Mark Posts
- * Plugin URI:        
- * Description:       Mark and highlight posts, pages and posts of custom post types within the posts overview 
+ * Plugin URI:        https://github.com/flymke/mark-posts
+ * Description:       Mark and highlight posts, pages and posts of custom post types within the posts overview
  * Version:           1.0.0
  * Author:            Michael Schoenrock
  * Author URI:        http://www.michaelschoenrock.com
- * Text Domain:       mark-posts-de
+ * Contributor:       Sven Hofmann
+ * Contributor URI:   http://hofmannsven.com
+ * Text Domain:       mark-posts
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/<owner>/<repo>
+ * GitHub Plugin URI: https://github.com/flymke/mark-posts
  */
 
 // If this file is called directly, abort.

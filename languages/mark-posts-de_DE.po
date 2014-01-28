@@ -1,0 +1,106 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Mark Posts 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/flymke/mark-posts\n"
+"POT-Creation-Date: 2014-01-28 17:08+0100\n"
+"PO-Revision-Date: 2014-01-28 17:09+0100\n"
+"Last-Translator: Sven Hofmann <info@hofmannsven.com>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-KeywordsList: __;_e;_n\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-mark-posts-admin.php:189
+msgid "Mark Posts"
+msgstr "Mark Posts"
+
+#: admin/class-mark-posts-admin.php:190 admin/class-mark-posts-admin.php:261
+#: admin/views/admin.php:104
+msgid "Mark Posts Options"
+msgstr "Mark Posts Optionen"
+
+#: admin/class-mark-posts-admin.php:216
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: admin/class-mark-posts-admin.php:283
+msgid "Mark this post as:"
+msgstr "Diesen Beitrag markieren als:"
+
+#: admin/class-mark-posts-admin.php:303
+#, php-format
+msgid "Click <a href=\"%s\">here</a> to manage Marker categories"
+msgstr "<a href=\"%s\">Hier</a> klicken um die Marker Kategorien zu verwalten."
+
+#: admin/class-mark-posts-admin.php:360
+msgid "Marker Category"
+msgstr "Marker Kategorie"
+
+#: admin/views/admin.php:64
+msgid "Marker Categories"
+msgstr "Marker Kategorien"
+
+#: admin/views/admin.php:71
+msgid "delete"
+msgstr "löschen"
+
+#: admin/views/admin.php:84
+msgid "Add new Marker Categories"
+msgstr "Neue Marker Kategorien hinzufügen"
+
+#: admin/views/admin.php:86
+msgid "Add new marker types - for example (please separate them by comma):"
+msgstr "Neue Marker-Typen hinzufügen - zum Beispiel (bitte mit Komma trennen):"
+
+#: admin/views/admin.php:87
+msgid "Ready to go, Not quite finished, Not finished yet"
+msgstr "Noch nicht fertig..."
+
+#: public/class-mark-posts.php:313
+msgid "Search Marker"
+msgstr "Marker Suchen"
+
+#: public/class-mark-posts.php:314
+msgid "All Markers"
+msgstr "Alle Marker"
+
+#: public/class-mark-posts.php:315
+msgid "Parent Marker"
+msgstr "Eltern Marker"
+
+#: public/class-mark-posts.php:316
+msgid "Parent Marker:"
+msgstr "Eltern Marker:"
+
+#: public/class-mark-posts.php:317
+msgid "Edit Marker"
+msgstr "Marker bearbeiten"
+
+#: public/class-mark-posts.php:318
+msgid "Update Marker"
+msgstr "Marker aktualisieren"
+
+#: public/class-mark-posts.php:319
+msgid "Add New Marker"
+msgstr "Neue Marker hinzufügen"
+
+#: public/class-mark-posts.php:320
+msgid "New Marker Name"
+msgstr "Neu Marker erstellen"
+
+#: public/class-mark-posts.php:321
+msgid "Marker"
+msgstr "Marker"
+
+#~ msgid "Page Title"
+#~ msgstr "Seiten Titel"
+
+#~ msgid "Menu Text"
+#~ msgstr "Menü Text"

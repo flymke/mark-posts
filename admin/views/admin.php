@@ -8,25 +8,25 @@
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 Michael Schoenrock
  */
 ?>
 
 <?php
 function validate_form() {
-		
+
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-            
+
 	    //print_r($_POST);
-	    
+
 	    $markers = explode(",", $_POST['markers']);
-	    
+
 	    foreach($markers as $marker) {
 		$marker = trim($marker);
 		wp_insert_term( $marker, 'marker' );
 	    }
-	    
+
 	    // update markers
 	    $i=0;
 	    if($_POST['markernames']) {
@@ -39,17 +39,17 @@ function validate_form() {
 		    $i++;
 		}
 	    }
-	    
+
 	}
-	
+
 }
 
 function show_settings() {
-	
+
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 	<?php
-	
+
 	// Get Marker terms from DB
 	$markers_terms = get_terms( 'marker', 'hide_empty=0' );
 	$markers_registered = '';
@@ -60,45 +60,49 @@ function show_settings() {
 	$markers_registered = rtrim($markers_registered, ", "); // cut trailing comma and space
 
 	if(!empty($markers_terms)) {
-	
-		echo '<h3 class="title">Marker Categories</h3>';
-	
+
+		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
+
 		echo '<table class="form-table"><tbody>';
-		
+
 		foreach($markers_terms as $marker_term) {
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
 			echo '<td width="130"><input type="text" name="colors[]" value="'.$marker_term->description.'" class="my-color-field" data-default-color="#effeff" /></td>';
-			echo '<td>[<a href="#">delete</a>]</td>';
+			echo '<td>[<a href="#">' . __('delete', 'mark-posts') . '</a>]</td>';
 			echo '<input type="hidden" name="term_ids[]" value="'.$marker_term->term_id.'"/>';
-			
+
 		}
-		
+
 		echo '</tbody></table>';
-	
+
 	}
-	
+
 	submit_button();
 
 	?>
 		<hr />
-		<h3 class="title">Add new Marker Categories</h3>
-		<p>Add new marker types - for example (please separate them by comma):<br /><strong><em>Ready to go, Not quite finished, Not finished yet</em></strong></p>
-			<textarea name="markers" style="width:60%;height:120px;"></textarea>
-			<?php submit_button(); ?>
-		</form>
-	
+		<h3 class="title"><?php _e('Add new Marker Categories', 'mark-posts'); ?></h3>
+		<p>
+			<?php _e('Add new marker types - for example (please separate them by comma):', 'mark-posts'); ?><br />
+			<strong><em><?php _e('Ready to go, Not quite finished, Not finished yet', 'mark-posts'); ?></em></strong>
+		</p>
+
+		<textarea name="markers" style="width:60%;height:120px;"></textarea>
+
+		<?php submit_button(); ?>
+
+	</form>
+
 <?php } ?>
 
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-	
-	<?php validate_form(); ?>
-	
-	<h2><?php echo esc_html( get_admin_page_title() ); ?> Options</h2>
 
-	<!-- Provide markup for your options page here. -->
-	
+	<?php validate_form(); ?>
+
+	<h2><?php _e('Mark Posts Options', 'mark-posts'); ?></h2>
+
 	<?php show_settings(); ?>
-	
+
 </div>
