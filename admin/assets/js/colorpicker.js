@@ -4,7 +4,9 @@
 	$(function () {
 
 		// Place your administration-specific JavaScript here
-		$('.my-color-field').wpColorPicker();
+		$('.my-color-field').wpColorPicker({
+			defaultColor: false	
+		});
 		
 	});
 
