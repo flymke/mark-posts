@@ -7,41 +7,73 @@
  *
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
+ * @contributor Sven Hofmann <info@hofmannsven.com>
  * @license   GPL-2.0+
- * @link
  * @copyright 2014 Michael Schoenrock
  */
 ?>
 
 <?php
+
+// create options
+$default_marker_post_types = array( 'posts', 'pages' );
+add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
+
+// save form data
 function validate_form() {
 
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
 	    //print_r($_POST);
 
-	    $markers = explode(",", $_POST['markers']);
+		// update marker posttypes
+		$markertypes = $_POST['markertypes'];
+		$get_mark_posts_settings = get_option( 'mark_posts_settings' );
+		$set_mark_posts_settings = $_POST['markertypes'];
+		$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
 
+		update_option( 'mark_posts_settings', $get_mark_posts_settings );
+
+		// update marker terms
+	    $markers = explode(",", $_POST['markers']);
 	    foreach($markers as $marker) {
-		$marker = trim($marker);
-		wp_insert_term( $marker, 'marker' );
+			$marker = trim($marker);
+			wp_insert_term( $marker, 'marker' );
 	    }
 
 	    // update markers
 	    $i=0;
 	    if($_POST['markernames']) {
-		foreach($_POST['markernames'] as $markername) {
-		    wp_update_term($_POST['term_ids'][$i], 'marker', array(
-		    'name' => $markername,
-		    'slug' => sanitize_title($markername),
-		    'description' => $_POST['colors'][$i]
-		    ));
-		    $i++;
-		}
+			foreach($_POST['markernames'] as $markername) {
+		    	wp_update_term($_POST['term_ids'][$i], 'marker', array(
+					'name' => $markername,
+					'slug' => sanitize_title($markername),
+					'description' => $_POST['colors'][$i]
+				));
+				$i++;
+			}
 	    }
-
 	}
+}
 
+// get all available post types
+function get_all_types() {
+	$all_post_types = get_post_types();
+	$option = get_option( 'mark_posts_settings' );
+	$mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
+
+    foreach( $all_post_types as $one_post_type ) {
+		// do not show attachments, revisions, or nav menu items
+		if( !in_array( $one_post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ) {
+			echo '<p><input name="markertypes[]" type="checkbox" value="' . $one_post_type . '"';
+            	if ( isset( $option['mark_posts_posttypes'] ) ) :
+            		if ( in_array( $one_post_type, $option['mark_posts_posttypes'] ) ) :
+            			echo ' checked="checked"';
+            		endif;
+            	endif;
+			echo ' /> ' . $one_post_type . '</p>';
+		}
+	}
 }
 
 function show_settings() {
@@ -61,7 +93,7 @@ function show_settings() {
 
 	if(!empty($markers_terms)) {
 
-		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
+		echo '<h3 class="title">xxq' . __('Marker Categories', 'mark-posts') . '</h3>';
 
 		echo '<table class="form-table"><tbody>';
 
@@ -80,6 +112,7 @@ function show_settings() {
 	submit_button();
 
 	?>
+
 		<hr />
 		<h3 class="title"><?php _e('Add new Marker Categories', 'mark-posts'); ?></h3>
 		<p>
@@ -89,7 +122,18 @@ function show_settings() {
 
 		<textarea name="markers" style="width:60%;height:120px;"></textarea>
 
-		<?php submit_button(); ?>
+		<hr />
+		<h3 class="title"><?php _e('Enable/Disable Marker', 'mark-posts'); ?></h3>
+		<p>
+			<?php _e('Enable/Disable Markers for specific post types...', 'mark-posts'); ?>
+		</p>
+
+		<?php
+
+			get_all_types();
+			submit_button();
+
+		?>
 
 	</form>
 
