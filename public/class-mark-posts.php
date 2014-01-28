@@ -285,7 +285,8 @@ class Mark_Posts {
 		add_settings_section(
 			$option_name,
 			__( 'Mark Posts Options', 'plugin_mark_posts_settings' ),
-			'__return_false'
+			'__return_false',
+			$this->plugin_slug // plugin slug
 		);
 
 	}
