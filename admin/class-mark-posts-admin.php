@@ -259,7 +259,7 @@ class Mark_Posts_Admin {
             foreach ( $mark_posts_posttypes as $mark_posts_posttype ) {
                add_meta_box(
                    'mark_posts_options',
-                   __( 'Mark Posts Option', 'mark-posts' ),
+                   __( 'Mark Posts Options', 'mark-posts' ),
                    array( $this, 'mark_posts_inner_meta_box' ),
                    $mark_posts_posttype,
                    'side'
