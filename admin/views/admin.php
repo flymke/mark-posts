@@ -8,48 +8,80 @@
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 Michael Schoenrock
  */
 ?>
 
 <?php
+
+// create options
+$default_marker_post_types = array( 'posts', 'pages' );
+add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
+
+// save form data
 function validate_form() {
-		
+
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-            
-	    //print_r($_POST);
-	    
+
+	    print_r($_POST);
+
 	    $markers = explode(",", $_POST['markers']);
-	    
+	    $markertypes = $_POST['markertypes'];
+
+		if($_POST['markertypes']) {
+			foreach($_POST['markertypes'] as $markertype) {
+				$update_marker_post_types = array_push($default_marker_post_types, $markertype);
+			}
+			update_option( 'default_mark_posts_posttypes', $update_marker_post_types );
+		}
+
+
 	    foreach($markers as $marker) {
-		$marker = trim($marker);
-		wp_insert_term( $marker, 'marker' );
+			$marker = trim($marker);
+			wp_insert_term( $marker, 'marker' );
 	    }
-	    
+
 	    // update markers
 	    $i=0;
 	    if($_POST['markernames']) {
-		foreach($_POST['markernames'] as $markername) {
-		    wp_update_term($_POST['term_ids'][$i], 'marker', array(
-		    'name' => $markername,
-		    'slug' => sanitize_title($markername),
-		    'description' => $_POST['colors'][$i]
-		    ));
-		    $i++;
-		}
+			foreach($_POST['markernames'] as $markername) {
+		    	wp_update_term($_POST['term_ids'][$i], 'marker', array(
+					'name' => $markername,
+					'slug' => sanitize_title($markername),
+					'description' => $_POST['colors'][$i]
+				));
+				$i++;
+			}
 	    }
-	    
+
 	}
-	
+
+}
+
+// get all available post types
+function get_all_types() {
+	$all_post_types = get_post_types();
+    foreach( $all_post_types as $one_post_type ) {
+		// do not show attachments, revisions, or nav menu items
+		if( !in_array( $one_post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ) {
+			echo '<p><input name="markertypes[]" type="checkbox" value="' . $one_post_type . '"';
+            	/*
+            	if( in_array( $mark_posts_post_type, $mark_posts_settings['post_types'] ) ) {
+					echo ' checked="checked"';
+				}
+				*/
+			echo ' /> ' . $one_post_type . '</p>';
+		}
+	}
 }
 
 function show_settings() {
-	
+
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 	<?php
-	
+
 	// Get Marker terms from DB
 	$markers_terms = get_terms( 'marker', 'hide_empty=0' );
 	$markers_registered = '';
@@ -60,45 +92,64 @@ function show_settings() {
 	$markers_registered = rtrim($markers_registered, ", "); // cut trailing comma and space
 
 	if(!empty($markers_terms)) {
-	
+
 		echo '<h3 class="title">Marker Categories</h3>';
-	
+
 		echo '<table class="form-table"><tbody>';
-		
+
 		foreach($markers_terms as $marker_term) {
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
 			echo '<td width="130"><input type="text" name="colors[]" value="'.$marker_term->description.'" class="my-color-field" data-default-color="#effeff" /></td>';
 			echo '<td>[<a href="#">delete</a>]</td>';
 			echo '<input type="hidden" name="term_ids[]" value="'.$marker_term->term_id.'"/>';
-			
+
 		}
-		
+
 		echo '</tbody></table>';
-	
+
 	}
-	
+
 	submit_button();
 
 	?>
-		<hr />
-		<h3 class="title">Add new Marker Categories</h3>
-		<p>Add new marker types - for example (please separate them by comma):<br /><strong><em>Ready to go, Not quite finished, Not finished yet</em></strong></p>
-			<textarea name="markers" style="width:60%;height:120px;"></textarea>
-			<?php submit_button(); ?>
-		</form>
-	
+	<hr />
+	<h3 class="title">Add new Marker Categories</h3>
+	<p>
+		Add new marker types - for example (please separate them by comma):<br />
+		<strong><em>Ready to go, Not quite finished, Not finished y</em></strong>
+	</p>
+
+	<textarea name="markers" style="width:60%;height:120px;"></textarea>
+
+	<?php
+		submit_button();
+	?>
+
+	<hr />
+	<h3 class="title">Enable/Disable Marker</h3>
+	<p>
+		Enable/Disable Markers for specific post types...
+	</p>
+
+	<?php
+		get_all_types();
+		submit_button();
+	?>
+
+	</form>
+
 <?php } ?>
 
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-	
+
 	<?php validate_form(); ?>
-	
+
 	<h2><?php echo esc_html( get_admin_page_title() ); ?> Options</h2>
 
 	<!-- Provide markup for your options page here. -->
-	
+
 	<?php show_settings(); ?>
-	
+
 </div>

@@ -5,7 +5,7 @@
  * @package   Mark_Posts_Admin
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 Michael Schoenrock
  */
 
@@ -15,7 +15,7 @@
  *
  * If you're interested in introducing public-facing
  * functionality, then refer to `class-plugin-name.php`
- * 
+ *
  */
 class Mark_Posts_Admin {
 
@@ -76,7 +76,7 @@ class Mark_Posts_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-                
+
 		//add_action( '@TODO', array( $this, 'action_method_name' ) );
 		//add_filter( '@TODO', array( $this, 'filter_method_name' ) );
 
@@ -84,22 +84,22 @@ class Mark_Posts_Admin {
                 add_action( 'add_meta_boxes', array( $this, 'mark_posts_add_meta_box' ) );
                 // Save Action for metabox
                 add_action( 'save_post', array( $this, 'save' ) );
-                
+
                 /**
                  * Post columns
                  *
                  * Different post types
-                 * 
+                 *
                  * ref: http://wp.tutsplus.com/tutorials/creative-coding/add-a-custom-column-in-posts-and-custom-post-types-admin-screen/
                  */
-                
-                // for posts and custom post types 
-                add_filter('manage_posts_columns', array( $this, 'mark_posts_column_head' ));  
+
+                // for posts and custom post types
+                add_filter('manage_posts_columns', array( $this, 'mark_posts_column_head' ));
                 add_action('manage_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2);
-                
+
                 // for pages
-                add_filter('manage_page_posts_columns', array( $this, 'mark_posts_column_head' ), 10);  
-                add_action('manage_page_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2); 
+                add_filter('manage_page_posts_columns', array( $this, 'mark_posts_column_head' ), 10);
+                add_action('manage_page_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2);
     	}
 
 	/**
@@ -161,7 +161,7 @@ class Mark_Posts_Admin {
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
 			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Mark_Posts::VERSION );
 		}
-                
+
                 // see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
                 wp_enqueue_style( 'wp-color-picker' );
                 wp_enqueue_script( 'mark-posts-colorpicker', plugins_url('assets/js/colorpicker.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
@@ -245,17 +245,17 @@ class Mark_Posts_Admin {
 	public function filter_method_name() {
 		// @TODO: Define your filter hook callback here
 	}
-        
-        
+
+
         /**
         * Adds a box to the main column on the Post and Page edit screens.
         */
         public function mark_posts_add_meta_box() {
-       
+
            $screens = array( 'post', 'page' );
-                  
+
            foreach ( $screens as $screen ) {
-       
+
                add_meta_box(
                    'mark_posts_options',
                    __( 'Mark Posts Options', 'myplugin_textdomain' ),
@@ -265,23 +265,23 @@ class Mark_Posts_Admin {
                );
            }
         }
-        
+
 	/**
 	 * Prints the box content.
 	 *
 	 * @param WP_Post $post The object for the current post/page.
 	 */
 	public function mark_posts_inner_meta_box( $post ) {
-	
+
 		// Add an nonce field so we can check for it later.
 		wp_nonce_field( 'mark_posts_inner_meta_box', 'mark_posts_inner_meta_box_nonce' );
 
 		// Use get_post_meta to retrieve an existing value from the database.
 		$value = get_post_meta( $post->ID, '_mark_posts_term_id', true );
-                
+
 		// Display the form, using the current value.
                 $content = '<p>Mark this post as: </p>';
-                
+
                 // Get Marker terms from DB
                 $markers_terms = get_terms( 'marker', 'hide_empty=0' );
                 $content .= '<select id="mark_posts_term_id" name="mark_posts_term_id">';
@@ -296,23 +296,23 @@ class Mark_Posts_Admin {
                     }
                 }
                 $content .= '</select>';
-                
+
                 if(ISSET($color_selected))
                     $content .= '<span class="mark-posts-color" style="position:absolute;top:-41px;right:30px;width:20px;height:20px;display:block;margin-left:10px;background:'.$color_selected.'"></span>';
-                
+
                 $content .= '<p>Click <a href="options-general.php?page=mark-posts">here</a> to manage Marker categories</p>';
-                
+
                 echo $content;
 	}
-        
+
         /**
 	 * Save the meta when the post is saved.
 	 *
 	 * @param int $post_id The ID of the post being saved.
 	 */
 	public function save( $post_id ) {
-            
-	
+
+
 		/*
 		 * We need to verify this came from the our screen and with proper authorization,
 		 * because save_post can be triggered at other times.
@@ -330,7 +330,7 @@ class Mark_Posts_Admin {
 
 		// If this is an autosave, our form has not been submitted,
                 //     so we don't want to do anything.
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return $post_id;
 
 		// Check the user's permissions.
@@ -338,7 +338,7 @@ class Mark_Posts_Admin {
 
 			if ( ! current_user_can( 'edit_page', $post_id ) )
 				return $post_id;
-	
+
 		} else {
 
 			if ( ! current_user_can( 'edit_post', $post_id ) )
@@ -353,17 +353,17 @@ class Mark_Posts_Admin {
 		// Update the meta field.
 		update_post_meta( $post_id, '_mark_posts_term_id', $mydata );
 	}
-        
-        
+
+
         // create admin columns
-        public function mark_posts_column_head($defaults) {  
-            $defaults['Marker Category'] = 'Marker Category';  
-            return $defaults;  
-        }  
-  
-        // show the column content 
-        public function mark_posts_column_content($column_name, $post_ID) {  
-            
+        public function mark_posts_column_head($defaults) {
+            $defaults['Marker Category'] = 'Marker Category';
+            return $defaults;
+        }
+
+        // show the column content
+        public function mark_posts_column_content($column_name, $post_ID) {
+
             $value = get_post_meta( $post_ID, '_mark_posts_term_id', true );
             if(ISSET($value)) {
                 $term = get_term( $value, 'marker' );
@@ -373,8 +373,8 @@ class Mark_Posts_Admin {
             else {
                 // no marker set
             }
-            
-        }  
+
+        }
 
 
 }
