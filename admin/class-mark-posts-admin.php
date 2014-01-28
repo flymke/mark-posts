@@ -258,7 +258,7 @@ class Mark_Posts_Admin {
 
                add_meta_box(
                    'mark_posts_options',
-                   __( 'Mark Posts Options', 'myplugin_textdomain' ),
+                   __( 'Mark Posts Options', 'mark-posts' ),
                    array( $this, 'mark_posts_inner_meta_box' ),
                    $screen,
                    'side'
@@ -280,7 +280,8 @@ class Mark_Posts_Admin {
 		$value = get_post_meta( $post->ID, '_mark_posts_term_id', true );
 
 		// Display the form, using the current value.
-                $content = '<p>Mark this post as: </p>';
+
+                $content = '<p>' . __('Mark this post as:', 'mark-posts') . '</p>';
 
                 // Get Marker terms from DB
                 $markers_terms = get_terms( 'marker', 'hide_empty=0' );
@@ -300,12 +301,12 @@ class Mark_Posts_Admin {
                 if(ISSET($color_selected))
                     $content .= '<span class="mark-posts-color" style="position:absolute;top:-41px;right:30px;width:20px;height:20px;display:block;margin-left:10px;background:'.$color_selected.'"></span>';
 
-                $content .= '<p>Click <a href="options-general.php?page=mark-posts">here</a> to manage Marker categories</p>';
+                $content .= '<p>' . printf( __('Click <a href="%s">here</a> to manage Marker categories', 'mark-posts'), esc_url('options-general.php?page=mark-posts') ) . '</p>';
 
                 echo $content;
 	}
 
-        /**
+    /**
 	 * Save the meta when the post is saved.
 	 *
 	 * @param int $post_id The ID of the post being saved.
@@ -357,7 +358,9 @@ class Mark_Posts_Admin {
 
         // create admin columns
         public function mark_posts_column_head($defaults) {
-            $defaults['Marker Category'] = 'Marker Category';
+
+            $defaults['Marker Category'] = __('Marker Category', 'mark-posts');
+
             return $defaults;
         }
 

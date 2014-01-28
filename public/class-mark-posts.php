@@ -5,7 +5,7 @@
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 Michael Schoenrock
  */
 
@@ -15,7 +15,7 @@
  *
  * If you're interested in introducing administrative or dashboard
  * functionality, then refer to `class-plugin-name-admin.php`
- * 
+ *
  */
 class Mark_Posts {
 
@@ -76,7 +76,7 @@ class Mark_Posts {
 		 */
 		//add_action( '@TODO', array( $this, 'action_method_name' ) );
 		//add_filter( '@TODO', array( $this, 'filter_method_name' ) );
-		
+
 	}
 
 	/**
@@ -254,6 +254,7 @@ class Mark_Posts {
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 
 	}
 
@@ -300,11 +301,11 @@ class Mark_Posts {
 	public function filter_method_name() {
 		// @TODO: Define your filter hook callback here
 	}
-	
+
 	public function create_taxonomies() {
-		
+
 		// create marker taxonomy
-		
+
 		// Add new taxonomy
 		$labels = array(
 			'name'              => _x( 'Marker', 'taxonomy general name' ),
@@ -319,7 +320,7 @@ class Mark_Posts {
 			'new_item_name'     => __( 'New Marker Name' ),
 			'menu_name'         => __( 'Marker' ),
 		);
-	
+
 		$args = array(
 			'hierarchical'      => true,
 			'labels'            => $labels,
@@ -328,7 +329,7 @@ class Mark_Posts {
 			'query_var'         => true,
 			'rewrite'           => array( 'slug' => 'marker' ),
 		);
-	
+
 		/**
 		 * null - Setting explicitly to null registers the taxonomy but doesn't
 		 * associate it with any objects, so it won't be directly available within
@@ -338,9 +339,9 @@ class Mark_Posts {
 		 *
 		 * see http://codex.wordpress.org/Function_Reference/register_taxonomy
 		 */
-		
+
 		register_taxonomy( 'marker', 'null', $args );
-		
+
 	}
 
 }
