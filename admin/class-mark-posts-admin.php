@@ -371,8 +371,10 @@ class Mark_Posts_Admin {
             $value = get_post_meta( $post_ID, '_mark_posts_term_id', true );
             if(ISSET($value)) {
                 $term = get_term( $value, 'marker' );
-                echo '<span class="mark-posts-post-color" data-color="'.$term->description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$term->description.'"></span>';
-                echo $term->name;
+                if($term) {
+                    echo '<span class="mark-posts-post-color" data-color="'.$term->description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$term->description.'"></span>';
+                    echo $term->name;
+                }
             }
             else {
                 // no marker set
