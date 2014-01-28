@@ -21,18 +21,21 @@ add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
 // save form data
 function validate_form() {
-
-	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+	
+	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']) ) {
 
 	    //print_r($_POST);
 
 		// update marker posttypes
-		$markertypes = $_POST['markertypes'];
-		$get_mark_posts_settings = get_option( 'mark_posts_settings' );
-		$set_mark_posts_settings = $_POST['markertypes'];
-		$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
-
-		update_option( 'mark_posts_settings', $get_mark_posts_settings );
+		if(ISSET( $_POST['markertypes']) ) {
+			
+			$markertypes = $_POST['markertypes'];
+			$get_mark_posts_settings = get_option( 'mark_posts_settings' );
+			$set_mark_posts_settings = $_POST['markertypes'];
+			$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
+	
+			update_option( 'mark_posts_settings', $get_mark_posts_settings );
+		}
 
 		// update marker terms
 	    $markers = explode(",", $_POST['markers']);
@@ -53,7 +56,18 @@ function validate_form() {
 				$i++;
 			}
 	    }
+	    
+	    echo display_settings_updated();
+	    
 	}
+}
+
+function display_settings_updated() {
+	
+	return '<div id="message" class="updated">
+		<p>'._x('Settings saved.', 'mark-posts').'</p>
+		</div>';
+
 }
 
 // get all available post types
@@ -78,6 +92,9 @@ function get_all_types() {
 }
 
 function show_settings() {
+	
+	// set default colors
+	$default_colors = array('#81d742', '#eeee22', '#dd3333', '#1e73be', '#dd9933', '#8224e3');
 
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
@@ -97,13 +114,20 @@ function show_settings() {
 		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
 
 		echo '<table class="form-table"><tbody>';
-
+		
+		$i=0;
 		foreach($markers_terms as $marker_term) {
+			
+			if($marker_term->description != '')
+				$color = $default_colors[$i];
+			else
+				$color = $default_colors[$i];
+				
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
-			echo '<td width="130"><input type="text" name="colors[]" value="'.$marker_term->description.'" class="my-color-field" data-default-color="#effeff" /></td>';
+			echo '<td width="130"><input type="text" name="colors[]" value="'.$color.'" class="my-color-field" data-default-color="'.$color.'"/></td>';
 			echo '<td>[<a href="#">' . __('delete', 'mark-posts') . '</a>]</td>';
 			echo '<input type="hidden" name="term_ids[]" value="'.$marker_term->term_id.'"/>';
-
+			$i++;
 		}
 
 		echo '</tbody></table>';
@@ -143,7 +167,7 @@ function show_settings() {
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-
+	
 	<?php validate_form(); ?>
 
 	<h2><?php _e('Mark Posts Options', 'mark-posts'); ?></h2>
