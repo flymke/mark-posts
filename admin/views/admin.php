@@ -24,18 +24,17 @@ function validate_form() {
 	
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']) ) {
 
-	    //print_r($_POST);
-
 		// update marker posttypes
-		if(ISSET( $_POST['markertypes']) ) {
-			
+		if(ISSET( $_POST['markertypes']) )
 			$markertypes = $_POST['markertypes'];
-			$get_mark_posts_settings = get_option( 'mark_posts_settings' );
-			$set_mark_posts_settings = $_POST['markertypes'];
-			$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
+		else
+			$markertypes = array();
+			
+		$get_mark_posts_settings = get_option( 'mark_posts_settings' );
+		$set_mark_posts_settings = $markertypes;
+		$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
 	
-			update_option( 'mark_posts_settings', $get_mark_posts_settings );
-		}
+		update_option( 'mark_posts_settings', $get_mark_posts_settings );
 
 		// update marker terms
 	    $markers = explode(",", $_POST['markers']);
