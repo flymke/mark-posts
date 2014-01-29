@@ -93,7 +93,7 @@ function get_all_types() {
 function show_settings() {
 	
 	// set default colors
-	$default_colors = array('#81d742', '#eeee22', '#dd3333', '#1e73be', '#dd9933', '#8224e3');
+	$default_colors = array('#8FB359', '#FFD933', '#FF4F00', '#192B33', '#3E6B7F', '#65777F');
 
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
