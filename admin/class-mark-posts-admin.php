@@ -253,18 +253,20 @@ class Mark_Posts_Admin {
         */
         public function mark_posts_add_meta_box() {
 
-			$get_mark_posts_setup = get_option( 'mark_posts_settings' );
-			$mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
+	    $get_mark_posts_setup = get_option( 'mark_posts_settings' );
+	    $mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
 
-            foreach ( $mark_posts_posttypes as $mark_posts_posttype ) {
-               add_meta_box(
-                   'mark_posts_options',
-                   __( 'Mark Posts Options', 'mark-posts' ),
-                   array( $this, 'mark_posts_inner_meta_box' ),
-                   $mark_posts_posttype,
-                   'side'
-               );
-           }
+            if( !empty($mark_posts_posttypes) ) {
+                foreach ( $mark_posts_posttypes as $mark_posts_posttype ) {
+                   add_meta_box(
+                       'mark_posts_options',
+                       __( 'Mark Posts Options', 'mark-posts' ),
+                       array( $this, 'mark_posts_inner_meta_box' ),
+                       $mark_posts_posttype,
+                       'side'
+                   );
+                }
+            }
         }
 
 	/**
