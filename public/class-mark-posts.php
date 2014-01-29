@@ -263,7 +263,7 @@ class Mark_Posts {
 		$domain = $this->plugin_slug;
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
+		load_textdomain( $domain, trailingslashit( WP_MARK_POSTS_PATH ) . 'languages/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
 
 	}

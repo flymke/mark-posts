@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mark Posts 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/flymke/mark-posts\n"
-"POT-Creation-Date: 2014-01-28 19:28+0100\n"
-"PO-Revision-Date: 2014-01-28 19:28+0100\n"
+"POT-Creation-Date: 2014-01-29 01:07+0100\n"
+"PO-Revision-Date: 2014-01-29 01:07+0100\n"
 "Last-Translator: Sven Hofmann <info@hofmannsven.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.3\n"
-"X-Poedit-KeywordsList: __;_e;_n\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -22,7 +22,7 @@ msgid "Mark Posts"
 msgstr "Mark Posts"
 
 #: admin/class-mark-posts-admin.php:192 admin/class-mark-posts-admin.php:262
-#: admin/views/admin.php:148 public/class-mark-posts.php:287
+#: admin/views/admin.php:173 public/class-mark-posts.php:287
 msgid "Mark Posts Options"
 msgstr "Mark Posts Optionen"
 
@@ -43,69 +43,74 @@ msgstr "<a href=\"%s\">Hier</a> klicken um die Marker Kategorien zu verwalten."
 msgid "Marker Category"
 msgstr "Marker Kategorie"
 
-#: admin/views/admin.php:96
+#: admin/views/admin.php:68
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: admin/views/admin.php:114
 msgid "Marker Categories"
 msgstr "Marker Kategorien"
 
-#: admin/views/admin.php:103
+#: admin/views/admin.php:128
 msgid "delete"
 msgstr "löschen"
 
-#: admin/views/admin.php:117
+#: admin/views/admin.php:142
 msgid "Add new Marker Categories"
 msgstr "Neue Marker Kategorien hinzufügen"
 
-#: admin/views/admin.php:119
+#: admin/views/admin.php:144
 msgid "Add new marker types - for example (please separate them by comma):"
 msgstr "Neue Marker-Typen hinzufügen - zum Beispiel (bitte mit Komma trennen):"
 
-#: admin/views/admin.php:120
+#: admin/views/admin.php:145
 msgid "Ready to go, Not quite finished, Not finished yet"
 msgstr "Noch nicht fertig..."
 
-#: admin/views/admin.php:126
+#: admin/views/admin.php:151
 msgid "Enable/Disable Marker"
 msgstr "Marker aktivieren/deaktivieren"
 
-#: admin/views/admin.php:128
+#: admin/views/admin.php:153
 msgid "Enable/Disable Markers for specific post types..."
 msgstr "Marker für bestimmte Post Types aktivieren/deaktivieren"
 
-#: public/class-mark-posts.php:355
+#: public/class-mark-posts.php:354 public/class-mark-posts.php:355
+#: public/class-mark-posts.php:364
+msgid "Marker"
+msgstr "Marker"
+
+#: public/class-mark-posts.php:356
 msgid "Search Marker"
 msgstr "Marker Suchen"
 
-#: public/class-mark-posts.php:356
+#: public/class-mark-posts.php:357
 msgid "All Markers"
 msgstr "Alle Marker"
 
-#: public/class-mark-posts.php:357
+#: public/class-mark-posts.php:358
 msgid "Parent Marker"
 msgstr "Eltern Marker"
 
-#: public/class-mark-posts.php:358
+#: public/class-mark-posts.php:359
 msgid "Parent Marker:"
 msgstr "Eltern Marker:"
 
-#: public/class-mark-posts.php:359
+#: public/class-mark-posts.php:360
 msgid "Edit Marker"
 msgstr "Marker bearbeiten"
 
-#: public/class-mark-posts.php:360
+#: public/class-mark-posts.php:361
 msgid "Update Marker"
 msgstr "Marker aktualisieren"
 
-#: public/class-mark-posts.php:361
+#: public/class-mark-posts.php:362
 msgid "Add New Marker"
 msgstr "Neue Marker hinzufügen"
 
-#: public/class-mark-posts.php:362
+#: public/class-mark-posts.php:363
 msgid "New Marker Name"
 msgstr "Neu Marker erstellen"
-
-#: public/class-mark-posts.php:363
-msgid "Marker"
-msgstr "Marker"
 
 #, fuzzy
 #~ msgid "Mark Posts Option"

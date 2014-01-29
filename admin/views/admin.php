@@ -21,19 +21,19 @@ add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
 // save form data
 function validate_form() {
-	
+
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']) ) {
 
 	    //print_r($_POST);
 
 		// update marker posttypes
 		if(ISSET( $_POST['markertypes']) ) {
-			
+
 			$markertypes = $_POST['markertypes'];
 			$get_mark_posts_settings = get_option( 'mark_posts_settings' );
 			$set_mark_posts_settings = $_POST['markertypes'];
 			$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
-	
+
 			update_option( 'mark_posts_settings', $get_mark_posts_settings );
 		}
 
@@ -56,17 +56,17 @@ function validate_form() {
 				$i++;
 			}
 	    }
-	    
+
 	    echo display_settings_updated();
-	    
+
 	}
 }
 
 function display_settings_updated() {
-	
-	return '<div id="message" class="updated">
-		<p>'._x('Settings saved.', 'mark-posts').'</p>
-		</div>';
+
+	echo '<div id="message" class="updated">';
+	echo '<p>' . __('Settings saved.', 'mark-posts') . '</p>';
+	echo '</div>';
 
 }
 
@@ -92,7 +92,7 @@ function get_all_types() {
 }
 
 function show_settings() {
-	
+
 	// set default colors
 	$default_colors = array('#81d742', '#eeee22', '#dd3333', '#1e73be', '#dd9933', '#8224e3');
 
@@ -114,15 +114,15 @@ function show_settings() {
 		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
 
 		echo '<table class="form-table"><tbody>';
-		
+
 		$i=0;
 		foreach($markers_terms as $marker_term) {
-			
+
 			if($marker_term->description != '')
 				$color = $default_colors[$i];
 			else
 				$color = $default_colors[$i];
-				
+
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
 			echo '<td width="130"><input type="text" name="colors[]" value="'.$color.'" class="my-color-field" data-default-color="'.$color.'"/></td>';
 			echo '<td>[<a href="#">' . __('delete', 'mark-posts') . '</a>]</td>';
@@ -167,7 +167,7 @@ function show_settings() {
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-	
+
 	<?php validate_form(); ?>
 
 	<h2><?php _e('Mark Posts Options', 'mark-posts'); ?></h2>
