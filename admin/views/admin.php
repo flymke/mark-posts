@@ -21,13 +21,24 @@ add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
 // save form data
 function validate_form() {
-	
+
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']) ) {
 		
 		// just for debugging
 		// print_r($_POST);
 
 		// update marker posttypes
+<<<<<<< HEAD
+		if(ISSET( $_POST['markertypes']) ) {
+
+			$markertypes = $_POST['markertypes'];
+			$get_mark_posts_settings = get_option( 'mark_posts_settings' );
+			$set_mark_posts_settings = $_POST['markertypes'];
+			$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
+
+			update_option( 'mark_posts_settings', $get_mark_posts_settings );
+		}
+=======
 		if(ISSET($_POST['markertypes']))
 			$markertypes = $_POST['markertypes'];
 		else
@@ -38,6 +49,7 @@ function validate_form() {
 		$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
 	
 		update_option( 'mark_posts_settings', $get_mark_posts_settings );
+>>>>>>> dev
 
 		// update marker terms
 		$markers = explode(",", $_POST['markers']);
@@ -57,6 +69,12 @@ function validate_form() {
 				));
 				$i++;
 			}
+<<<<<<< HEAD
+	    }
+
+	    echo display_settings_updated();
+
+=======
 		}
 		
 		// delete markers
@@ -68,14 +86,15 @@ function validate_form() {
 		
 		echo display_settings_updated();
 	    
+>>>>>>> dev
 	}
 }
 
 function display_settings_updated() {
-	
-	return '<div id="message" class="updated">
-		<p>'._x('Settings saved.', 'mark-posts').'</p>
-		</div>';
+
+	echo '<div id="message" class="updated">';
+	echo '<p>' . __('Settings saved.', 'mark-posts') . '</p>';
+	echo '</div>';
 
 }
 
@@ -101,7 +120,7 @@ function get_all_types() {
 }
 
 function show_settings() {
-	
+
 	// set default colors
 	$default_colors = array('#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61');
 
@@ -123,11 +142,17 @@ function show_settings() {
 		echo '<h3 class="title">' . __('Marker Categories', 'mark-posts') . '</h3>';
 
 		echo '<table class="form-table"><tbody>';
-		
+
 		$i=0;
 		foreach($markers_terms as $marker_term) {
-			
+
 			if($marker_term->description != '')
+<<<<<<< HEAD
+				$color = $default_colors[$i];
+			else
+				$color = $default_colors[$i];
+
+=======
 				$color = $marker_term->description;
 			else {
 				if(ISSET($default_colors[$i])) {
@@ -139,6 +164,7 @@ function show_settings() {
 				}
 			}
 			
+>>>>>>> dev
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
 			echo '<td width="130"><input type="text" name="colors[]" value="'.$color.'" class="my-color-field" data-default-color="'.$color.'"/></td>';
 			echo '<td><input type="checkbox" name="delete[]" id="delete_'.$marker_term->term_id.'" value="'.$marker_term->term_id.'"> <label for="delete_'.$marker_term->term_id.'">'. __('delete', 'mark-posts') .'?</label> </td>';
@@ -184,7 +210,7 @@ function show_settings() {
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-	
+
 	<?php validate_form(); ?>
 
 	<h2><?php _e('Mark Posts Options', 'mark-posts'); ?></h2>
