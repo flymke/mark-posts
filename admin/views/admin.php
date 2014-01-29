@@ -23,9 +23,12 @@ add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 function validate_form() {
 	
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']) ) {
+		
+		// just for debugging
+		// print_r($_POST);
 
 		// update marker posttypes
-		if(ISSET( $_POST['markertypes']) )
+		if(ISSET($_POST['markertypes']))
 			$markertypes = $_POST['markertypes'];
 		else
 			$markertypes = array();
@@ -37,26 +40,33 @@ function validate_form() {
 		update_option( 'mark_posts_settings', $get_mark_posts_settings );
 
 		// update marker terms
-	    $markers = explode(",", $_POST['markers']);
-	    foreach($markers as $marker) {
+		$markers = explode(",", $_POST['markers']);
+		foreach($markers as $marker) {
 			$marker = trim($marker);
 			wp_insert_term( $marker, 'marker' );
-	    }
-
-	    // update markers
-	    $i=0;
-	    if($_POST['markernames']) {
+		}
+		
+		// update markers
+		$i=0;
+		if(ISSET($_POST['markernames'])) {
 			foreach($_POST['markernames'] as $markername) {
-		    	wp_update_term($_POST['term_ids'][$i], 'marker', array(
+				wp_update_term($_POST['term_ids'][$i], 'marker', array(
 					'name' => $markername,
 					'slug' => sanitize_title($markername),
 					'description' => $_POST['colors'][$i]
 				));
 				$i++;
 			}
-	    }
-	    
-	    echo display_settings_updated();
+		}
+		
+		// delete markers
+		if(ISSET($_POST['delete'])) {
+			foreach($_POST['delete'] as $term_id) {
+				wp_delete_term( $term_id, 'marker' );
+			}
+		}
+		
+		echo display_settings_updated();
 	    
 	}
 }
@@ -93,14 +103,14 @@ function get_all_types() {
 function show_settings() {
 	
 	// set default colors
-	$default_colors = array('#8FB359', '#FFD933', '#FF4F00', '#192B33', '#3E6B7F', '#65777F');
+	$default_colors = array('#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61');
 
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 	<?php
 
 	// Get Marker terms from DB
-	$markers_terms = get_terms( 'marker', 'hide_empty=0' );
+	$markers_terms = get_terms( 'marker', 'orderby=id&hide_empty=0' );
 	$markers_registered = '';
 	foreach($markers_terms as $marker_term) {
 		$markers_registered .= $marker_term->name;
@@ -118,26 +128,34 @@ function show_settings() {
 		foreach($markers_terms as $marker_term) {
 			
 			if($marker_term->description != '')
-				$color = $default_colors[$i];
-			else
-				$color = $default_colors[$i];
-				
+				$color = $marker_term->description;
+			else {
+				if(ISSET($default_colors[$i])) {
+					$color = $default_colors[$i];
+				}
+				else {
+					$i=0; // reset pointer to 0 start over
+					$color = $default_colors[$i];
+				}
+			}
+			
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
 			echo '<td width="130"><input type="text" name="colors[]" value="'.$color.'" class="my-color-field" data-default-color="'.$color.'"/></td>';
-			echo '<td>[<a href="#">' . __('delete', 'mark-posts') . '</a>]</td>';
+			echo '<td><input type="checkbox" name="delete[]" id="delete_'.$marker_term->term_id.'" value="'.$marker_term->term_id.'"> <label for="delete_'.$marker_term->term_id.'">'. __('delete', 'mark-posts') .'?</label> </td>';
 			echo '<input type="hidden" name="term_ids[]" value="'.$marker_term->term_id.'"/>';
 			$i++;
 		}
 
 		echo '</tbody></table>';
-
+	
+		submit_button();
+		
+		echo '<hr />';
 	}
-
-	submit_button();
 
 	?>
 
-		<hr />
+		
 		<h3 class="title"><?php _e('Add new Marker Categories', 'mark-posts'); ?></h3>
 		<p>
 			<?php _e('Add new marker types - for example (please separate them by comma):', 'mark-posts'); ?><br />
