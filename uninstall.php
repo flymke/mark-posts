@@ -5,7 +5,7 @@
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link      
+ * @link      http://flymke.github.io/mark-posts/
  * @copyright 2014 Michael Schoenrock
  */
 
@@ -14,4 +14,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// @TODO: Define uninstall functionality here
+// unregister plugin settings
+
+function unregister_plugin(){
+    register_taxonomy('marker', array());
+}
+
+unregister_plugin();
