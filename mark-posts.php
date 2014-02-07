@@ -5,7 +5,7 @@
  * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>
  * @license   GPL-2.0+
- * @link
+ * @link      http://flymke.github.io/mark-posts/
  * @copyright 2014 Michael Schoenrock
  *
  * @wordpress-plugin
@@ -64,7 +64,7 @@ register_activation_hook( __FILE__, array( 'Mark_Posts', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Mark_Posts', 'deactivate' ) );
 
 /*
- * @TODOdone:
+ * Add action plugins_loaded 
  *
  *
  */
@@ -75,13 +75,6 @@ add_action( 'plugins_loaded', array( 'Mark_Posts', 'get_instance' ) );
  *----------------------------------------------------------------------------*/
 
 /*
- *
- * If you want to include Ajax within the dashboard, change the following
- * conditional to:
- *
- * if ( is_admin() ) {
- *   ...
- * }
  *
  * The code below is intended to to give the lightest footprint possible.
  */
