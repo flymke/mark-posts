@@ -96,6 +96,18 @@ class Mark_Posts_Admin {
 				// todo: remove columns if post type is disabled in settings
 
                 // for posts and custom post types
+                
+                /*
+                // more todo here...:) (anzeige der Spalte nur wenn das für den post type ausgewählt wurde)
+                $get_mark_posts_setup = get_option( 'mark_posts_settings' );
+                $mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
+
+                if( !empty($mark_posts_posttypes) )
+                
+                foreach ( $mark_posts_posttypes as $mark_posts_posttype ) {
+                    
+                }*/
+            
                 add_filter('manage_posts_columns', array( $this, 'mark_posts_column_head' ));
                 add_action('manage_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2);
 
@@ -374,8 +386,10 @@ class Mark_Posts_Admin {
             if(ISSET($value)) {
                 $term = get_term( $value, 'marker' );
                 if($term) {
-                    echo '<span class="mark-posts-post-color" data-color="'.$term->description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$term->description.'"></span>';
-                    echo $term->name;
+                    if( ISSET ($term->description) && ISSET ($term->nam) ) {
+                        echo '<span class="mark-posts-post-color" data-color="'.$description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$description.'"></span>';
+                        echo $term->name;
+                    }
                 }
             }
             else {
