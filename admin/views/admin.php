@@ -65,17 +65,24 @@ function validate_form() {
 				wp_delete_term( $term_id, 'marker' );
 			}
 		}
-
-		echo display_settings_updated();
+		
+		display_settings_updated();
+		
+		// redirect
+		header('location: options-general.php?page=mark-posts?settings-updated=true');
 
 	}
 }
 
 function display_settings_updated() {
+	
+	if(ISSET($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') {
 
-	return '<div id="message" class="updated">
-		<p>'._x('Settings saved.', 'mark-posts').'</p>
-		</div>';
+		return '<div id="message" class="updated">
+			<p>'._x('Settings saved.').'</p>
+			</div>';
+			
+	}
 
 }
 

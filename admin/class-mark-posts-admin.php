@@ -88,32 +88,17 @@ class Mark_Posts_Admin {
                 /**
                  * Post columns
                  *
-                 * Different post types
-                 *
-                 * ref: http://wp.tutsplus.com/tutorials/creative-coding/add-a-custom-column-in-posts-and-custom-post-types-admin-screen/
                  */
-
-				// todo: remove columns if post type is disabled in settings
-
-                // for posts and custom post types
                 
-                /*
-                // more todo here...:) (anzeige der Spalte nur wenn das für den post type ausgewählt wurde)
+                // Display posts_custom_column on selected post types
                 $get_mark_posts_setup = get_option( 'mark_posts_settings' );
                 $mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
-
-                if( !empty($mark_posts_posttypes) )
                 
-                foreach ( $mark_posts_posttypes as $mark_posts_posttype ) {
-                    
-                }*/
-            
-                add_filter('manage_posts_columns', array( $this, 'mark_posts_column_head' ));
-                add_action('manage_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2);
+                foreach($mark_posts_posttypes as $post_type) {
+                    add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'mark_posts_column_head' ), 10 );
+                    add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2 );
+                }
 
-                // for pages
-                add_filter('manage_page_posts_columns', array( $this, 'mark_posts_column_head' ), 10);
-                add_action('manage_page_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2);
     	}
 
 	/**
@@ -153,10 +138,11 @@ class Mark_Posts_Admin {
 			return;
 		}
 
-		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Mark_Posts::VERSION );
-		}
+                wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Mark_Posts::VERSION );
+
+		//$screen = get_current_screen();
+		//if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+		//}
 
 	}
 
@@ -201,11 +187,13 @@ class Mark_Posts_Admin {
 		 */
 		$this->plugin_screen_hook_suffix = add_options_page(
 			__( 'Mark Posts', $this->plugin_slug ),
-			__( 'Mark Posts Options', $this->plugin_slug ),
+			__( 'Mark Posts', $this->plugin_slug ),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
 		);
+                
+                //add_action('manage_options','do_on_my_plugin_settings_save');
 
 	}
 
@@ -374,7 +362,7 @@ class Mark_Posts_Admin {
         // create admin columns
         public function mark_posts_column_head($defaults) {
 
-            $defaults['Marker Category'] = __('Marker Category', 'mark-posts');
+            $defaults['Marker Category'] = __('Marker', 'mark-posts');
 
             return $defaults;
         }
@@ -386,9 +374,10 @@ class Mark_Posts_Admin {
             if(ISSET($value)) {
                 $term = get_term( $value, 'marker' );
                 if($term) {
-                    if( ISSET ($term->description) && ISSET ($term->nam) ) {
-                        echo '<span class="mark-posts-post-color" data-color="'.$description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$description.'"></span>';
-                        echo $term->name;
+                    if( ISSET ($term->description) && ISSET ($term->name) ) {
+                        //echo '<span class="mark-posts-post-color" data-color="'.$term->description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$term->description.'"></span>';
+                        //echo $term->name;
+                        echo '<span class="mark-posts-marker" style="background:'.$term->description.'">'.$term->name.'</span>';
                     }
                 }
             }

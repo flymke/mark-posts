@@ -7,7 +7,8 @@
 .js-new-markers-intro {
 	display: none;
 }
-.new-marker {
+.new-marker,
+.mark-posts-marker {
 	background: rgba(255,255,255,.75);
 	color: #444;
 	line-height: 27px; /* in case of multiple lines for markers*/
@@ -16,4 +17,5 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+        display: inline-block;
 }
