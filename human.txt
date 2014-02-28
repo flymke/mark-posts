@@ -9,6 +9,7 @@
   From: Munich, Germany
 
 /* PLUGIN */
-  Last update: 2014/02/07
+  Last update: 2014/02/28
   Language: English / German
   Platform: WordPress
+  Download: https://github.com/flymke/mark-posts
