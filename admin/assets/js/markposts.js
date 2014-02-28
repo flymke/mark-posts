@@ -13,6 +13,30 @@
 
 	});
 
+  // convert rgb to hex
+  function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  }
+
+  // modify hex for background usage
+  function convertHex(hex,opacity){
+    hex = hex.replace('#','');
+    var r = parseInt(hex.substring(0,2), 16);
+    var g = parseInt(hex.substring(2,4), 16);
+    var b = parseInt(hex.substring(4,6), 16);
+    return 'rgba('+r+','+g+','+b+','+opacity/100+')';
+  }
+
+  // highlight each row
+	$('.mark-posts-marker').each(function() {
+  	var hex = rgb2hex($(this).css('backgroundColor'));
+  	$(this).parent().parent().find('th, td').css('background-color', convertHex(hex,25));
+	});
+
 
 	// live preview of new markers
 	$('.js-add-markers').keyup(function(e) { // use keyup instead of keypress for latest char
