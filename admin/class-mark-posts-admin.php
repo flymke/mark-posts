@@ -89,11 +89,11 @@ class Mark_Posts_Admin {
                  * Post columns
                  *
                  */
-                
+
                 // Display posts_custom_column on selected post types
                 $get_mark_posts_setup = get_option( 'mark_posts_settings' );
                 $mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
-                
+
                 foreach($mark_posts_posttypes as $post_type) {
                     add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'mark_posts_column_head' ), 10 );
                     add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2 );
@@ -192,7 +192,7 @@ class Mark_Posts_Admin {
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
 		);
-                
+
                 //add_action('manage_options','do_on_my_plugin_settings_save');
 
 	}
@@ -304,7 +304,7 @@ class Mark_Posts_Admin {
                 if(ISSET($color_selected))
                     $content .= '<span class="mark-posts-color" style="position:absolute;top:-41px;right:30px;width:20px;height:20px;display:block;margin-left:10px;background:'.$color_selected.'"></span>';
 
-                $content .= '<p>' . printf( __('Click <a href="%s">here</a> to manage Marker categories', 'mark-posts'), esc_url('options-general.php?page=mark-posts') ) . '</p>';
+                $content .= '<p>' . sprintf( __('Click <a href="%s">here</a> to manage Marker categories.', 'mark-posts'), esc_url('options-general.php?page=mark-posts') ) . '</p>';
 
                 echo $content;
 	}
