@@ -67,9 +67,6 @@ function validate_form() {
 		}
 		
 		display_settings_updated();
-		
-		// redirect
-		header('location: options-general.php?page=mark-posts?settings-updated=true');
 
 	}
 }
