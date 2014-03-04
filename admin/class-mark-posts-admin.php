@@ -292,11 +292,11 @@ class Mark_Posts_Admin {
                 $content .= '<option value="">---</option>';
                 foreach($markers_terms as $marker_term) {
                     if(ISSET($value) && $marker_term->term_id == $value) {
-                        $content .= '<option value="'.$marker_term->term_id.'" selected="selected">'.$marker_term->name.'</option>';
+                        $content .= '<option value="'.$marker_term->term_id.'" data-color="'.$marker_term->description.'" selected="selected">'.$marker_term->name.'</option>';
                         $color_selected = $marker_term->description;
                     }
                     else {
-                        $content .= '<option value="'.$marker_term->term_id.'">'.$marker_term->name.'</option>';
+                        $content .= '<option value="'.$marker_term->term_id.'" data-color="'.$marker_term->description.'">'.$marker_term->name.'</option>';
                     }
                 }
                 $content .= '</select>';
