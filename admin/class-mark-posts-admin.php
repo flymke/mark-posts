@@ -302,8 +302,10 @@ class Mark_Posts_Admin {
                 $content .= '</select>';
 
                 if(ISSET($color_selected))
-                    $content .= '<span class="mark-posts-color" style="position:absolute;top:-41px;right:30px;width:20px;height:20px;display:block;margin-left:10px;background:'.$color_selected.'"></span>';
-
+                    $content .= '<span class="mark-posts-color" style="background:'.$color_selected.'"></span>';
+                else
+                    $content .= '<span class="mark-posts-color"></span>';
+                
                 $content .= '<p>' . sprintf( __('Click <a href="%s">here</a> to manage Marker categories.', 'mark-posts'), esc_url('options-general.php?page=mark-posts') ) . '</p>';
 
                 echo $content;
@@ -377,7 +379,7 @@ class Mark_Posts_Admin {
                     if( ISSET ($term->description) && ISSET ($term->name) ) {
                         //echo '<span class="mark-posts-post-color" data-color="'.$term->description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$term->description.'"></span>';
                         //echo $term->name;
-                        echo '<span class="mark-posts-marker" style="background:'.$term->description.'">'.$term->name.'</span>';
+                        echo '<span class="mark-posts-marker" style="background:'.$term->description.'" data-background="'.$term->description.'">'.$term->name.'</span>';
                     }
                 }
             }

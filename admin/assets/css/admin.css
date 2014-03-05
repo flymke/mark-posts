@@ -9,15 +9,27 @@
 }
 .new-marker,
 .mark-posts-marker {
-	background: rgba(255,255,255,.75);
+        background: rgba(255,255,255); /* for IE */
+	background: rgba(255,255,255,.65);
 	color: #444;
 	line-height: 27px; /* in case of multiple lines for markers*/
-	padding: 2px 5px;
+	padding: 0 5px;
 	margin: 0 0 0 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
         display: inline-block;
+        font-weight:bold;
+}
+
+span.mark-posts-color {
+    position:absolute;
+    top:-41px;
+    right:30px;
+    width:20px;
+    height:20px;
+    display:block;
+    margin-left:10px;
 }
 
 span.mark-posts-color,
@@ -27,3 +39,12 @@ span.mark-posts-color,
 	-o-transition: 100ms linear;  /* Opera 10.50Ð12.00 */
 	transition: 100ms linear;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
+
+.mark_posts_pre {
+    position:absolute;
+    width:5px;
+    height:100%;
+    top:0;
+    left:0;
+}
+

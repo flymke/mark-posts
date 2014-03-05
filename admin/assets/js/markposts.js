@@ -21,8 +21,10 @@
 
 	// highlight each row
 	$('.mark-posts-marker').each(function() {
-  	var hex = rgb2hex($(this).css('backgroundColor'));
-  	$(this).parent().parent().find('th, td').css('background-color', convertHex(hex,25));
+  	var color = $(this).data('background');
+  	$(this).parent().parent().find('th, td').css('background-color', convertHex(color,25));
+	$(this).parent().parent().find('.check-column').css('position', 'relative');
+	$(this).parent().parent().find('.check-column').append('<div class="mark_posts_pre" style="background:'+color+';"></div>');
 	});
 
 
@@ -42,8 +44,8 @@
 	// change background color in edit post options
 	if($('#mark_posts_options').length > 0) {
 		var color = $('select#mark_posts_term_id option:selected').data('color');
-		$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));
-		
+		if (color)
+			$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));
 		$('select#mark_posts_term_id').on('change', function() {
 			var color = $('select#mark_posts_term_id option:selected').data('color');
 			$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));
