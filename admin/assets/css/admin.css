@@ -21,30 +21,33 @@
         display: inline-block;
         font-weight:bold;
 }
+.mark-posts-marker {
+        margin-top:6px;   
+}
 
 span.mark-posts-color {
-    position:absolute;
-    top:-41px;
-    right:30px;
-    width:20px;
-    height:20px;
-    display:block;
-    margin-left:10px;
+        position:absolute;
+        top:-41px;
+        right:30px;
+        width:20px;
+        height:20px;
+        display:block;
+        margin-left:10px;
 }
 
 span.mark-posts-color,
 #mark_posts_options h3.hndle {
     	-webkit-transition: 100ms linear;  /* Chrome 1-25, Safari 3.2+ */
 	-moz-transition: 100ms linear;  /* Firefox 4-15 */
-	-o-transition: 100ms linear;  /* Opera 10.50Ð12.00 */
+	-o-transition: 100ms linear;  /* Opera 10.50â€“12.00 */
 	transition: 100ms linear;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
 
 .mark_posts_pre {
-    position:absolute;
-    width:5px;
-    height:100%;
-    top:0;
-    left:0;
+        position:absolute;
+        width:5px;
+        height:100%;
+        top:0;
+        left:0;
 }
 
