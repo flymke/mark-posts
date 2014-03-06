@@ -305,7 +305,7 @@ class Mark_Posts_Admin {
                     $content .= '<span class="mark-posts-color" style="background:'.$color_selected.'"></span>';
                 else
                     $content .= '<span class="mark-posts-color"></span>';
-                
+
                 $content .= '<p>' . sprintf( __('Click <a href="%s">here</a> to manage Marker categories.', 'mark-posts'), esc_url('options-general.php?page=mark-posts') ) . '</p>';
 
                 echo $content;
@@ -355,9 +355,13 @@ class Mark_Posts_Admin {
 
 		// Sanitize the user input.
 		$mydata = sanitize_text_field( $_POST['mark_posts_term_id'] );
+    $myterm = get_term( $mydata, 'marker' );
 
 		// Update the meta field.
 		update_post_meta( $post_id, '_mark_posts_term_id', $mydata );
+		// Update taxonomy count
+		wp_set_object_terms( $post_id, $myterm->name, 'marker' );
+
 	}
 
 
@@ -379,6 +383,7 @@ class Mark_Posts_Admin {
                     if( ISSET ($term->description) && ISSET ($term->name) ) {
                         //echo '<span class="mark-posts-post-color" data-color="'.$term->description.'" style="display:inline-block;height:13px;width:6px;margin-right:5px;background-color:'.$term->description.'"></span>';
                         //echo $term->name;
+                        //echo $term->count;
                         echo '<span class="mark-posts-marker" style="background:'.$term->description.'" data-background="'.$term->description.'">'.$term->name.'</span>';
                     }
                 }
