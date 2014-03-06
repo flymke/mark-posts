@@ -66,6 +66,9 @@ class Mark_Posts_Admin {
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
+		// Add dashboard
+		add_action('wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
@@ -205,6 +208,60 @@ class Mark_Posts_Admin {
 	public function display_plugin_admin_page() {
 		include_once( 'views/admin.php' );
 	}
+
+	/**
+	 * Register custom dashboard widget
+	 *
+	 * @since    1.0.0
+	 */
+	public function mark_posts_dashboard_widget() {
+    global $wp_meta_boxes;
+    $this->plugin_screen_hook_suffix = wp_add_dashboard_widget(
+      'mark_posts_info_widget',
+      'Mark Posts',
+      array( $this, 'mark_posts_dashboard_info' )
+    );
+    add_action( 'admin_enqueue_scripts', array( $this, 'mark_posts_enqueue_dashboard_styles' ) );
+    add_action( 'admin_head', array( $this, 'mark_posts_custom_dashboard_styles' ) );
+
+  }
+
+	/**
+	 * Render the dashboard widget
+	 *
+	 * @since    1.0.0
+	 */
+  public function mark_posts_dashboard_info() {
+    include_once( 'views/dashboard.php' );
+  }
+
+	/**
+	 * Load additional dashboard styles
+	 *
+	 * @since    1.0.0
+	 */
+  public function mark_posts_enqueue_dashboard_styles() {
+    wp_enqueue_style( $this->plugin_slug .'-dashboard-styles', plugins_url( 'assets/css/dashboard.css', __FILE__ ), array(), Mark_Posts::VERSION );
+  }
+
+	/**
+	 * Build custom dashboard styles
+	 *
+	 * @since    1.0.0
+	 */
+  public function mark_posts_custom_dashboard_styles() {
+    $marker_args = array(
+      'hide_empty' => true
+    );
+    $markers = get_terms( 'marker', $marker_args );
+    echo '<style>';
+
+    foreach ( $markers as $marker ) :
+      echo '.mark-posts-' . $marker->slug . ' a:before { color: ' . $marker->description . '} ';
+    endforeach;
+
+    echo '</style>';
+  }
 
 	/**
 	 * Add settings action link to the plugins page.
