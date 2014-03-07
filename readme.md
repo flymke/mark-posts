@@ -1,3 +1,9 @@
+## Mark Posts Project Page
+
+For the project page including screenshots visit:
+
+http://flymke.github.io/mark-posts/
+
 ## Plugin Information
 
 Mark Posts plugin provides an easy way to mark and highlight posts, pages and posts of custom post types within the posts overview.
