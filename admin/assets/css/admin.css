@@ -24,7 +24,6 @@
 .mark-posts-marker {
         margin-top:6px;
 }
-
 span.mark-posts-color {
         position:absolute;
         top:-41px;
@@ -34,7 +33,6 @@ span.mark-posts-color {
         display:block;
         margin-left:10px;
 }
-
 span.mark-posts-color,
 #mark_posts_options h3.hndle {
     	-webkit-transition: 100ms linear;  /* Chrome 1-25, Safari 3.2+ */
@@ -42,11 +40,18 @@ span.mark-posts-color,
 	-o-transition: 100ms linear;  /* Opera 10.50–12.00 */
 	transition: 100ms linear;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
-
 .mark_posts_pre {
         position:absolute;
         width:5px;
         height:100%;
         top:0;
         left:0;
+}
+a.mark-posts-initial {
+    display:inline-block;
+    margin-left:25px;
+}
+.mark-posts-copy {
+    margin-top:25px;
+    padding-top:25px;
 }

@@ -72,6 +72,12 @@ class Mark_Posts_Admin {
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
+                
+                // Add quick edit custom box
+                add_action( 'quick_edit_custom_box', array( $this, 'display_custom_quickedit_box' ), 10, 2 );
+                // Important Quick Edit JS Parts
+                add_action( 'admin_footer-edit.php', array( $this, 'admin_edit_markposts_foot' ), 11);
+                add_action( 'manage_book_posts_custom_column' , array( $this, 'custom_markposts_column' ), 10, 2 );
 
 		/*
 		 * Define custom functionality.
@@ -412,12 +418,45 @@ class Mark_Posts_Admin {
 
 		// Sanitize the user input.
 		$mydata = sanitize_text_field( $_POST['mark_posts_term_id'] );
-    $myterm = get_term( $mydata, 'marker' );
+                $myterm = get_term( $mydata, 'marker' );
 
 		// Update the meta field.
 		update_post_meta( $post_id, '_mark_posts_term_id', $mydata );
 		// Update taxonomy count
 		wp_set_object_terms( $post_id, $myterm->name, 'marker' );
+                
+                /* Save data for Quick Edit Custom Box */
+                
+                        /* in production code, $slug should be set only once in the plugin,
+                        preferably as a class property, rather than in each function that needs it.
+                      */
+                     /*$slug = 'book';
+                     if ( $slug !== $_POST['post_type'] ) {
+                         return;
+                     }
+                     if ( !current_user_can( 'edit_post', $post_id ) ) {
+                         return;
+                     }
+                     $_POST += array("{$slug}_edit_nonce" => '');
+                     if ( !wp_verify_nonce( $_POST["{$slug}_edit_nonce"],
+                                            plugin_basename( __FILE__ ) ) )
+                     {
+                         return;
+                     }
+                 
+                     if ( isset( $_REQUEST['book_author'] ) ) {
+                         update_post_meta( $post_id, 'author', $_REQUEST['book_author'] );
+                     }
+                     # checkboxes are submitted if checked, absent if not
+                     if ( isset( $_REQUEST['inprint'] ) ) {
+                         update_post_meta($post_id, 'inprint', TRUE);
+                     } else {
+                         update_post_meta($post_id, 'inprint', FALSE);
+                     }*/
+                
+                /* ----- */
+                
+                
 
 	}
 
@@ -449,6 +488,61 @@ class Mark_Posts_Admin {
                 // no marker set
             }
 
+        }
+        
+        // Quick Edit Custom Box
+        public function display_custom_quickedit_box( $column_name, $post_type ) {
+            static $printNonce = TRUE;
+            if ( $printNonce ) {
+                $printNonce = FALSE;
+                wp_nonce_field( plugin_basename( __FILE__ ), 'mark_posts_inner_meta_box_nonce' );
+            }
+        
+            ?>
+            <fieldset class="inline-edit-col-right inline-edit-book">
+              <div class="inline-edit-col column-marker_category">
+                <label class="inline-edit-group">
+                <span class="title">Mark Posts</span>
+                </label>
+                <?php
+                // Get Marker terms from DB
+                $markers_terms = get_terms( 'marker', 'hide_empty=0' );
+                $content = '<select class="mark_posts_term_id" name="mark_posts_term_id">';
+                $content .= '<option value="">---</option>';
+                foreach($markers_terms as $marker_term) {
+                    if(ISSET($value) && $marker_term->term_id == $value) {
+                        $content .= '<option value="'.$marker_term->term_id.'" data-color="'.$marker_term->description.'" selected="selected">'.$marker_term->name.'</option>';
+                        $color_selected = $marker_term->description;
+                    }
+                    else {
+                        $content .= '<option value="'.$marker_term->term_id.'" data-color="'.$marker_term->description.'">'.$marker_term->name.'</option>';
+                    }
+                }
+                $content .= '</select>';
+                // print $content
+                echo $content;
+                ?>
+              </div>
+            </fieldset>
+            <?php
+        }        
+        
+        // Important Quick Edit JS Parts
+        /* load scripts in the footer */
+        public function admin_edit_markposts_foot() {
+            echo '<script type="text/javascript" src="', plugins_url( 'assets/js/admin-edit.js', __FILE__ ), '"></script>';
+        }
+        
+        /* example of how an existing value can be stored in the table */
+        public function custom_markposts_column( $column, $post_id ) {
+                // the !! means translate the following item to a boolean value
+                if ( !!get_post_meta( $post_id , 'inprint' , true ) ) {
+                    $checked = 'checked';
+                } else {
+                    $checked = '';
+                }
+                echo "<input type='checkbox' readonly $checked/>";
+                break;
         }
 
 

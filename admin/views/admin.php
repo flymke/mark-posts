@@ -19,6 +19,43 @@
 $default_marker_post_types = array( 'posts', 'pages' );
 add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
+// misc functions
+function misc_funtions() {
+
+	// mark all posts
+	if ( $_SERVER["REQUEST_METHOD"] == "GET" && ISSET($_GET['mark-all-posts-term-id']) ) {
+		
+		$term_id = $_GET['mark-all-posts-term-id']; /* TODO:: SECURITY */
+			
+		// set color only for selected post types
+		$get_mark_posts_settings = get_option( 'mark_posts_settings' );
+		foreach($get_mark_posts_settings['mark_posts_posttypes'] as $post_type) {
+			
+			$args = array(
+			'posts_per_page'   => -1,
+			'post_type'        => $post_type );
+			
+			// get all posts
+			$all_posts = get_posts($args);
+			
+			foreach($all_posts as $post) {
+				// Sanitize the user input.
+				$mydata = sanitize_text_field( $term_id );
+				$myterm = get_term( $term_id, 'marker' );
+		
+				// Update the meta field.
+				update_post_meta( $post->ID, '_mark_posts_term_id', $mydata );
+				// Update taxonomy count
+				wp_set_object_terms( $post->ID, $myterm->name, 'marker' );
+			}
+			
+		}
+		
+		echo display_settings_updated();
+	}
+
+}
+
 // save form data
 function validate_form() {
 
@@ -66,20 +103,17 @@ function validate_form() {
 			}
 		}
 
-		display_settings_updated();
+		echo display_settings_updated();
 
 	}
 }
 
 function display_settings_updated() {
 
-	if(ISSET($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') {
+	return '<div id="message" class="updated">
+		<p>'.__('Settings saved', 'mark-posts').'</p>
+		</div>';
 
-		return '<div id="message" class="updated">
-			<p>'._x('Settings saved.').'</p>
-			</div>';
-
-	}
 
 }
 
@@ -145,7 +179,8 @@ function show_settings() {
 
 			echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="'.$marker_term->name.'"></th>';
 			echo '<td width="130"><input type="text" name="colors[]" value="'.$color.'" class="my-color-field" data-default-color="'.$color.'"/></td>';
-			echo '<td><input type="checkbox" name="delete[]" id="delete_'.$marker_term->term_id.'" value="'.$marker_term->term_id.'"> <label for="delete_'.$marker_term->term_id.'">'. __('delete', 'mark-posts') .'?</label> </td>';
+			echo '<td><input type="checkbox" name="delete[]" id="delete_'.$marker_term->term_id.'" value="'.$marker_term->term_id.'"> <label for="delete_'.$marker_term->term_id.'">'. __('delete', 'mark-posts') .'?</label>';
+			echo '<a href="javascript:void(0);" class="mark-posts-initial" data-confirm-msg="' . __('Do you really want to mark all posts with this marker? Warning: This will override all your previous set markers.', 'mark-posts') . '" data-term-id="'.$marker_term->term_id.'">' . __('Mark all posts with this marker', 'mark-posts') . '</a></td>';
 			echo '<input type="hidden" name="term_ids[]" value="'.$marker_term->term_id.'"/>';
 			$i++;
 		}
@@ -192,11 +227,15 @@ function show_settings() {
 <div class="wrap">
 
 	<?php screen_icon(); ?>
+	
+	<?php misc_funtions() ?>
 
 	<?php validate_form(); ?>
 
 	<h2><?php _e('Mark Posts Options', 'mark-posts'); ?></h2>
 
 	<?php show_settings(); ?>
+	
+	<div class="mark-posts-copy"><hr />Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> - (c) 2014 <a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>, <a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a></div>
 
 </div>
