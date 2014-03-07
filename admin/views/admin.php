@@ -65,20 +65,20 @@ function validate_form() {
 				wp_delete_term( $term_id, 'marker' );
 			}
 		}
-		
+
 		display_settings_updated();
 
 	}
 }
 
 function display_settings_updated() {
-	
+
 	if(ISSET($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') {
 
 		return '<div id="message" class="updated">
 			<p>'._x('Settings saved.').'</p>
 			</div>';
-			
+
 	}
 
 }
@@ -162,8 +162,7 @@ function show_settings() {
 
 		<h3 class="title"><?php _e('Add new Marker Categories', 'mark-posts'); ?></h3>
 		<p>
-			<?php _e('Add new marker types - for example (please separate them by comma):', 'mark-posts'); ?><br />
-			<strong><em><?php _e('Ready to go, Not quite finished, Not finished yet', 'mark-posts'); ?></em></strong>
+			<?php _e('Add new marker (please separate them by comma):', 'mark-posts'); ?>
 		</p>
 
 		<textarea class="js-add-markers" name="markers" style="width:60%;height:120px;"></textarea>
@@ -176,7 +175,7 @@ function show_settings() {
 		<hr />
 		<h3 class="title"><?php _e('Enable/Disable Marker', 'mark-posts'); ?></h3>
 		<p>
-			<?php _e('Enable/Disable Markers for specific post types...', 'mark-posts'); ?>
+			<?php _e('Enable/Disable marker for specific post types:', 'mark-posts'); ?>
 		</p>
 
 		<?php
