@@ -3,18 +3,18 @@
  * Mark Posts
  *
  * @package   Mark_Posts
- * @author    Michael Schoenrock <hello@michaelschoenrock.com>
+ * @author    Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hoffmann <info@hofmannsven.com>
  * @license   GPL-2.0+
- * @link
+ * @link      http://flymke.github.io/mark-posts/
  * @copyright 2014 Michael Schoenrock
  *
  * @wordpress-plugin
  * Plugin Name:       Mark Posts
- * Plugin URI:        https://github.com/flymke/mark-posts
+ * Plugin URI:        http://flymke.github.io/mark-posts/
  * Description:       Mark and highlight posts, pages and posts of custom post types within the posts overview
  * Version:           1.0.0
- * Author:            Michael Schoenrock
- * Author URI:        http://www.michaelschoenrock.com
+ * Author:            <a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>, <a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a>
+ * Author URI:        http://www.aliquit.de
  * Contributor:       Sven Hofmann
  * Contributor URI:   http://hofmannsven.com
  * Text Domain:       mark-posts
@@ -64,7 +64,7 @@ register_activation_hook( __FILE__, array( 'Mark_Posts', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Mark_Posts', 'deactivate' ) );
 
 /*
- * @TODOdone:
+ * Add action plugins_loaded 
  *
  *
  */
@@ -75,13 +75,6 @@ add_action( 'plugins_loaded', array( 'Mark_Posts', 'get_instance' ) );
  *----------------------------------------------------------------------------*/
 
 /*
- *
- * If you want to include Ajax within the dashboard, change the following
- * conditional to:
- *
- * if ( is_admin() ) {
- *   ...
- * }
  *
  * The code below is intended to to give the lightest footprint possible.
  */

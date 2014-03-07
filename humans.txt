@@ -1,0 +1,15 @@
+/* TEAM */
+  Developer: Michael Schönrock
+  Website: michaelschoenrock.com
+  From: Munich, Germany
+
+  Developer: Sven Hofmann
+  Website: hofmannsven.com
+  Twitter: @hofmannsven
+  From: Munich, Germany
+
+/* PLUGIN */
+  Last update: 2014/02/28
+  Language: English / German
+  Platform: WordPress
+  Download: https://github.com/flymke/mark-posts
