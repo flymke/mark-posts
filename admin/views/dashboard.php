@@ -20,9 +20,13 @@ $markers = get_terms( 'marker', $marker_args );
 <div class="main">
   <ul id="markers_right_now">
     <?php
-      foreach ( $markers as $marker ) :
-        echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><a href="' . admin_url( 'edit.php?marker=' ) . $marker->slug . '">' . $marker->count . ' ' . $marker->name . '</a></li>';
-      endforeach;
+      if ( !empty($markers) ) :
+        foreach ( $markers as $marker ) :
+          echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><a href="' . admin_url( 'edit.php?marker=' ) . $marker->slug . '">' . $marker->count . ' ' . $marker->name . '</a></li>';
+        endforeach;
+      else:
+        _e('No marked posts yet.', 'mark-posts');
+      endif;
     ?>
   </ul><!-- /#markers_right_now -->
 </div><!-- /.main -->
