@@ -1,6 +1,6 @@
 ## Mark Posts Project Page
 
-For the project page including screenshots visit:
+The project page including screenshots for this plugin is located at:
 
 http://flymke.github.io/mark-posts/
 
