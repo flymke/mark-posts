@@ -1,4 +1,4 @@
-## Mark Posts Project Page
+# Mark Posts WordPress Plugin
 
 The project page including screenshots for this plugin is located at:
 
