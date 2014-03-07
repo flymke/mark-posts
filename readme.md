@@ -1,3 +1,9 @@
+# Mark Posts WordPress Plugin
+
+The project page including screenshots for this plugin is located at:
+
+http://flymke.github.io/mark-posts/
+
 ## Plugin Information
 
 Mark Posts plugin provides an easy way to mark and highlight posts, pages and posts of custom post types within the posts overview.
