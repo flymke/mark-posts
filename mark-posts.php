@@ -81,7 +81,8 @@ function manage_wp_posts_using_bulk_quick_edit_save_post( $post_id, $post ) {
 
         // update terms
         $term = get_term( $_POST[ '_mark_posts_term_id' ], 'marker' );
-        wp_set_object_terms( $post_id, $term->name, 'marker' );
+        if ( !empty($term->name) )
+            wp_set_object_terms( $post_id, $term->name, 'marker' );
     endif;
 }
 
