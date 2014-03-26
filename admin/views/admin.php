@@ -236,6 +236,6 @@ function show_settings() {
 
 	<?php show_settings(); ?>
 	
-	<div class="mark-posts-copy"><hr />Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> - (c) 2014 <a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>, <a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a></div>
+	<div class="mark-posts-copy"><hr />Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> | &copy; <?php echo date('Y'); ?> <a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>, <a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a></div>
 
 </div>
