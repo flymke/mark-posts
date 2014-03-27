@@ -44,7 +44,7 @@ function misc_funtions() {
 				$myterm = get_term( $term_id, 'marker' );
 		
 				// Update the meta field.
-				update_post_meta( $post->ID, '_mark_posts_term_id', $mydata );
+				update_post_meta( $post->ID, 'mark_posts_term_id', $mydata );
 				// Update taxonomy count
 				wp_set_object_terms( $post->ID, $myterm->name, 'marker' );
 			}

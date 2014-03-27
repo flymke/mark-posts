@@ -13,6 +13,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 * Set up maker categories and colors
 * Assign marker categories to posts/pages/cpt
 * View them within the posts/pages/cpt overview lists
+* Quick edit, bulk edit and edit all markers
 * Dashboard widget with marker overview
 
 ***

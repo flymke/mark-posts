@@ -26,7 +26,7 @@
             var $mark_posts_term_id = $( '#mark_posts_term_id-' + $post_id ).data('val');
 
             // set the term
-            $edit_row.find( 'select[name="_mark_posts_term_id"]' ).val( $mark_posts_term_id );
+            $edit_row.find( 'select[name="mark_posts_term_id"]' ).val( $mark_posts_term_id );
 
         }
 
@@ -44,18 +44,18 @@
         });
 
         // get the custom fields
-        var $mark_posts_term_id = $bulk_row.find( 'select[name="_mark_posts_term_id"]' ).val();
+        var $mark_posts_term_id = $bulk_row.find( 'select[name="mark_posts_term_id"]' ).val();
 
         // save the data
         $.ajax({
-            url: ajaxurl, // this is a variable that WordPress has already defined for us
+            url: ajaxurl,
             type: 'POST',
             async: false,
             cache: false,
             data: {
-                action: 'manage_wp_posts_using_bulk_quick_save_bulk_edit', // this is the name of our WP AJAX function that we'll set up next
-                post_ids: $post_ids, // and these are the 2 parameters we're passing to our function
-                _mark_posts_term_id: $mark_posts_term_id
+                action: 'save_mark_posts_bulk_edit',
+                post_ids: $post_ids,
+                mark_posts_term_id: $mark_posts_term_id
             }
         });
 
