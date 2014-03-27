@@ -1,6 +1,6 @@
 <?php
 /**
- * Mark Posts
+ * Mark Posts Class
  *
  * @package   Mark_Posts_Admin
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hofmann <info@hofmannsven.com>
@@ -67,18 +67,7 @@ class Mark_Posts_Admin {
         add_action( 'save_post', array( $this, 'save' ) );
 
 
-        /**
-         * Custom post columns
-         */
 
-        // Display posts_custom_column on selected post types
-        $get_mark_posts_setup = get_option( 'mark_posts_settings' );
-        $mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
-
-        foreach($mark_posts_posttypes as $post_type) {
-            add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'mark_posts_column_head' ), 10, 2 );
-            add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2 );
-        }
 
     }
 
@@ -277,7 +266,7 @@ class Mark_Posts_Admin {
 		wp_nonce_field( 'mark_posts_inner_meta_box', 'mark_posts_inner_meta_box_nonce' );
 
 		// Use get_post_meta to retrieve an existing value from the database.
-		$value = get_post_meta( $post->ID, '_mark_posts_term_id', true );
+		$value = get_post_meta( $post->ID, 'mark_posts_term_id', true );
 
 		// Display the form, using the current value.
 
@@ -348,40 +337,13 @@ class Mark_Posts_Admin {
         $myterm = get_term( $mydata, 'marker' );
 
 		// Update the meta field.
-		update_post_meta( $post_id, '_mark_posts_term_id', $mydata );
+		update_post_meta( $post_id, 'mark_posts_term_id', $mydata );
 
 		// Update taxonomy count
-		wp_set_object_terms( $post_id, $myterm->name, 'marker' );
+        if ( !empty($myterm->name) )
+            wp_set_object_terms( $post_id, $myterm->name, 'marker' );
 
 	}
-
-
-    /**
-     * Create admin column
-     *
-     * @since    1.0.0
-     */
-     public function mark_posts_column_head( $columns ) {
-        $columns['mark_posts_term_id'] = __('Marker', 'mark-posts');
-        return $columns;
-     }
-
-    /**
-     * Show column content
-     *
-     * @since    1.0.0
-     */
-     public function mark_posts_column_content( $column_name, $post_id ) {
-        $value = get_post_meta( $post_id, '_mark_posts_term_id', true );
-        if( ISSET($value) ) {
-            $term = get_term( $value, 'marker' );
-            if( $term ) {
-                if( ISSET ($term->description) && ISSET ($term->name) ) {
-                    echo '<div id="mark_posts_term_id-' . $post_id . '" class="mark-posts-marker" style="background:'.$term->description.'" data-val="'.$term->term_id.'" data-background="'.$term->description.'">'.$term->name.'</div>';
-                }
-            }
-        }
-     }
 
     /**
      * Custom quick edit box
@@ -397,7 +359,7 @@ class Mark_Posts_Admin {
                     <span class="title"><?php _e('Marker', 'mark-posts'); ?></span>
                     <?php
                         $markers_terms = get_terms( 'marker', 'hide_empty=0' );
-                        $content = '<select name="_mark_posts_term_id">';
+                        $content = '<select name="mark_posts_term_id">';
                         $content .= '<option value="">---</option>';
                         foreach( $markers_terms as $marker_term ) {
                             $content .= '<option value="'.$marker_term->term_id.'" data-color="'.$marker_term->description.'">'.$marker_term->name.'</option>';
