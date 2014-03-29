@@ -11,22 +11,23 @@
 
 // get marker
 $marker_args = array(
-  'hide_empty' => true
+	'hide_empty' => true
 );
 $markers = get_terms( 'marker', $marker_args );
 
 ?>
 
 <div class="main">
-  <ul id="markers_right_now">
-    <?php
-      if ( !empty($markers) ) :
-        foreach ( $markers as $marker ) :
-          echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><span>' . $marker->count . ' ' . $marker->name . '</span></li>';
-        endforeach;
-      else:
-        _e('No marked posts yet.', 'mark-posts');
-      endif;
-    ?>
-  </ul><!-- /#markers_right_now -->
+	<ul id="markers_right_now">
+		<?php
+		if ( ! empty( $markers ) ) :
+			foreach ( $markers as $marker ) :
+				echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><span>' . $marker->count . ' ' . $marker->name . '</span></li>';
+			endforeach;
+		else:
+			_e( 'No marked posts yet.', 'mark-posts' );
+		endif;
+		?>
+	</ul>
+	<!-- /#markers_right_now -->
 </div><!-- /.main -->

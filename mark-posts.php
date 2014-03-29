@@ -38,14 +38,18 @@ if ( ! defined( 'WPINC' ) ) {
  * plugin version
  *
  */
-if (!defined('WP_MARK_POSTS_VERSION')) define('WP_MARK_POSTS_VERSION', '1.0.0');
+if ( ! defined( 'WP_MARK_POSTS_VERSION' ) ) {
+	define( 'WP_MARK_POSTS_VERSION', '1.0.0' );
+}
 
 /*
  *
  * plugin dir path
  *
  */
-if (!defined('WP_MARK_POSTS_PATH')) define('WP_MARK_POSTS_PATH', plugin_dir_path( __FILE__ ));
+if ( ! defined( 'WP_MARK_POSTS_PATH' ) ) {
+	define( 'WP_MARK_POSTS_PATH', plugin_dir_path( __FILE__ ) );
+}
 
 /*
  *
@@ -53,7 +57,6 @@ if (!defined('WP_MARK_POSTS_PATH')) define('WP_MARK_POSTS_PATH', plugin_dir_path
  *
  */
 require_once( plugin_dir_path( __FILE__ ) . 'public/class-mark-posts.php' );
-
 
 /*
  * Register hooks that are fired when the plugin is activated or deactivated.
