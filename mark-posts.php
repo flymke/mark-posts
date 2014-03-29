@@ -78,12 +78,9 @@ add_action( 'plugins_loaded', array( 'Mark_Posts', 'get_instance' ) );
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
 
-require_once( plugin_dir_path( __FILE__ ) . 'admin/mark-posts-quickedit.php' );
-
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+if ( is_admin() ) {
 
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/class-mark-posts-admin.php' );
-
 	add_action( 'plugins_loaded', array( 'Mark_Posts_Admin', 'get_instance' ) );
 
 }
