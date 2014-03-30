@@ -3,7 +3,7 @@
  * Mark Posts
  *
  * @package   Mark_Posts
- * @author    Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hoffmann <info@hofmannsven.com>
+ * @author    Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hofmann <info@hofmannsven.com>
  * @license   GPL-2.0+
  * @link      http://flymke.github.io/mark-posts/
  * @copyright 2014 Michael Schoenrock
@@ -35,17 +35,21 @@ if ( ! defined( 'WPINC' ) ) {
 
 /*
  *
- * plugin varion
+ * plugin version
  *
  */
-if (!defined('WP_MARK_POSTS_VERSION')) define('WP_MARK_POSTS_VERSION', '1.0.0');
+if ( ! defined( 'WP_MARK_POSTS_VERSION' ) ) {
+	define( 'WP_MARK_POSTS_VERSION', '1.0.0' );
+}
 
 /*
  *
  * plugin dir path
  *
  */
-if (!defined('WP_MARK_POSTS_PATH')) define('WP_MARK_POSTS_PATH', plugin_dir_path( __FILE__ ));
+if ( ! defined( 'WP_MARK_POSTS_PATH' ) ) {
+	define( 'WP_MARK_POSTS_PATH', plugin_dir_path( __FILE__ ) );
+}
 
 /*
  *
@@ -64,7 +68,7 @@ register_activation_hook( __FILE__, array( 'Mark_Posts', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Mark_Posts', 'deactivate' ) );
 
 /*
- * Add action plugins_loaded 
+ * Add action plugins_loaded
  *
  *
  */
@@ -74,11 +78,7 @@ add_action( 'plugins_loaded', array( 'Mark_Posts', 'get_instance' ) );
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
 
-/*
- *
- * The code below is intended to to give the lightest footprint possible.
- */
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+if ( is_admin() ) {
 
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/class-mark-posts-admin.php' );
 	add_action( 'plugins_loaded', array( 'Mark_Posts_Admin', 'get_instance' ) );

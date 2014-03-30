@@ -1,4 +1,4 @@
-(function ( $ ) {
+(function($) {
 	"use strict";
 
 	// convert rgb to hex
@@ -12,21 +12,20 @@
 
 	// modify hex for background usage
 	function convertHex(hex,opacity){
-	  hex = hex.replace('#','');
-	  var r = parseInt(hex.substring(0,2), 16);
-	  var g = parseInt(hex.substring(2,4), 16);
-	  var b = parseInt(hex.substring(4,6), 16);
-	  return 'rgba('+r+','+g+','+b+','+opacity/100+')';
+	    hex = hex.replace('#','');
+	    var r = parseInt(hex.substring(0,2), 16);
+	    var g = parseInt(hex.substring(2,4), 16);
+	    var b = parseInt(hex.substring(4,6), 16);
+	    return 'rgba('+r+','+g+','+b+','+opacity/100+')';
 	}
 
 	// highlight each row
 	$('.mark-posts-marker').each(function() {
-  	var color = $(this).data('background');
-  	$(this).parent().parent().find('th, td').css('background-color', convertHex(color,25));
-	$(this).parent().parent().find('.check-column').css('position', 'relative');
-	$(this).parent().parent().find('.check-column').append('<div class="mark_posts_pre" style="background:'+color+';"></div>');
+  	    var color = $(this).data('background');
+  	    $(this).parent().parent().find('th, td').css('background-color', convertHex(color,25));
+	    $(this).parent().parent().find('.check-column').css('position', 'relative');
+	    $(this).parent().parent().find('.check-column').append('<div class="mark_posts_pre" style="background:'+color+';"></div>');
 	});
-
 
 	// live preview of new markers
 	$('.js-add-markers').keyup(function(e) { // use keyup instead of keypress for latest char

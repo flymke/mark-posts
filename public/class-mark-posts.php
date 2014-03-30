@@ -87,7 +87,7 @@ class Mark_Posts {
 	 *
 	 * @since    1.0.0
 	 *
-	 *@return    Plugin slug variable.
+	 * @return    Plugin slug variable.
 	 */
 	public function get_plugin_slug() {
 		return $this->plugin_slug;
@@ -115,7 +115,7 @@ class Mark_Posts {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses
+	 * @param    boolean $network_wide       True if WPMU superadmin uses
 	 *                                       "Network Activate" action, false if
 	 *                                       WPMU is disabled or plugin is
 	 *                                       activated on an individual blog.
@@ -124,7 +124,7 @@ class Mark_Posts {
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
-			if ( $network_wide  ) {
+			if ( $network_wide ) {
 
 				// Get all blog ids
 				$blog_ids = self::get_blog_ids();
@@ -152,7 +152,7 @@ class Mark_Posts {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses
+	 * @param    boolean $network_wide       True if WPMU superadmin uses
 	 *                                       "Network Deactivate" action, false if
 	 *                                       WPMU is disabled or plugin is
 	 *                                       deactivated on an individual blog.
@@ -190,7 +190,7 @@ class Mark_Posts {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param    int    $blog_id    ID of the new blog.
+	 * @param    int $blog_id ID of the new blog.
 	 */
 	public function activate_new_site( $blog_id ) {
 
@@ -241,7 +241,7 @@ class Mark_Posts {
 		);
 
 		// @TODO: Define activation functionality here
-		self::create_taxonomies();
+		// self::create_taxonomies();
 	}
 
 	/**
@@ -264,7 +264,7 @@ class Mark_Posts {
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_MARK_POSTS_PATH ) . 'languages/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, dirname(plugin_basename(__FILE__)).'/languages/');
+		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	}
 
