@@ -1,8 +1,6 @@
 # Mark Posts ToDo List
 
-- readme.txt für WordPress.org aktualisieren
-- Kommentare im Code entsprechend dem PHPDocBlock vervollständigen
-- Multisite/Plugin für alle Seiten aktivieren (bin mir nicht sicher ob
-man hier noch etwas machen muss)
-- auf GitHub den Release taggen (das ist voll coool!!)
-» https://github.com/flymke/mark-posts/releases
+- readme.txt f√ºr WordPress.org aktualisieren
+- Kommentare im Code entsprechend PHPDocBlock vervollst√§ndigen
+- Plugin mit Multisite testen (Plugin f√ºr alle Seiten aktivieren)
+- Release taggen auf GitHub (https://github.com/flymke/mark-posts/releases)
