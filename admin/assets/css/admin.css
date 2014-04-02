@@ -55,3 +55,8 @@ a.mark-posts-initial {
     margin-top:25px;
     padding-top:25px;
 }
+#wpbody-content .quick-edit-row-page .inline-edit-col-right.mark-posts-quickedit {
+    margin-top:0;
+    width:50%;
+    float:right;
+}

@@ -373,7 +373,7 @@ class Mark_Posts_Admin {
 	 */
 	public function display_mark_posts_quickedit_box() {
 		?>
-		<fieldset class="inline-edit-col-right">
+		<fieldset class="inline-edit-col-right mark-posts-quickedit">
 			<div class="inline-edit-col">
 				<div class="inline-edit-group">
 					<label class="inline-edit-status alignleft">
