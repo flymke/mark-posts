@@ -1,6 +1,6 @@
 === Mark Posts ===
 Contributors: flymke, hofmannsven
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4G365L4BYJG5J
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZLNTW4AA4JS2
 Tags: mark, mark posts, highlight, highlight posts, status, post status, overview, post overview, featured, custom posts, featured posts, post, posts
 Requires at least: 3.5.1
 Tested up to: 3.8

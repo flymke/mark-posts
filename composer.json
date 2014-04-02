@@ -1,0 +1,23 @@
+{
+	"name"       : "flymke/mark-posts",
+	"description": "Mark and highlight posts, pages and posts of custom post types within the posts overview.",
+	"keywords"   : ["wordpress", "wp-admin"],
+	"homepage"   : "https://github.com/flymke/mark-posts",
+	"license"    : "GPL-2.0+",
+	"authors"    : [
+		{
+			"name"    : "Michael Schönrock",
+			"email"   : "hello@michaelschoenrock.com",
+			"homepage": "http://michaelschoenrock.com"
+		},
+		{
+			"name"    : "Sven Hofmann",
+			"email"   : "info@hofmannsven.com",
+			"homepage": "http://hofmannsven.com"
+		}
+	],
+	"type"       : "wordpress-plugin",
+	"require"    : {
+		"composer/installers": "~1.0"
+	}
+}
