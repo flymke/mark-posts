@@ -159,7 +159,7 @@ function show_settings() {
 
 		if ( ! empty( $markers_terms ) ) {
 
-			echo '<h3 class="title">' . __( 'Marker Categories', 'mark-posts' ) . '</h3>';
+			echo '<h3 class="title">' . __( 'Markers', 'mark-posts' ) . '</h3>';
 
 			echo '<table class="form-table"><tbody>';
 
@@ -180,7 +180,7 @@ function show_settings() {
 				echo '<tr valign="top"><th scope="row"><input type="text" name="markernames[]" value="' . $marker_term->name . '"></th>';
 				echo '<td width="130"><input type="text" name="colors[]" value="' . $color . '" class="my-color-field" data-default-color="' . $color . '"/></td>';
 				echo '<td><input type="checkbox" name="delete[]" id="delete_' . $marker_term->term_id . '" value="' . $marker_term->term_id . '"> <label for="delete_' . $marker_term->term_id . '">' . __( 'delete', 'mark-posts' ) . '?</label>';
-				echo '<a href="javascript:void(0);" class="mark-posts-initial" data-confirm-msg="' . __( 'Do you really want to mark all posts with this marker? Warning: This will override all your previous set markers.', 'mark-posts' ) . '" data-term-id="' . $marker_term->term_id . '">' . __( 'Mark all posts with this marker', 'mark-posts' ) . '</a></td>';
+				echo '<a href="javascript:void(0);" class="mark-posts-initial" data-confirm-msg="' . __( 'Do you really want to mark all posts with this marker? Note: This will override all your previous set markers. This will only effect the enabled post types.', 'mark-posts' ) . '" data-term-id="' . $marker_term->term_id . '">' . __( 'Mark all posts with this marker', 'mark-posts' ) . '</a></td>';
 				echo '<input type="hidden" name="term_ids[]" value="' . $marker_term->term_id . '"/>';
 				$i ++;
 			}
@@ -195,7 +195,7 @@ function show_settings() {
 		?>
 
 
-		<h3 class="title"><?php _e( 'Add new Marker Categories', 'mark-posts' ); ?></h3>
+		<h3 class="title"><?php _e( 'Add new Markers', 'mark-posts' ); ?></h3>
 
 		<p>
 			<?php _e( 'Add new marker (please separate them by comma):', 'mark-posts' ); ?>
@@ -211,17 +211,15 @@ function show_settings() {
 		<?php submit_button(); ?>
 
 		<hr />
-		<h3 class="title"><?php _e( 'Enable/Disable Marker', 'mark-posts' ); ?></h3>
+		<h3 class="title"><?php _e( 'Enable/Disable Markers', 'mark-posts' ); ?></h3>
 
 		<p>
-			<?php _e( 'Enable/Disable marker for specific post types:', 'mark-posts' ); ?>
+			<?php _e( 'Enable/Disable markers for specific post types:', 'mark-posts' ); ?>
 		</p>
 
 		<?php
-
 		get_all_types();
 		submit_button();
-
 		?>
 
 	</form>
@@ -244,6 +242,17 @@ function show_settings() {
 		<hr />
 		Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> | &copy; <?php echo date( 'Y' ); ?>
 		<a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>,
-		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a></div>
+		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a>
+		<!-- Donate -->
+		<div class="mark-posts-donate">
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="4G365L4BYJG5J">
+		<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen Ð mit PayPal.">
+		<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+		</form>
+		</div>
+		<!-- /Donate -->
+	</div>
 
 </div>

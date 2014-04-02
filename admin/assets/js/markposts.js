@@ -28,7 +28,9 @@
 	});
 
 	// live preview of new markers
+	$('.new-markers').hide();
 	$('.js-add-markers').keyup(function(e) { // use keyup instead of keypress for latest char
+		$('.new-markers').show();
 		var markers = [];
 		var make_markers = $(this).val().split(","); // separate marker by comma
 		$(make_markers).each(function(e) { // push each new marker to array
@@ -37,7 +39,9 @@
 
 		$('.js-new-markers-intro').show();
 		$('.js-new-markers').html(markers.join(' ')); // preview new markers
-
+		
+		if($(this).val().length == 0) // hide container
+			$('.new-markers').hide();
 	});
 	
 	// change background color in edit post options

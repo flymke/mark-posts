@@ -4,6 +4,7 @@
 	height: 20px;
 	padding: 10px 0 5px 0;
 }
+.new-markers
 .js-new-markers-intro {
 	display: none;
 }
@@ -54,4 +55,12 @@ a.mark-posts-initial {
 .mark-posts-copy {
     margin-top:25px;
     padding-top:25px;
+}
+#wpbody-content .quick-edit-row-page .inline-edit-col-right.mark-posts-quickedit {
+    margin-top:0;
+    width:50%;
+    float:right;
+}
+.mark-posts-donate {
+    margin-top:15px;   
 }
