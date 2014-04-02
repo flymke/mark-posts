@@ -242,6 +242,17 @@ function show_settings() {
 		<hr />
 		Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> | &copy; <?php echo date( 'Y' ); ?>
 		<a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>,
-		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a></div>
+		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a>
+		<!-- Donate -->
+		<div class="mark-posts-donate">
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="4G365L4BYJG5J">
+		<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen Ð mit PayPal.">
+		<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+		</form>
+		</div>
+		<!-- /Donate -->
+	</div>
 
 </div>
