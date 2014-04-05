@@ -68,7 +68,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 == Screenshots ==
 
 1. Shows a screenshot of marked posts in the posts overview
-2. Shows a screenshot of the pptions box while editing a post
+2. Shows a screenshot of the options box while editing a post
 3. Shows a screenshot of the quick edit box in the posts overview
 4. Shows a screenshot of the Mark Posts settings screen
 5. Shows a screenshot of the Mark Posts dashboard widget

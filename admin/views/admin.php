@@ -19,6 +19,18 @@
 $default_marker_post_types = array( 'posts', 'pages' );
 add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
+// declare default colors
+function get_default_colors() {
+	$default_colors = array( '#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61' );
+	return $default_colors;
+}
+
+// get marker terms
+function get_marker_terms() {
+	$marker_terms = get_terms( 'marker', 'orderby=id&hide_empty=0' );
+	return $marker_terms;
+}
+
 // misc functions
 function misc_funtions() {
 
@@ -58,12 +70,12 @@ function misc_funtions() {
 
 // save form data
 function validate_form() {
+	
+	// get default colors
+	$default_colors = get_default_colors();
 
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST['submit'] ) ) {
-
-		// just for debugging
-		// print_r($_POST);
-
+		
 		// update marker posttypes
 		if ( ISSET( $_POST['markertypes'] ) ) {
 			$markertypes = $_POST['markertypes'];
@@ -77,11 +89,25 @@ function validate_form() {
 
 		update_option( 'mark_posts_settings', $get_mark_posts_settings );
 
-		// update marker terms
+		// news markers
 		$markers = explode( ",", $_POST['markers'] );
+		$count_markers = count(get_marker_terms());
+		if($count_markers)
+			$i = $count_markers; // define $i for default color
+		else
+			$i = 0;
 		foreach ( $markers as $marker ) {
 			$marker = trim( $marker );
-			wp_insert_term( $marker, 'marker' );
+			$color = $default_colors[$i]; // define default color
+			wp_insert_term( $marker, 'marker' , array(
+						'name' => $marker,
+						'slug' => sanitize_title( $marker ),
+						'description' => $color
+					) );
+			if($i>5)
+				$i=0; // reset $i to color count so the next color is first color again etc.
+			else
+				$i++;
 		}
 
 		// update markers
@@ -141,15 +167,15 @@ function get_all_types() {
 
 function show_settings() {
 
-	// set default colors
-	$default_colors = array( '#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61' );
+	// get default colors
+	$default_colors = get_default_colors();
 
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 		<?php
 
 		// Get Marker terms from DB
-		$markers_terms = get_terms( 'marker', 'orderby=id&hide_empty=0' );
+		$markers_terms = get_marker_terms();
 		$markers_registered = '';
 		foreach ( $markers_terms as $marker_term ) {
 			$markers_registered .= $marker_term->name;
@@ -248,7 +274,7 @@ function show_settings() {
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 		<input type="hidden" name="cmd" value="_s-xclick">
 		<input type="hidden" name="hosted_button_id" value="QZLNTW4AA4JS2">
-		<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen Ð mit PayPal.">
+		<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen â€“ mit PayPal.">
 		<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
 		</form>
 		</div>
