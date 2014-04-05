@@ -361,9 +361,11 @@ class Mark_Posts_Admin {
 		update_post_meta( $post_id, 'mark_posts_term_id', $mydata );
 
 		// Update taxonomy count
-		if ( ! empty( $myterm->name ) ) {
+		if ( ! empty( $myterm->name ) ) :
 			wp_set_object_terms( $post_id, $myterm->name, 'marker' );
-		}
+		else :
+			wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
+		endif;
 
 	}
 
@@ -435,8 +437,11 @@ class Mark_Posts_Admin {
 
 				// update terms
 				$term = get_term( $_POST[$mark_field], 'marker' );
-				if ( ! empty( $term->name ) )
+				if ( ! empty( $term->name ) ) :
 					wp_set_object_terms( $post_id, $term->name, 'marker' );
+				else :
+					wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
+				endif;
 			endif;
 		endforeach;
 	}
