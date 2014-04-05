@@ -20,6 +20,28 @@ $default_marker_post_types = array( 'posts', 'pages' );
 add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
 /**
+ * Declare default colors
+ *
+ * @since     1.0.1
+ */
+function get_default_colors() {
+	$default_colors = array( '#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61' );
+
+	return $default_colors;
+}
+
+/**
+ * Get marker terms
+ *
+ * @since     1.0.1
+ */
+function get_marker_terms() {
+	$marker_terms = get_terms( 'marker', 'orderby=id&hide_empty=0' );
+
+	return $marker_terms;
+}
+
+/**
  * Misc functions
  *
  * @since     1.0.0
@@ -67,10 +89,10 @@ function misc_funtions() {
  */
 function validate_form() {
 
-	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST['submit'] ) ) {
+	// get default colors
+	$default_colors = get_default_colors();
 
-		// just for debugging
-		// print_r($_POST);
+	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST['submit'] ) ) {
 
 		// update marker posttypes
 		if ( ISSET( $_POST['markertypes'] ) ) {
@@ -85,11 +107,29 @@ function validate_form() {
 
 		update_option( 'mark_posts_settings', $get_mark_posts_settings );
 
-		// update marker terms
-		$markers = explode( ",", $_POST['markers'] );
+		// news markers
+		$markers       = explode( ",", $_POST['markers'] );
+		$count_markers = count( get_marker_terms() );
+		if ( $count_markers ) {
+			$i = $count_markers;
+		} // define $i for default color
+		else {
+			$i = 0;
+		}
 		foreach ( $markers as $marker ) {
 			$marker = trim( $marker );
-			wp_insert_term( $marker, 'marker' );
+			$color  = $default_colors[$i]; // define default color
+			wp_insert_term( $marker, 'marker', array(
+				'name'        => $marker,
+				'slug'        => sanitize_title( $marker ),
+				'description' => $color
+			) );
+			if ( $i > 5 ) {
+				$i = 0;
+			} // reset $i to color count so the next color is first color again etc.
+			else {
+				$i ++;
+			}
 		}
 
 		// update markers
@@ -159,15 +199,15 @@ function get_all_types() {
  */
 function show_settings() {
 
-	// set default colors
-	$default_colors = array( '#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61' );
+	// get default colors
+	$default_colors = get_default_colors();
 
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 		<?php
 
 		// Get Marker terms from DB
-		$markers_terms = get_terms( 'marker', 'orderby=id&hide_empty=0' );
+		$markers_terms = get_marker_terms();
 		$markers_registered = '';
 		foreach ( $markers_terms as $marker_term ) {
 			$markers_registered .= $marker_term->name;
@@ -260,13 +300,13 @@ function show_settings() {
 		<hr />
 		Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> | &copy; <?php echo date( 'Y' ); ?>
 		<a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>,
-		<a href="http://hofmannsven.com" target="_blank">Sven Hofmann</a>
+		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a>
 		<!-- Donate -->
 		<div class="mark-posts-donate">
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 				<input type="hidden" name="cmd" value="_s-xclick">
 				<input type="hidden" name="hosted_button_id" value="QZLNTW4AA4JS2">
-				<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen � mit PayPal.">
+				<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
 				<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
 			</form>
 		</div>
