@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Mark Posts Class
  *
@@ -373,29 +374,36 @@ class Mark_Posts_Admin {
 	 * Custom quick edit box
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $column_name Custom column name e.g. 'mark_posts_term_id'
 	 */
-	public function display_mark_posts_quickedit_box() {
-		?>
-		<fieldset class="inline-edit-col-right mark-posts-quickedit">
-			<div class="inline-edit-col">
-				<div class="inline-edit-group">
-					<label class="inline-edit-status alignleft">
-						<span class="title"><?php _e( 'Marker', 'mark-posts' ); ?></span>
-						<?php
-						$markers_terms = get_terms( 'marker', 'hide_empty=0' );
-						$content = '<select name="mark_posts_term_id">';
-						$content .= '<option value="">---</option>';
-						foreach ( $markers_terms as $marker_term ) {
-							$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
-						}
-						$content .= '</select>';
-						echo $content;
-						?>
-					</label>
-				</div>
-			</div>
-		</fieldset>
-	<?php
+	public function display_mark_posts_quickedit_box( $column_name ) {
+
+		switch ( $column_name ) {
+			case 'mark_posts_term_id':
+				?>
+				<fieldset class="inline-edit-col-right mark-posts-quickedit">
+					<div class="inline-edit-col">
+						<div class="inline-edit-group">
+							<label class="inline-edit-status alignleft">
+								<span class="title"><?php _e( 'Marker', 'mark-posts' ); ?></span>
+								<?php
+								$markers_terms = get_terms( 'marker', 'hide_empty=0' );
+								$content = '<select name="mark_posts_term_id">';
+								$content .= '<option value="">---</option>';
+								foreach ( $markers_terms as $marker_term ) {
+									$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+								}
+								$content .= '</select>';
+								echo $content;
+								?>
+							</label>
+						</div>
+					</div>
+				</fieldset>
+				<?php
+				break;
+		}
 	}
 
 	/**
@@ -425,8 +433,9 @@ class Mark_Posts_Admin {
 		}
 
 		// dont save for revisions
-		if ( isset( $post->post_type ) && $post->post_type == 'revision' )
+		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
 			return $post_id;
+		}
 
 		$mark_posts_fields = array( 'mark_posts_term_id' );
 

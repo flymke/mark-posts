@@ -75,7 +75,13 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+* Bugs fixed:
+	* Update marker count if markers get deleted
+	* Remove duplicate quickedit dropdowns (in case of multiple custom admin columns)
+	* Assign default color to marker
+
+= 1.0.0 =
 * First release
 
 == Upgrade Notice ==
