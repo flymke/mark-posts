@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: mark, mark posts, highlight, highlight posts, status, post status, overview, post overview, featured, custom posts, featured posts, post, posts
 Requires at least: 3.7
 Tested up to: 3.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,10 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 
 == Changelog ==
 
+= 1.0.2 =
+* Security fixes:
+	* Prevent direct access to files (thanks Sergej Müller for pointing it out and helping to fix)
+	
 = 1.0.1 =
 * Bugs fixed:
 	* Update marker count if markers get deleted
