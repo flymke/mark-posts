@@ -5,21 +5,25 @@
  * This includes the header, options, and other information that should provide
  * The User Interface to the end user.
  *
- * @package     Mark_Posts
- * @author      Michael Schoenrock <hello@michaelschoenrock.com>
- * @contributor Sven Hofmann <info@hofmannsven.com>
- * @license     GPL-2.0+
- * @copyright   2014 Michael Schoenrock
+ * @package       Mark_Posts
+ * @author        Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hofmann <info@hofmannsven.com>
+ * @license       GPL-2.0+
+ * @copyright     2014 Michael Schoenrock
  */
-?>
 
-<?php
-
-// create options
+/**
+ * Create options
+ *
+ * @since     1.0.0
+ */
 $default_marker_post_types = array( 'posts', 'pages' );
 add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
 
-// misc functions
+/**
+ * Misc functions
+ *
+ * @since     1.0.0
+ */
 function misc_funtions() {
 
 	// mark all posts
@@ -56,7 +60,11 @@ function misc_funtions() {
 
 }
 
-// save form data
+/**
+ * Save form data
+ *
+ * @since     1.0.0
+ */
 function validate_form() {
 
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST['submit'] ) ) {
@@ -109,21 +117,26 @@ function validate_form() {
 	}
 }
 
+/**
+ * Show update notice
+ *
+ * @since     1.0.0
+ */
 function display_settings_updated() {
 
-	return '<div id="message" class="updated">
-		<p>' . __( 'Settings saved', 'mark-posts' ) . '</p>
-		</div>';
-
+	return '<div id="message" class="updated"><p>' . __( 'Settings saved', 'mark-posts' ) . '</p></div>';
 
 }
 
-// get all available post types
+/**
+ * Get all available post types
+ *
+ * @since     1.0.0
+ */
 function get_all_types() {
 	$all_post_types = get_post_types();
-
-	$option              = get_option( 'mark_posts_settings' );
-	$mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
+	$option         = get_option( 'mark_posts_settings' );
+	// $mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
 
 	foreach ( $all_post_types as $one_post_type ) {
 		// do not show attachments, revisions, or nav menu items
@@ -139,6 +152,11 @@ function get_all_types() {
 	}
 }
 
+/**
+ * Display all settings
+ *
+ * @since     1.0.0
+ */
 function show_settings() {
 
 	// set default colors
@@ -242,15 +260,15 @@ function show_settings() {
 		<hr />
 		Mark Posts | Version: <?php echo Mark_Posts::VERSION; ?> | &copy; <?php echo date( 'Y' ); ?>
 		<a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>,
-		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a>
+		<a href="http://hofmannsven.com" target="_blank">Sven Hofmann</a>
 		<!-- Donate -->
 		<div class="mark-posts-donate">
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="hidden" name="hosted_button_id" value="QZLNTW4AA4JS2">
-		<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen Ð mit PayPal.">
-		<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-		</form>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="QZLNTW4AA4JS2">
+				<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen ï¿½ mit PayPal.">
+				<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+			</form>
 		</div>
 		<!-- /Donate -->
 	</div>
