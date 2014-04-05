@@ -3,13 +3,16 @@
  * Renders the view for the dashboard widget.
  *
  * @package      Mark_Posts
- * @author       Michael Schoenrock <hello@michaelschoenrock.com>
- * @contributor  Sven Hofmann <info@hofmannsven.com>
+ * @author       Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hofmann <info@hofmannsven.com>
  * @license      GPL-2.0+
  * @copyright    2014 Michael Schoenrock
  */
 
-// get marker
+/**
+ * Get marker
+ *
+ * @since     1.0.0
+ */
 $marker_args = array(
 	'hide_empty' => true
 );

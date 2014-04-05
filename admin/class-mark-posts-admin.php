@@ -3,7 +3,7 @@
 /**
  * Mark Posts Class
  *
- * @package   Mark_Posts_Admin
+ * @package   Mark_Posts
  * @author    Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hofmann <info@hofmannsven.com>
  * @license   GPL-2.0+
  * @copyright 2014 Michael Schoenrock
@@ -71,11 +71,10 @@ class Mark_Posts_Admin {
 		add_action( 'wp_ajax_save_mark_posts_bulk_edit', array( $this, 'save_mark_posts_bulk_edit' ) );
 
 		/**
-		 *  Custom admin post columns (custom post types only)
+		 * Custom admin post columns (custom post types only)
 		 *
 		 * @since    1.0.0
 		 */
-
 		$get_mark_posts_setup = get_option( 'mark_posts_settings' );
 		$mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
 
@@ -123,6 +122,8 @@ class Mark_Posts_Admin {
 	/**
 	 * Register and enqueue admin-specific JavaScript
 	 *
+	 * @since     1.0.0
+	 *
 	 * @return    null    Return early if no settings page is registered
 	 */
 	public function enqueue_admin_scripts() {
@@ -150,15 +151,7 @@ class Mark_Posts_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 
-		/*
-		 * Add a settings page for this plugin to the Settings menu.
-		 *
-		 * NOTE: Alternative menu locations are available via WordPress administration menu functions.
-		 *
-		 * Administration Menus: http://codex.wordpress.org/Administration_Menus
-		 *
-		 * For reference: http://codex.wordpress.org/Roles_and_Capabilities
-		 */
+		// add a settings page for this plugin to the Settings menu
 		$this->plugin_screen_hook_suffix = add_options_page(
 			__( 'Mark Posts', $this->plugin_slug ),
 			__( 'Mark Posts', $this->plugin_slug ),
@@ -235,9 +228,13 @@ class Mark_Posts_Admin {
 	 * Add settings action link to the plugins page
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $links
+	 *
+	 * @return array associative array of plugin action links
 	 */
 	public function add_action_links( $links ) {
-
+		// add a 'Settings' link to the front of the actions list for this plugin
 		return array_merge(
 			array(
 				'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
@@ -274,6 +271,8 @@ class Mark_Posts_Admin {
 	 * Prints the box content
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $post Information about the post e.g. 'ID'
 	 */
 	public function mark_posts_inner_meta_box( $post ) {
 
@@ -284,7 +283,6 @@ class Mark_Posts_Admin {
 		$value = get_post_meta( $post->ID, 'mark_posts_term_id', true );
 
 		// Display the form, using the current value.
-
 		$content = '<p>' . __( 'Mark this post as:', 'mark-posts' ) . '</p>';
 
 		// Get Marker terms from DB
@@ -316,6 +314,10 @@ class Mark_Posts_Admin {
 	 * Save the meta when the post is saved
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $post_id ID of the post e.g. '1'
+	 *
+	 * @return mixed
 	 */
 	public function save( $post_id ) {
 		// Check if our nonce is set.
@@ -360,9 +362,11 @@ class Mark_Posts_Admin {
 		update_post_meta( $post_id, 'mark_posts_term_id', $mydata );
 
 		// Update taxonomy count
-		if ( ! empty( $myterm->name ) ) {
+		if ( ! empty( $myterm->name ) ) :
 			wp_set_object_terms( $post_id, $myterm->name, 'marker' );
-		}
+		else :
+			wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
+		endif;
 
 	}
 
@@ -370,36 +374,47 @@ class Mark_Posts_Admin {
 	 * Custom quick edit box
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $column_name Custom column name e.g. 'mark_posts_term_id'
 	 */
-	public function display_mark_posts_quickedit_box() {
-		?>
-		<fieldset class="inline-edit-col-right mark-posts-quickedit">
-			<div class="inline-edit-col">
-				<div class="inline-edit-group">
-					<label class="inline-edit-status alignleft">
-						<span class="title"><?php _e( 'Marker', 'mark-posts' ); ?></span>
-						<?php
-						$markers_terms = get_terms( 'marker', 'hide_empty=0' );
-						$content = '<select name="mark_posts_term_id">';
-						$content .= '<option value="">---</option>';
-						foreach ( $markers_terms as $marker_term ) {
-							$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
-						}
-						$content .= '</select>';
-						echo $content;
-						?>
-					</label>
-				</div>
-			</div>
-		</fieldset>
-	<?php
-	}
+	public function display_mark_posts_quickedit_box( $column_name ) {
 
+		switch ( $column_name ) {
+			case 'mark_posts_term_id':
+				?>
+				<fieldset class="inline-edit-col-right mark-posts-quickedit">
+					<div class="inline-edit-col">
+						<div class="inline-edit-group">
+							<label class="inline-edit-status alignleft">
+								<span class="title"><?php _e( 'Marker', 'mark-posts' ); ?></span>
+								<?php
+								$markers_terms = get_terms( 'marker', 'hide_empty=0' );
+								$content = '<select name="mark_posts_term_id">';
+								$content .= '<option value="">---</option>';
+								foreach ( $markers_terms as $marker_term ) {
+									$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+								}
+								$content .= '</select>';
+								echo $content;
+								?>
+							</label>
+						</div>
+					</div>
+				</fieldset>
+				<?php
+				break;
+		}
+	}
 
 	/**
 	 * Save quick edit
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $post_id ID of the post e.g. '1'
+	 * @param $post    Information about the post e.g. 'post_type'
+	 *
+	 * @return mixed
 	 */
 	public function save_mark_posts_quick_edit( $post_id, $post ) {
 		// pointless if $_POST is empty (this happens on bulk edit)
@@ -413,12 +428,14 @@ class Mark_Posts_Admin {
 		}
 
 		// don't save for autosave
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_id;
+		}
 
 		// dont save for revisions
-		if ( isset( $post->post_type ) && $post->post_type == 'revision' )
+		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
 			return $post_id;
+		}
 
 		$mark_posts_fields = array( 'mark_posts_term_id' );
 
@@ -429,8 +446,11 @@ class Mark_Posts_Admin {
 
 				// update terms
 				$term = get_term( $_POST[$mark_field], 'marker' );
-				if ( ! empty( $term->name ) )
+				if ( ! empty( $term->name ) ) :
 					wp_set_object_terms( $post_id, $term->name, 'marker' );
+				else :
+					wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
+				endif;
 			endif;
 		endforeach;
 	}
@@ -483,9 +503,13 @@ class Mark_Posts_Admin {
 	}
 
 	/**
-	 * Create admin column
+	 * Set admin column
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $columns Set custom admin column ID and name
+	 *
+	 * @return mixed
 	 */
 	public function mark_posts_column_head( $columns ) {
 		$columns['mark_posts_term_id'] = __( 'Marker', 'mark-posts' );
@@ -497,6 +521,9 @@ class Mark_Posts_Admin {
 	 * Show column content
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param $column_name Custom column name e.g. 'mark_posts_term_id'
+	 * @param $post_id     ID of the post e.g. '1'
 	 */
 	public function mark_posts_column_content( $column_name, $post_id ) {
 

@@ -3,7 +3,7 @@
  * Mark Posts
  *
  * @package   Mark_Posts
- * @author    Michael Schoenrock <hello@michaelschoenrock.com>
+ * @author    Michael Schoenrock <hello@michaelschoenrock.com>, Sven Hofmann <info@hofmannsven.com>
  * @license   GPL-2.0+
  * @link
  * @copyright 2014 Michael Schoenrock

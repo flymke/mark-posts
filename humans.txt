@@ -11,4 +11,5 @@
 /* PLUGIN */
   Language: English / German
   Platform: WordPress
-  Download: https://github.com/flymke/mark-posts
+  GitHub Download: https://github.com/flymke/mark-posts
+  WordPress Download: http://wordpress.org/plugins/mark-posts/
