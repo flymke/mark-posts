@@ -10,6 +10,12 @@
  * @license       GPL-2.0+
  * @copyright     2014 Michael Schoenrock
  */
+ 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 
 /**
  * Create options
