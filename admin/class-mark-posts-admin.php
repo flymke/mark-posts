@@ -122,7 +122,7 @@ class Mark_Posts_Admin {
 			return;
 		}
 
-		wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Mark_Posts::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), WP_MARK_POSTS_VERSION );
 
 	}
 
@@ -141,13 +141,13 @@ class Mark_Posts_Admin {
 
 		$screen = get_current_screen();
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Mark_Posts::VERSION );
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), WP_MARK_POSTS_VERSION );
 		}
 
 		// see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( $this->plugin_slug . '-colorpicker', plugins_url( 'assets/js/colorpicker.js', __FILE__ ), array( 'wp-color-picker' ), Mark_Posts::VERSION, true );
-		wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array(), Mark_Posts::VERSION, true );
+		wp_enqueue_script( $this->plugin_slug . '-colorpicker', plugins_url( 'assets/js/colorpicker.js', __FILE__ ), array( 'wp-color-picker' ), WP_MARK_POSTS_VERSION, true );
+		wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array(), WP_MARK_POSTS_VERSION, true );
 
 	}
 
@@ -209,7 +209,7 @@ class Mark_Posts_Admin {
 	 * @since    1.0.0
 	 */
 	public function mark_posts_enqueue_dashboard_styles() {
-		wp_enqueue_style( $this->plugin_slug . '-dashboard-styles', plugins_url( 'assets/css/dashboard.css', __FILE__ ), array(), Mark_Posts::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-dashboard-styles', plugins_url( 'assets/css/dashboard.css', __FILE__ ), array(), WP_MARK_POSTS_VERSION );
 	}
 
 	/**
@@ -506,7 +506,7 @@ class Mark_Posts_Admin {
 	 * @since    1.0.0
 	 */
 	public function mark_posts_edit_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-quick-bulk-edit', plugins_url( 'assets/js/admin-edit.js', __FILE__ ), array( 'jquery', 'inline-edit-post' ), Mark_Posts::VERSION, true );
+		wp_enqueue_script( $this->plugin_slug . '-quick-bulk-edit', plugins_url( 'assets/js/admin-edit.js', __FILE__ ), array( 'jquery', 'inline-edit-post' ), WP_MARK_POSTS_VERSION, true );
 	}
 
 	/**
