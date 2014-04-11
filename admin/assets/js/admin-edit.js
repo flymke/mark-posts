@@ -46,14 +46,14 @@
         // get the custom fields
         var $mark_posts_term_id = $bulk_row.find( 'select[name="mark_posts_term_id"]' ).val();
 
-        // save the data
+        // mark_posts_save the data
         $.ajax({
             url: ajaxurl,
             type: 'POST',
             async: false,
             cache: false,
             data: {
-                action: 'save_mark_posts_bulk_edit',
+                action: 'mark_posts_save_bulk_edit',
                 post_ids: $post_ids,
                 mark_posts_term_id: $mark_posts_term_id
             }

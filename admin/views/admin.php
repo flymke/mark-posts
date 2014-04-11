@@ -30,7 +30,7 @@ add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
  *
  * @since     1.0.1
  */
-function get_default_colors() {
+function mark_posts_get_default_colors() {
 	$default_colors = array( '#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61' );
 
 	return $default_colors;
@@ -41,7 +41,7 @@ function get_default_colors() {
  *
  * @since     1.0.1
  */
-function get_marker_terms() {
+function mark_posts_get_marker_terms() {
 	$marker_terms = get_terms( 'marker', 'orderby=id&hide_empty=0' );
 
 	return $marker_terms;
@@ -52,7 +52,7 @@ function get_marker_terms() {
  *
  * @since     1.0.0
  */
-function misc_funtions() {
+function mark_posts_misc_funtions() {
 
 	// mark all posts
 	if ( $_SERVER["REQUEST_METHOD"] == "GET" && ISSET( $_GET['mark-all-posts-term-id'] ) ) {
@@ -83,7 +83,7 @@ function misc_funtions() {
 
 		}
 
-		echo display_settings_updated();
+		echo mark_posts_display_settings_updated();
 	}
 
 }
@@ -93,10 +93,10 @@ function misc_funtions() {
  *
  * @since     1.0.0
  */
-function validate_form() {
+function mark_posts_validate_form() {
 
 	// get default colors
-	$default_colors = get_default_colors();
+	$default_colors = mark_posts_get_default_colors();
 
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST['submit'] ) ) {
 
@@ -115,7 +115,7 @@ function validate_form() {
 
 		// news markers
 		$markers       = explode( ",", $_POST['markers'] );
-		$count_markers = count( get_marker_terms() );
+		$count_markers = count( mark_posts_get_marker_terms() );
 		if ( $count_markers ) {
 			$i = $count_markers;
 		} // define $i for default color
@@ -158,7 +158,7 @@ function validate_form() {
 			}
 		}
 
-		echo display_settings_updated();
+		echo mark_posts_display_settings_updated();
 
 	}
 }
@@ -168,7 +168,7 @@ function validate_form() {
  *
  * @since     1.0.0
  */
-function display_settings_updated() {
+function mark_posts_display_settings_updated() {
 
 	return '<div id="message" class="updated"><p>' . __( 'Settings saved', 'mark-posts' ) . '</p></div>';
 
@@ -179,7 +179,7 @@ function display_settings_updated() {
  *
  * @since     1.0.0
  */
-function get_all_types() {
+function mark_posts_get_all_types() {
 	$all_post_types = get_post_types();
 	$option         = get_option( 'mark_posts_settings' );
 	// $mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
@@ -203,17 +203,17 @@ function get_all_types() {
  *
  * @since     1.0.0
  */
-function show_settings() {
+function mark_posts_show_settings() {
 
 	// get default colors
-	$default_colors = get_default_colors();
+	$default_colors = mark_posts_get_default_colors();
 
 	?>
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 		<?php
 
 		// Get Marker terms from DB
-		$markers_terms = get_marker_terms();
+		$markers_terms = mark_posts_get_marker_terms();
 		$markers_registered = '';
 		foreach ( $markers_terms as $marker_term ) {
 			$markers_registered .= $marker_term->name;
@@ -282,7 +282,7 @@ function show_settings() {
 		</p>
 
 		<?php
-		get_all_types();
+		mark_posts_get_all_types();
 		submit_button();
 		?>
 
@@ -292,21 +292,21 @@ function show_settings() {
 
 <div class="wrap">
 
-	<?php screen_icon(); ?>
+	<?php // screen_icon(); ?>
 
-	<?php misc_funtions() ?>
+	<?php mark_posts_misc_funtions() ?>
 
-	<?php validate_form(); ?>
+	<?php mark_posts_validate_form(); ?>
 
 	<h2><?php _e( 'Mark Posts Options', 'mark-posts' ); ?></h2>
 
-	<?php show_settings(); ?>
+	<?php mark_posts_show_settings(); ?>
 
 	<div class="mark-posts-copy">
 		<hr />
 		Mark Posts | Version: <?php echo WP_MARK_POSTS_VERSION; ?> | &copy; <?php echo date( 'Y' ); ?>
 		<a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>,
-		<a href="http://www.hofmannsven.com" target="_blank">Sven Hofmann</a>
+		<a href="http://hofmannsven.com" target="_blank">Sven Hofmann</a>
 		<!-- Donate -->
 		<div class="mark-posts-donate">
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">

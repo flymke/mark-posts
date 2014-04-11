@@ -8,7 +8,7 @@
  * @link
  * @copyright 2014 Michael Schoenrock
  */
- 
+
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -21,20 +21,19 @@ if ( ! defined( 'WPINC' ) ) {
  * public-facing side of the WordPress site.
  *
  * If you're interested in introducing administrative or dashboard
- * functionality, then refer to `class-plugin-name-admin.php`
+ * functionality, then refer to `class-mark-posts-admin.php`
  *
  */
 class Mark_Posts {
 
 	/**
-	 * Plugin version, used for cache-busting of style and script file references.
+	 * Instance of this class.
 	 *
-	 * @since   1.0.0
+	 * @since    1.0.0
 	 *
-	 * @var     string
+	 * @var      object
 	 */
-	const VERSION = '1.0.0';
-
+	protected static $instance = null;
 	/**
 	 *
 	 * Unique identifier for your plugin.
@@ -51,15 +50,6 @@ class Mark_Posts {
 	protected $plugin_slug = 'mark-posts';
 
 	/**
-	 * Instance of this class.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      object
-	 */
-	protected static $instance = null;
-
-	/**
 	 * Initialize the plugin by setting localization and loading public scripts
 	 * and styles.
 	 *
@@ -68,36 +58,15 @@ class Mark_Posts {
 	private function __construct() {
 
 		// Load plugin text domain
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-		add_action( 'init', array( $this, 'create_taxonomies' ) );
+		add_action( 'init', array( $this, 'mark_posts_load_textdomain' ) );
+		add_action( 'init', array( $this, 'mark_posts_create_taxonomies' ) );
 
 		// Activate plugin when new blog is added
-		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
+		add_action( 'wpmu_new_blog', array( $this, 'mark_posts_activate_new_site' ) );
 
 		// Register settings
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_init', array( $this, 'mark_posts_register_settings' ) );
 
-		// Load public-facing style sheet and JavaScript.
-		// add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		// add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
-		/* Define custom functionality.
-		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-		 */
-		//add_action( '@TODO', array( $this, 'action_method_name' ) );
-		//add_filter( '@TODO', array( $this, 'filter_method_name' ) );
-
-	}
-
-	/**
-	 * Return the plugin slug.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @return    Plugin slug variable.
-	 */
-	public function get_plugin_slug() {
-		return $this->plugin_slug;
 	}
 
 	/**
@@ -155,6 +124,46 @@ class Mark_Posts {
 	}
 
 	/**
+	 * Get all blog ids of blogs in the current network that are:
+	 * - not archived
+	 * - not spam
+	 * - not deleted
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return   array|false    The blog ids, false if no matches.
+	 */
+	private static function get_blog_ids() {
+
+		global $wpdb;
+
+		// get an array of blog ids
+		$sql = "SELECT blog_id FROM $wpdb->blogs
+			WHERE archived = '0' AND spam = '0'
+			AND deleted = '0'";
+
+		return $wpdb->get_col( $sql );
+
+	}
+
+	/**
+	 * Fired for each blog when the plugin is activated.
+	 *
+	 * @since    1.0.0
+	 */
+	private static function single_activate() {
+		add_option(
+			'mark_posts_settings',
+			array(
+				'mark_posts_posttypes' => array( 'post', 'page' )
+			)
+		);
+
+		// @TODO: Define activation functionality here
+		// self::mark_posts_create_taxonomies();
+	}
+
+	/**
 	 * Fired when the plugin is deactivated.
 	 *
 	 * @since    1.0.0
@@ -193,13 +202,33 @@ class Mark_Posts {
 	}
 
 	/**
+	 * Fired for each blog when the plugin is deactivated.
+	 *
+	 * @since    1.0.0
+	 */
+	private static function single_deactivate() {
+		// @TODO: Define deactivation functionality here
+	}
+
+	/**
+	 * Return the plugin slug.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return    Plugin slug variable.
+	 */
+	public function get_plugin_slug() {
+		return $this->plugin_slug;
+	}
+
+	/**
 	 * Fired when a new site is activated with a WPMU environment.
 	 *
 	 * @since    1.0.0
 	 *
 	 * @param    int $blog_id ID of the new blog.
 	 */
-	public function activate_new_site( $blog_id ) {
+	public function mark_posts_activate_new_site( $blog_id ) {
 
 		if ( 1 !== did_action( 'wpmu_new_blog' ) ) {
 			return;
@@ -212,60 +241,11 @@ class Mark_Posts {
 	}
 
 	/**
-	 * Get all blog ids of blogs in the current network that are:
-	 * - not archived
-	 * - not spam
-	 * - not deleted
-	 *
-	 * @since    1.0.0
-	 *
-	 * @return   array|false    The blog ids, false if no matches.
-	 */
-	private static function get_blog_ids() {
-
-		global $wpdb;
-
-		// get an array of blog ids
-		$sql = "SELECT blog_id FROM $wpdb->blogs
-			WHERE archived = '0' AND spam = '0'
-			AND deleted = '0'";
-
-		return $wpdb->get_col( $sql );
-
-	}
-
-	/**
-	 * Fired for each blog when the plugin is activated.
-	 *
-	 * @since    1.0.0
-	 */
-	private static function single_activate() {
-		add_option(
-			'mark_posts_settings',
-			array(
-				'mark_posts_posttypes' => array( 'post', 'page' )
-			)
-		);
-
-		// @TODO: Define activation functionality here
-		// self::create_taxonomies();
-	}
-
-	/**
-	 * Fired for each blog when the plugin is deactivated.
-	 *
-	 * @since    1.0.0
-	 */
-	private static function single_deactivate() {
-		// @TODO: Define deactivation functionality here
-	}
-
-	/**
 	 * Load the plugin text domain for translation.
 	 *
 	 * @since    1.0.0
 	 */
-	public function load_plugin_textdomain() {
+	public function mark_posts_load_textdomain() {
 
 		$domain = $this->plugin_slug;
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
@@ -280,14 +260,14 @@ class Mark_Posts {
 	 *
 	 * @since    1.0.0
 	 */
-	public function register_settings() {
+	public function mark_posts_register_settings() {
 
 		$option_name = 'plugin_mark_posts_settings';
 
 		register_setting(
 			'general',
 			$option_name,
-			array( $this, 'settings_validate' )
+			array( $this, 'mark_posts_settings_validate' )
 		);
 		add_settings_section(
 			$option_name,
@@ -303,66 +283,20 @@ class Mark_Posts {
 	 *
 	 * @since    1.0.0
 	 */
-	public function settings_validate( $input ) {
+	public function mark_posts_settings_validate( $input ) {
 		// todo: sanitize user input
 		return $input;
 	}
 
+
 	/**
-	 * Register and enqueue public-facing style sheet.
+	 * Create marker taxonomy
 	 *
 	 * @since    1.0.0
 	 */
+	public function mark_posts_create_taxonomies() {
 
-	/*
-	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array(), self::VERSION );
-	}
-	*/
-
-	/**
-	 * Register and enqueues public-facing JavaScript files.
-	 *
-	 * @since    1.0.0
-	 */
-
-	/*
-	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
-	}
-	*/
-
-	/**
-	 * NOTE:  Actions are points in the execution of a page or process
-	 *        lifecycle that WordPress fires.
-	 *
-	 *        Actions:    http://codex.wordpress.org/Plugin_API#Actions
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
-	 *
-	 * @since    1.0.0
-	 */
-	public function action_method_name() {
-		// @TODO: Define your action hook callback here
-	}
-
-	/**
-	 * NOTE:  Filters are points of execution in which WordPress modifies data
-	 *        before saving it or sending it to the browser.
-	 *
-	 *        Filters: http://codex.wordpress.org/Plugin_API#Filters
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
-	 *
-	 * @since    1.0.0
-	 */
-	public function filter_method_name() {
-		// @TODO: Define your filter hook callback here
-	}
-
-	public function create_taxonomies() {
-
-		// create marker taxonomy
-
-		// Add new taxonomy
+		// Add new marker taxonomy
 		$labels = array(
 			'name'              => _x( 'Marker', 'taxonomy general name' ),
 			'singular_name'     => _x( 'Marker', 'taxonomy singular name' ),

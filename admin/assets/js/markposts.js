@@ -1,6 +1,13 @@
 (function($) {
 	"use strict";
 
+	// color picket setup
+	$(function () {
+		$('.my-color-field').wpColorPicker({
+			defaultColor: false
+		});
+	});
+
 	// convert rgb to hex
 	function rgb2hex(rgb) {
 	  rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -67,6 +74,5 @@
 		}
 		return false;
 	});
-
 
 }(jQuery));
