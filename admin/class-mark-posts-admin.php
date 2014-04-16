@@ -1,12 +1,4 @@
 <?php
-
-
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
-
-
 /**
  * Mark Posts Class
  *
@@ -15,6 +7,14 @@ if ( ! defined( 'WPINC' ) ) {
  * @license   GPL-2.0+
  * @copyright 2014 Michael Schoenrock
  */
+
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
+
 class Mark_Posts_Admin {
 
 	/**
@@ -49,33 +49,33 @@ class Mark_Posts_Admin {
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
 		// Load admin style sheet and JavaScript
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'mark_posts_enqueue_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'mark_posts_enqueue_admin_scripts' ) );
 
 		// Add the options page and menu item
-		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
+		add_action( 'admin_menu', array( $this, 'mark_posts_add_plugin_admin_menu' ) );
 
 		// Add dashboard
 		add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
 
 		// Add an action link pointing to the options page
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
-		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
+		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'mark_posts_add_action_links' ) );
 
 		// Add quick edit and bulk edit actions
-		add_action( 'bulk_edit_custom_box', array( $this, 'display_mark_posts_quickedit_box' ), 10, 2 );
-		add_action( 'quick_edit_custom_box', array( $this, 'display_mark_posts_quickedit_box' ), 10, 2 );
+		add_action( 'bulk_edit_custom_box', array( $this, 'mark_posts_display_quickedit_box' ), 10, 2 );
+		add_action( 'quick_edit_custom_box', array( $this, 'mark_posts_display_quickedit_box' ), 10, 2 );
 		// Add JavaScript for quick edit and bulk edit actions
 		add_action( 'admin_print_scripts-edit.php', array( $this, 'mark_posts_edit_scripts' ), 10, 2 );
 
 		// Add metabox
 		add_action( 'add_meta_boxes', array( $this, 'mark_posts_add_meta_box' ) );
 		// Save action for metabox
-		add_action( 'save_post', array( $this, 'save' ) );
+		add_action( 'save_post', array( $this, 'mark_posts_save' ) );
 		// Save action for quick edit
-		add_action( 'save_post', array( $this, 'save_mark_posts_quick_edit' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'mark_posts_save_quick_edit' ), 10, 2 );
 		// Save action for bulk edit
-		add_action( 'wp_ajax_save_mark_posts_bulk_edit', array( $this, 'save_mark_posts_bulk_edit' ) );
+		add_action( 'wp_ajax_mark_posts_save_bulk_edit', array( $this, 'mark_posts_save_bulk_edit' ) );
 
 		/**
 		 * Custom admin post columns (custom post types only)
@@ -116,13 +116,13 @@ class Mark_Posts_Admin {
 	 *
 	 * @return    null    Return early if no settings page is registered
 	 */
-	public function enqueue_admin_styles() {
+	public function mark_posts_enqueue_admin_styles() {
 
 		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 
-		wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Mark_Posts::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), WP_MARK_POSTS_VERSION );
 
 	}
 
@@ -133,21 +133,14 @@ class Mark_Posts_Admin {
 	 *
 	 * @return    null    Return early if no settings page is registered
 	 */
-	public function enqueue_admin_scripts() {
+	public function mark_posts_enqueue_admin_scripts() {
 
 		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 
-		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
-			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Mark_Posts::VERSION );
-		}
-
-		// see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( $this->plugin_slug . '-colorpicker', plugins_url( 'assets/js/colorpicker.js', __FILE__ ), array( 'wp-color-picker' ), Mark_Posts::VERSION, true );
-		wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array(), Mark_Posts::VERSION, true );
+		wp_enqueue_style( 'wp-color-picker' ); // see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
+		wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array( 'wp-color-picker' ), WP_MARK_POSTS_VERSION, true );
 
 	}
 
@@ -156,7 +149,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_plugin_admin_menu() {
+	public function mark_posts_add_plugin_admin_menu() {
 
 		// add a settings page for this plugin to the Settings menu
 		$this->plugin_screen_hook_suffix = add_options_page(
@@ -164,7 +157,7 @@ class Mark_Posts_Admin {
 			__( 'Mark Posts', $this->plugin_slug ),
 			'manage_options',
 			$this->plugin_slug,
-			array( $this, 'display_plugin_admin_page' )
+			array( $this, 'mark_posts_display_plugin_admin_page' )
 		);
 
 	}
@@ -174,7 +167,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function display_plugin_admin_page() {
+	public function mark_posts_display_plugin_admin_page() {
 		include_once( 'views/admin.php' );
 	}
 
@@ -209,7 +202,7 @@ class Mark_Posts_Admin {
 	 * @since    1.0.0
 	 */
 	public function mark_posts_enqueue_dashboard_styles() {
-		wp_enqueue_style( $this->plugin_slug . '-dashboard-styles', plugins_url( 'assets/css/dashboard.css', __FILE__ ), array(), Mark_Posts::VERSION );
+		wp_enqueue_style( $this->plugin_slug . '-dashboard-styles', plugins_url( 'assets/css/dashboard.css', __FILE__ ), array(), WP_MARK_POSTS_VERSION );
 	}
 
 	/**
@@ -240,7 +233,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @return array associative array of plugin action links
 	 */
-	public function add_action_links( $links ) {
+	public function mark_posts_add_action_links( $links ) {
 		// add a 'Settings' link to the front of the actions list for this plugin
 		return array_merge(
 			array(
@@ -326,7 +319,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @return mixed
 	 */
-	public function save( $post_id ) {
+	public function mark_posts_save( $post_id ) {
 		// Check if our nonce is set.
 		if ( ! isset( $_POST['mark_posts_inner_meta_box_nonce'] ) ) {
 			return $post_id;
@@ -359,7 +352,7 @@ class Mark_Posts_Admin {
 			}
 		}
 
-		/* OK, its safe for us to save the data now. */
+		/* OK, its safe for us to mark_posts_save the data now. */
 
 		// Sanitize the user input.
 		$mydata = sanitize_text_field( $_POST['mark_posts_term_id'] );
@@ -384,7 +377,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @param $column_name Custom column name e.g. 'mark_posts_term_id'
 	 */
-	public function display_mark_posts_quickedit_box( $column_name ) {
+	public function mark_posts_display_quickedit_box( $column_name ) {
 
 		switch ( $column_name ) {
 			case 'mark_posts_term_id':
@@ -423,7 +416,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @return mixed
 	 */
-	public function save_mark_posts_quick_edit( $post_id, $post ) {
+	public function mark_posts_save_quick_edit( $post_id, $post ) {
 		// pointless if $_POST is empty (this happens on bulk edit)
 		if ( empty( $_POST ) ) {
 			return $post_id;
@@ -434,12 +427,12 @@ class Mark_Posts_Admin {
 			return $post_id;
 		}
 
-		// don't save for autosave
+		// don't mark_posts_save for autosave
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_id;
 		}
 
-		// dont save for revisions
+		// dont mark_posts_save for revisions
 		if ( isset( $post->post_type ) && $post->post_type == 'revision' ) {
 			return $post_id;
 		}
@@ -467,7 +460,7 @@ class Mark_Posts_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function save_mark_posts_bulk_edit() {
+	public function mark_posts_save_bulk_edit() {
 
 		// we need the post IDs
 		$post_ids = ( isset( $_POST['post_ids'] ) && ! empty( $_POST['post_ids'] ) ) ? $_POST['post_ids'] : NULL;
@@ -506,7 +499,7 @@ class Mark_Posts_Admin {
 	 * @since    1.0.0
 	 */
 	public function mark_posts_edit_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-quick-bulk-edit', plugins_url( 'assets/js/admin-edit.js', __FILE__ ), array( 'jquery', 'inline-edit-post' ), Mark_Posts::VERSION, true );
+		wp_enqueue_script( $this->plugin_slug . '-quick-bulk-edit', plugins_url( 'assets/js/admin-edit.js', __FILE__ ), array( 'jquery', 'inline-edit-post' ), WP_MARK_POSTS_VERSION, true );
 	}
 
 	/**
