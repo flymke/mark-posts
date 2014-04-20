@@ -16,7 +16,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 
 = Features =
 
-* Set up maker categories and colors
+* Set up marker categories and colors
 * Assign marker categories to posts/pages/cpt
 * View them within the posts/pages/cpt overview lists
 * Quick edit, bulk edit and edit all markers
@@ -55,6 +55,10 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 If you find an issue, please [raise an issue](https://github.com/flymke/mark-posts/issues/new) on GitHub.
 
 == Frequently Asked Questions ==
+
+= Can I export/import markers? =
+
+Check the [Export & Import](https://github.com/flymke/mark-posts/wiki/Export-&-Import) wiki page for further information
 
 = I'm having issues getting the plugin to work what should I do? =
 
