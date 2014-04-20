@@ -10,7 +10,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 
 ### Features
 
-* Set up maker categories and colors
+* Set up marker categories and colors
 * Assign marker categories to posts/pages/cpt
 * View them within the posts/pages/cpt overview lists
 * Quick edit, bulk edit and edit all markers
@@ -30,6 +30,12 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 1. Unzip the download package
 2. Upload `mark-posts` to the `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
+
+***
+
+### Wiki
+
+* [Export & Import Markers](https://github.com/flymke/mark-posts/wiki/Export-&-Import)
 
 ***
 
