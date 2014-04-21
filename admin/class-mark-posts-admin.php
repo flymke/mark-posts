@@ -279,23 +279,42 @@ class Mark_Posts_Admin {
 		// Add an nonce field so we can check for it later.
 		wp_nonce_field( 'mark_posts_inner_meta_box', 'mark_posts_inner_meta_box_nonce' );
 
-		// Use get_post_meta to retrieve an existing value from the database.
+		// Retrieve post meta value from the database.
 		$value = get_post_meta( $post->ID, 'mark_posts_term_id', true );
 
-		// Display the form, using the current value.
-		$content = '<p>' . __( 'Mark this post as:', 'mark-posts' ) . '</p>';
-
-		// Get Marker terms from DB
+		// Get markers terms
 		$markers_terms = get_terms( 'marker', 'hide_empty=0' );
-		$content .= '<select id="mark_posts_term_id" name="mark_posts_term_id">';
+		$content       = '<select id="mark_posts_term_id" name="mark_posts_term_id">';
 		$content .= '<option value="">---</option>';
+
+		/**
+		 * Filter: 'mark_posts_marker_limit' - Allow custom user capabilities for marker terms
+		 *
+		 * @since    1.0.4
+		 *
+		 * @param array $limited Array with marker term names and appropriate user capability
+		 */
+		$limited = array();
+		$limited = apply_filters( 'mark_posts_marker_limit', $limited );
+
 		foreach ( $markers_terms as $marker_term ) {
-			if ( ISSET( $value ) && $marker_term->term_id == $value ) {
+
+			if ( isset( $value ) && $marker_term->term_id == $value ) {
 				$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '" selected="selected">' . $marker_term->name . '</option>';
 				$color_selected = $marker_term->description;
 			} else {
-				$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+				// Check if there is a custom limit
+				if ( isset( $limited[$marker_term->name] ) ) :
+					// Display markers depending on user capability
+					if ( current_user_can( $limited[$marker_term->name] ) ) :
+						$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+					endif;
+				// Display markers if there is no custom limit defined
+				else :
+					$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+				endif;
 			}
+
 		}
 		$content .= '</select>';
 
@@ -391,8 +410,28 @@ class Mark_Posts_Admin {
 								$markers_terms = get_terms( 'marker', 'hide_empty=0' );
 								$content = '<select name="mark_posts_term_id">';
 								$content .= '<option value="">---</option>';
+
+								/**
+								 * Filter: 'mark_posts_marker_limit' - Allow custom user capabilities for marker terms
+								 *
+								 * @since    1.0.4
+								 *
+								 * @param array $limited Array with marker term names and appropriate user capability
+								 */
+								$limited = array();
+								$limited = apply_filters( 'mark_posts_marker_limit', $limited );
+
 								foreach ( $markers_terms as $marker_term ) {
-									$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+									// Check if there is a custom limit
+									if ( isset( $limited[$marker_term->name] ) ) :
+										// Display markers depending on user capability
+										if ( current_user_can( $limited[$marker_term->name] ) ) :
+											$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+										endif;
+									// Display markers if there is no custom limit defined
+									else :
+										$content .= '<option value="' . $marker_term->term_id . '" data-color="' . $marker_term->description . '">' . $marker_term->name . '</option>';
+									endif;
 								}
 								$content .= '</select>';
 								echo $content;

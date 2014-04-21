@@ -12,7 +12,7 @@
  * Plugin Name:       Mark Posts
  * Plugin URI:        http://flymke.github.io/mark-posts/
  * Description:       Simply mark and highlight posts, pages and posts of custom post types within the posts view overview.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            <a href="http://www.aliquit.de" target="_blank">Michael Schoenrock</a>, <a href="http://hofmannsven.com" target="_blank">Sven Hofmann</a>
  * Author URI:        http://www.aliquit.de
  * Contributor:       Sven Hofmann
@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  */
 if ( ! defined( 'WP_MARK_POSTS_VERSION' ) ) {
-	define( 'WP_MARK_POSTS_VERSION', '1.0.3' );
+	define( 'WP_MARK_POSTS_VERSION', '1.0.4' );
 }
 
 /*
