@@ -56,6 +56,7 @@
 		var color = $('select#mark_posts_term_id option:selected').data('color');
 		if (color)
 			$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));
+			$('span.mark-posts-color').css('background-color', color);
 		$('select#mark_posts_term_id').on('change', function() {
 			var color = $('select#mark_posts_term_id option:selected').data('color');
 			$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));

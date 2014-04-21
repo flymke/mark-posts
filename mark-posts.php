@@ -75,6 +75,7 @@ add_action( 'plugins_loaded', array( 'Mark_Posts', 'get_instance' ) );
 
 if ( is_admin() ) {
 
+	require_once( plugin_dir_path( __FILE__ ) . 'admin/class-mark-posts-marker.php' );
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/class-mark-posts-admin.php' );
 	add_action( 'plugins_loaded', array( 'Mark_Posts_Admin', 'get_instance' ) );
 
