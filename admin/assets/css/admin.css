@@ -1,66 +1,75 @@
-/* This stylesheet is used to style the admin option form of the plugin. */
-
+/* Mark Posts Admin Styles */
 .new-markers {
-	height: 20px;
+	height:  20px;
 	padding: 10px 0 5px 0;
 }
+
 .new-markers
 .js-new-markers-intro {
 	display: none;
 }
+
 .new-marker,
 .mark-posts-marker {
-        background: rgba(255,255,255); /* for IE */
-	background: rgba(255,255,255,.65);
-	color: #444;
-	line-height: 27px; /* in case of multiple lines for markers*/
-	padding: 0 5px;
-	margin: 0 0 0 3px;
+	background:            rgba(255, 255, 255); /* for IE */
+	background:            rgba(255, 255, 255, .65);
+	color:                 #444;
+	line-height:           27px; /* in case of multiple lines for markers*/
+	padding:               0 5px;
+	margin:                0 0 0 3px;
 	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-        display: inline-block;
-        font-weight:bold;
+	-moz-border-radius:    3px;
+	border-radius:         3px;
+	display:               inline-block;
+	font-weight:           bold;
 }
+
 .mark-posts-marker {
-        margin-top:6px;
+	margin-top: 6px;
 }
+
 span.mark-posts-color {
-        position:absolute;
-        top:-41px;
-        right:30px;
-        width:20px;
-        height:20px;
-        display:block;
-        margin-left:10px;
+	position:    absolute;
+	top:         -41px;
+	right:       30px;
+	width:       20px;
+	height:      20px;
+	display:     block;
+	margin-left: 10px;
 }
+
 span.mark-posts-color,
 #mark_posts_options h3.hndle {
-    	-webkit-transition: 100ms linear;  /* Chrome 1-25, Safari 3.2+ */
-	-moz-transition: 100ms linear;  /* Firefox 4-15 */
-	-o-transition: 100ms linear;  /* Opera 10.50–12.00 */
-	transition: 100ms linear;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+	-webkit-transition: 100ms linear; /* Chrome 1-25, Safari 3.2+ */
+	-moz-transition:    100ms linear; /* Firefox 4-15 */
+	-o-transition:      100ms linear; /* Opera 10.50–12.00 */
+	transition:         100ms linear; /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
+
 .mark_posts_pre {
-        position:absolute;
-        width:5px;
-        height:100%;
-        top:0;
-        left:0;
+	position: absolute;
+	width:    5px;
+	height:   100%;
+	top:      0;
+	left:     0;
 }
+
 a.mark-posts-initial {
-    display:inline-block;
-    margin-left:25px;
+	display:     inline-block;
+	margin-left: 25px;
 }
+
 .mark-posts-copy {
-    margin-top:25px;
-    padding-top:25px;
+	margin-top:  25px;
+	padding-top: 25px;
 }
+
 #wpbody-content .quick-edit-row-page .inline-edit-col-right.mark-posts-quickedit {
-    margin-top:0;
-    width:50%;
-    float:right;
+	margin-top: 0;
+	width:      50%;
+	float:      right;
 }
+
 .mark-posts-donate {
-    margin-top:15px;   
+	margin-top: 15px;
 }

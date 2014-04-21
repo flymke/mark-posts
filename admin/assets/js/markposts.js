@@ -4,7 +4,8 @@
 	// color picket setup
 	$(function () {
 		$('.my-color-field').wpColorPicker({
-			defaultColor: false
+			defaultColor: false,
+			palettes: ['#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61']
 		});
 	});
 

@@ -85,6 +85,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 
 = 1.0.4 =
 * Add `mark_posts_marker_limit` filter for custom marker user roles
+* Provide custom color palettes for markers
 
 = 1.0.3 =
 * Code refactoring
