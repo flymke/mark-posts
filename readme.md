@@ -35,6 +35,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 
 ### Wiki
 
+* [Custom Marker Limits](https://github.com/flymke/mark-posts/wiki/Custom-Marker-Limits)
 * [Export & Import Markers](https://github.com/flymke/mark-posts/wiki/Export-&-Import)
 
 ***
