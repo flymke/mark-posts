@@ -56,6 +56,10 @@ If you find an issue, please [raise an issue](https://github.com/flymke/mark-pos
 
 == Frequently Asked Questions ==
 
+= Can I set specific user roles for specific markers? =
+
+Check the [Custom Marker Limits](https://github.com/flymke/mark-posts/wiki/Custom-Marker-Limits) wiki page for further information
+
 = Can I export/import markers? =
 
 Check the [Export & Import](https://github.com/flymke/mark-posts/wiki/Export-&-Import) wiki page for further information
