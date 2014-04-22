@@ -4,7 +4,8 @@
 	// color picket setup
 	$(function () {
 		$('.my-color-field').wpColorPicker({
-			defaultColor: false
+			defaultColor: false,
+			palettes: ['#96D754', '#FFFA74', '#FF7150', '#9ABADC', '#FFA74C', '#158A61']
 		});
 	});
 
@@ -56,6 +57,7 @@
 		var color = $('select#mark_posts_term_id option:selected').data('color');
 		if (color)
 			$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));
+			$('span.mark-posts-color').css('background-color', color);
 		$('select#mark_posts_term_id').on('change', function() {
 			var color = $('select#mark_posts_term_id option:selected').data('color');
 			$('#mark_posts_options h3.hndle').css('background-color', convertHex(color,25));

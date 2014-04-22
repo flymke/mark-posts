@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: mark, mark posts, highlight, highlight posts, status, post status, overview, post overview, featured, custom posts, featured posts, post, posts
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 
 = Features =
 
-* Set up maker categories and colors
+* Set up marker categories and colors
 * Assign marker categories to posts/pages/cpt
 * View them within the posts/pages/cpt overview lists
 * Quick edit, bulk edit and edit all markers
@@ -56,6 +56,14 @@ If you find an issue, please [raise an issue](https://github.com/flymke/mark-pos
 
 == Frequently Asked Questions ==
 
+= Can I set specific user roles for specific markers? =
+
+Check the [Custom Marker Limits](https://github.com/flymke/mark-posts/wiki/Custom-Marker-Limits) wiki page for further information
+
+= Can I export/import markers? =
+
+Check the [Export & Import](https://github.com/flymke/mark-posts/wiki/Export-&-Import) wiki page for further information
+
 = I'm having issues getting the plugin to work what should I do? =
 
 See [Mark Posts on Github](https://github.com/flymke/mark-posts) for detailed rundown of common issues
@@ -74,6 +82,10 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 5. Shows a screenshot of the Mark Posts dashboard widget
 
 == Changelog ==
+
+= 1.0.4 =
+* Add `mark_posts_marker_limit` filter for custom marker user roles
+* Provide custom color palettes for markers
 
 = 1.0.3 =
 * Code refactoring

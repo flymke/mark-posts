@@ -1,29 +1,32 @@
-/* dashboard widget styles */
+/* Mark Posts Dashboard Widget Styles */
 #markers_right_now {
-  overflow: hidden;
-  padding: 0px;
-  margin: 0;
+	overflow: hidden;
+	padding:  0px;
+	margin:   0;
 }
+
 #markers_right_now li {
-  width: 50%;
-  float: left;
-  margin-bottom: 10px;
+	width:         50%;
+	float:         left;
+	margin-bottom: 10px;
 }
+
 #markers_right_now li span {
-  line-height: 1.4em;
-  font-size: 13px;
+	line-height: 1.4em;
+	font-size:   13px;
 }
+
 #markers_right_now li span:before {
-  font: 400 20px/1 dashicons;
-  content: '\f159';
-  speak: none;
-  display: block;
-  float: left;
-  margin: 0 5px 0 0;
-  padding: 0;
-  text-indent: 0;
-  text-align: center;
-  position: relative;
-  -webkit-font-smoothing: antialiased;
-  text-decoration: none!important;
+	font:                   400 20px/1 dashicons;
+	content:                '\f159';
+	speak:                  none;
+	display:                block;
+	float:                  left;
+	margin:                 0 5px 0 0;
+	padding:                0;
+	text-indent:            0;
+	text-align:             center;
+	position:               relative;
+	-webkit-font-smoothing: antialiased;
+	text-decoration:        none !important;
 }
