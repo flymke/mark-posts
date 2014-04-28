@@ -46,12 +46,6 @@ span.mark-posts-color,
 	transition:         100ms linear; /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
 }
 
-.mark_post_wrap {
-        position: relative;
-        padding:  11px 0 0 3px;
-        height:   50px;
-}
-
 .mark_posts_pre {
 	position: absolute;
 	width:    5px;
