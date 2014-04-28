@@ -1,4 +1,5 @@
 (function($) {
+	
 	"use strict";
 
 	// color picket setup
@@ -29,10 +30,10 @@
 
 	// highlight each row
 	$('.mark-posts-marker').each(function() {
-  	    var color = $(this).data('background');
+  	    var color = $(this).data('background');	    
   	    $(this).parent().parent().find('th, td').css('background-color', convertHex(color,25));
-	    $(this).parent().parent().find('.check-column').css('position', 'relative');
-	    $(this).parent().parent().find('.check-column').append('<div class="mark_posts_pre" style="background:'+color+';"></div>');
+	    $(this).parent().parent().find('.check-column').css('padding', '0').wrapInner('<div class="mark_post_wrap"></div>');
+	    $(this).parent().parent().find('.mark_post_wrap').append('<div class="mark_posts_pre" style="background:'+color+';"></div>');
 	});
 
 	// live preview of new markers
