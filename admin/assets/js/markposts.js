@@ -1,5 +1,5 @@
 (function($) {
-	
+
 	"use strict";
 
 	// color picket setup
@@ -30,10 +30,10 @@
 
 	// highlight each row
 	$('.mark-posts-marker').each(function() {
-  	    var color = $(this).data('background');	    
+  	    var color = $(this).data('background');
   	    $(this).parent().parent().find('th, td').css('background-color', convertHex(color,25));
-	    $(this).parent().parent().find('.check-column').css('padding', '0').wrapInner('<div class="mark_post_wrap"></div>');
-	    $(this).parent().parent().find('.mark_post_wrap').append('<div class="mark_posts_pre" style="background:'+color+';"></div>');
+  	    $(this).parent().parent().find('.check-column').css('border-left', '5px solid '+color);
+  	    $(this).parent().parent().find('.check-column input').css('margin-left', '3px'); // balance border width
 	});
 
 	// live preview of new markers
@@ -48,11 +48,11 @@
 
 		$('.js-new-markers-intro').show();
 		$('.js-new-markers').html(markers.join(' ')); // preview new markers
-		
+
 		if($(this).val().length == 0) // hide container
 			$('.new-markers').hide();
 	});
-	
+
 	// change background color in edit post options
 	if($('#mark_posts_options').length > 0) {
 		var color = $('select#mark_posts_term_id option:selected').data('color');
@@ -65,7 +65,7 @@
 			$('span.mark-posts-color').css('background-color', color);
 		});
 	}
-	
+
 	$('a.mark-posts-initial').click(function() {
 		var confirm_msg = $(this).data('confirm-msg');
 		if (confirm(confirm_msg)) {
