@@ -57,8 +57,7 @@ class Mark_Posts {
 	 */
 	private function __construct() {
 
-		// Load plugin text domain
-		add_action( 'init', array( $this, 'mark_posts_load_textdomain' ) );
+		// Create marker taxonomy
 		add_action( 'init', array( $this, 'mark_posts_create_taxonomies' ) );
 
 		// Activate plugin when new blog is added
@@ -237,21 +236,6 @@ class Mark_Posts {
 		switch_to_blog( $blog_id );
 		self::single_activate();
 		restore_current_blog();
-
-	}
-
-	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since    1.0.0
-	 */
-	public function mark_posts_load_textdomain() {
-
-		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-		load_textdomain( $domain, trailingslashit( WP_MARK_POSTS_PATH ) . 'languages/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	}
 
