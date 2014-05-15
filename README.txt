@@ -86,6 +86,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 = 1.0.6 =
 * Updates:
 	* Better cross browser CSS rendering
+	* Better script enqueue
 	* Change `load_textdomain` to `load_plugin_textdomain`
 
 = 1.0.5 =

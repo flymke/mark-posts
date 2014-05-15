@@ -139,8 +139,11 @@ class Mark_Posts_Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'wp-color-picker' ); // see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
-		wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array( 'wp-color-picker' ), WP_MARK_POSTS_VERSION, true );
+		global $pagenow;
+		if ( $pagenow == 'options-general.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) :
+			wp_enqueue_style( 'wp-color-picker' ); // see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
+			wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array( 'wp-color-picker' ), WP_MARK_POSTS_VERSION, true );
+		endif;
 
 	}
 
