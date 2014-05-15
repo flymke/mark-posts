@@ -84,10 +84,13 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 == Changelog ==
 
 = 1.0.6 =
-* Bugfix
+* Updates:
+	* Better cross browser CSS rendering
+	* Better script enqueue
+	* Change `load_textdomain` to `load_plugin_textdomain`
 
 = 1.0.5 =
-* Bugfix
+* Bugfix (Sync)
 
 = 1.0.4 =
 * Add `mark_posts_marker_limit` filter for custom marker user roles

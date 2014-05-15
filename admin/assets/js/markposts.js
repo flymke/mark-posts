@@ -32,7 +32,7 @@
 	$('.mark-posts-marker').each(function() {
   	    var color = $(this).data('background');
   	    $(this).parent().parent().find('th, td').css('background-color', convertHex(color,25));
-  	    $(this).parent().parent().find('.check-column').css('border-left', '5px solid '+color);
+  	    $(this).parent().parent().find('.check-column').css('border-left', '4px solid '+color);
   	    $(this).parent().parent().find('.check-column input').css('margin-left', '3px'); // balance border width
 	});
 

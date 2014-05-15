@@ -64,6 +64,15 @@ register_activation_hook( __FILE__, array( 'Mark_Posts', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Mark_Posts', 'deactivate' ) );
 
 /*
+ * Load the plugin text domain for translation
+ *
+ */
+function mark_posts_load_textdomain() {
+	load_plugin_textdomain( 'mark-posts', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'init', 'mark_posts_load_textdomain', 1 );
+
+/*
  * Add action plugins_loaded
  *
  */
