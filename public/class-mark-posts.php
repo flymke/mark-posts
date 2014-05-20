@@ -302,7 +302,31 @@ class Mark_Posts {
 			'show_admin_column' => true,
 			'query_var'         => true,
 			'rewrite'           => array( 'slug' => 'marker' ),
+			'update_count_callback' => 'marker_update_count_callback'
 		);
+
+		/**
+		 * Function for updating the marker taxonomy count.
+		 *
+		 * See the _update_post_term_count() function in WordPress or http://justintadlock.com/archives/2011/10/20/custom-user-taxonomies-in-wordpress for more info.
+		 *
+		 * @since    1.0.7
+		 *
+		 * @param array $terms List of Term taxonomy IDs
+		 * @param object $taxonomy Current taxonomy object of terms
+		 */
+		function marker_update_count_callback( $terms, $taxonomy ) {
+			global $wpdb;
+
+			foreach ( (array) $terms as $term ) {
+
+				$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
+
+				do_action( 'edit_term_taxonomy', $term, $taxonomy );
+				$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+				do_action( 'edited_term_taxonomy', $term, $taxonomy );
+			}
+		}
 
 		/**
 		 * null - Setting explicitly to null registers the taxonomy but doesn't
@@ -317,5 +341,7 @@ class Mark_Posts {
 		register_taxonomy( 'marker', 'null', $args );
 
 	}
+
+
 
 }

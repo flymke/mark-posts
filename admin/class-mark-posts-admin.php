@@ -76,6 +76,8 @@ class Mark_Posts_Admin {
 		add_action( 'save_post', array( $this, 'mark_posts_save_quick_edit' ), 10, 2 );
 		// Save action for bulk edit
 		add_action( 'wp_ajax_mark_posts_save_bulk_edit', array( $this, 'mark_posts_save_bulk_edit' ) );
+		// Delete action
+		add_action( 'delete_post', array( $this, 'mark_posts_delete' ), 10 );
 
 		/**
 		 * Custom admin post columns (custom post types only)
@@ -346,12 +348,27 @@ class Mark_Posts_Admin {
 		update_post_meta( $post_id, 'mark_posts_term_id', $mydata );
 
 		// Update taxonomy count
-		if ( ! empty( $myterm->name ) ) :
-			wp_set_object_terms( $post_id, $myterm->name, 'marker' );
-		else :
-			wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
-		endif;
+		wp_update_term_count_now();
 
+	}
+
+	/**
+	 * Update taxonomy count if posts get deleted
+	 *
+	 * @since    1.0.7
+	 *
+	 * @param $post_id ID of the post e.g. '1'
+	 */
+	public function mark_posts_delete ( $post_id ) {
+		// Retrieve post meta value from the database
+		if ( isset( $post_id ) ) :
+			$term = get_post_meta( $post_id, 'mark_posts_term_id', true );
+			if ( ! empty( $term ) ) :
+				wp_set_object_terms( $post_id, $term, 'marker' );
+			else :
+				wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
+			endif;
+		endif;
 	}
 
 	/**
