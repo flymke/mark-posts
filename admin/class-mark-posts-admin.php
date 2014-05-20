@@ -360,7 +360,6 @@ class Mark_Posts_Admin {
 	 * @since    1.0.0
 	 *
 	 * @param $column_name Custom column name e.g. 'mark_posts_term_id'
-	 * @param $post_id
 	 */
 	public function mark_posts_display_quickedit_box( $column_name ) {
 
