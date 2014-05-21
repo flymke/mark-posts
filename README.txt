@@ -86,6 +86,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 = 1.0.7 =
 * Bugs fixed:
 	* Update marker count if posts get deleted
+	* Update dashboard count to only count published posts/markers
 
 = 1.0.6 =
 * Updates:

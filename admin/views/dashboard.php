@@ -32,7 +32,17 @@ $markers = get_terms( 'marker', $marker_args );
 		<?php
 		if ( ! empty( $markers ) ) :
 			foreach ( $markers as $marker ) :
-				echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><span>' . $marker->count . ' ' . $marker->name . '</span></li>';
+				/**
+				 * Get trashed marker and remove them from total count
+				 *
+				 * @since     1.0.7
+				 */
+				global $wpdb;
+				$trashed= $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts p JOIN $wpdb->term_relationships rl ON p.ID = rl.object_id WHERE rl.term_taxonomy_id = $marker->term_id AND p.post_status = 'trash' LIMIT 1");
+				$count = $marker->count - $trashed;
+				if ( $count > 0 ) :
+					echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><span>' . $count . ' ' . $marker->name . '</span></li>';
+				endif;
 			endforeach;
 		else:
 			_e( 'No marked posts yet.', 'mark-posts' );
