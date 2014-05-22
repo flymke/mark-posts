@@ -223,7 +223,7 @@ class Mark_Posts_Admin {
 		echo '<style>';
 
 		foreach ( $markers as $marker ) :
-			echo '.mark-posts-' . $marker->slug . ' span:before { color: ' . $marker->description . '} ';
+			echo '.mark-posts-' . $marker->slug . ' a:before { color: ' . $marker->description . '} ';
 		endforeach;
 
 		echo '</style>';
