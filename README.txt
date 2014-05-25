@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: mark, mark posts, highlight, highlight posts, status, post status, overview, post overview, featured, custom posts, featured posts, post, posts
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 5. Shows a screenshot of the Mark Posts dashboard widget
 
 == Changelog ==
+
+= 1.0.8 =
+* Introducing the new Dashboard Widget
 
 = 1.0.7 =
 * Bugs fixed:

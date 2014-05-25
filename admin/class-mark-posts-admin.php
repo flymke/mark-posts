@@ -47,6 +47,7 @@ class Mark_Posts_Admin {
 		 */
 		$plugin            = Mark_Posts::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
+		$get_mark_posts_setup = get_option( 'mark_posts_settings' );
 
 		// Load admin style sheet and JavaScript
 		add_action( 'admin_enqueue_scripts', array( $this, 'mark_posts_enqueue_admin_styles' ) );
@@ -55,8 +56,15 @@ class Mark_Posts_Admin {
 		// Add the options page and menu item
 		add_action( 'admin_menu', array( $this, 'mark_posts_add_plugin_admin_menu' ) );
 
-		// Add dashboard
-		add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+		/**
+		 * Add dashboard
+		 *
+		 * @since    1.0.8
+		 */
+		$mark_posts_dashboard = $get_mark_posts_setup['mark_posts_dashboard'];
+		if ( !empty($mark_posts_dashboard) ) :
+			add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+		endif;
 
 		// Add an action link pointing to the options page
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
@@ -84,9 +92,7 @@ class Mark_Posts_Admin {
 		 *
 		 * @since    1.0.0
 		 */
-		$get_mark_posts_setup = get_option( 'mark_posts_settings' );
 		$mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
-
 		foreach ( $mark_posts_posttypes as $post_type ) {
 			add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'mark_posts_column_head' ), 10, 2 );
 			add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2 );
