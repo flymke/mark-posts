@@ -21,9 +21,11 @@ if ( ! defined( 'WPINC' ) ) {
  * Create options
  *
  * @since     1.0.0
+ * @updated   1.0.8
  */
 $default_marker_post_types = array( 'posts', 'pages' );
 add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
+add_option( 'default_mark_posts_dashboard', array( 'dashboard') );
 
 /**
  * Declare default colors
@@ -51,8 +53,9 @@ function mark_posts_get_marker_terms() {
  * Misc functions
  *
  * @since     1.0.0
+ * @updated   1.0.8
  */
-function mark_posts_misc_funtions() {
+function mark_posts_misc_functions() {
 
 	// mark all posts
 	if ( $_SERVER["REQUEST_METHOD"] == "GET" && ISSET( $_GET['mark-all-posts-term-id'] ) ) {
@@ -100,16 +103,31 @@ function mark_posts_validate_form() {
 
 	if ( $_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST['submit'] ) ) {
 
-		// update marker posttypes
+		// get marker posttypes
 		if ( ISSET( $_POST['markertypes'] ) ) {
 			$markertypes = $_POST['markertypes'];
 		} else {
 			$markertypes = array();
 		}
 
+		// update post type settings
 		$get_mark_posts_settings                         = get_option( 'mark_posts_settings' );
 		$set_mark_posts_settings                         = $markertypes;
 		$get_mark_posts_settings['mark_posts_posttypes'] = $set_mark_posts_settings;
+
+		update_option( 'mark_posts_settings', $get_mark_posts_settings );
+
+		// get marker dashboard
+		if ( ISSET( $_POST['markerdashboard'] ) ) {
+			$markerdashboard = $_POST['markerdashboard'];
+		} else {
+			$markerdashboard = array();
+		}
+
+		// update dashboard settings
+		$get_mark_posts_settings                         = get_option( 'mark_posts_settings' );
+		$set_mark_posts_settings                         = $markerdashboard;
+		$get_mark_posts_settings['mark_posts_dashboard'] = $set_mark_posts_settings;
 
 		update_option( 'mark_posts_settings', $get_mark_posts_settings );
 
@@ -196,6 +214,20 @@ function mark_posts_get_all_types() {
 			echo ' /> ' . ucfirst( $one_post_type ) . '</p>';
 		}
 	}
+}
+
+/**
+ * Get dashboard widget setup
+ *
+ * @since     1.0.8
+ */
+function mark_posts_dashboard() {
+	$option = get_option( 'mark_posts_settings' );
+	echo '<p><input name="markerdashboard[]" type="checkbox" value="dashboard"';
+	if ( !empty( $option['mark_posts_dashboard'] ) ) :
+		echo ' checked="checked"';
+	endif;
+	echo ' /> ' . __('Dashboard Widget', 'mark-posts') . '</p>';
 }
 
 /**
@@ -286,15 +318,21 @@ function mark_posts_show_settings() {
 		submit_button();
 		?>
 
+		<hr />
+		<h3 class="title"><?php _e( 'Enable/Disable Dashboard Widget', 'mark-posts' ); ?></h3>
+
+		<?php
+		mark_posts_dashboard();
+		submit_button();
+		?>
+
 	</form>
 
 <?php } ?>
 
 <div class="wrap">
 
-	<?php // screen_icon(); ?>
-
-	<?php mark_posts_misc_funtions() ?>
+	<?php mark_posts_misc_functions() ?>
 
 	<?php mark_posts_validate_form(); ?>
 
