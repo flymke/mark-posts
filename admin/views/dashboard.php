@@ -27,7 +27,7 @@ $markers     = get_terms( 'marker', $marker_args );
 /**
  * Build marker stats for each post type
  *
- * @since     1.0.7
+ * @since     1.0.8
  */
 if ( ! empty( $markers ) ) :
 
