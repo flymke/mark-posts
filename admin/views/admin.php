@@ -178,6 +178,9 @@ function mark_posts_validate_form() {
 
 		echo mark_posts_display_settings_updated();
 
+		// Clear transient dashboard stats
+		delete_transient( 'marker_posts_stats' );
+
 	}
 }
 

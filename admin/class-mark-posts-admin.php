@@ -84,6 +84,8 @@ class Mark_Posts_Admin {
 		add_action( 'save_post', array( $this, 'mark_posts_save_quick_edit' ), 10, 2 );
 		// Save action for bulk edit
 		add_action( 'wp_ajax_mark_posts_save_bulk_edit', array( $this, 'mark_posts_save_bulk_edit' ) );
+		// Trash action
+		add_action( 'trash_post', array( $this, 'mark_posts_trash' ), 1, 1 );
 		// Delete action
 		add_action( 'delete_post', array( $this, 'mark_posts_delete' ), 10 );
 
@@ -356,10 +358,13 @@ class Mark_Posts_Admin {
 		// Update taxonomy count
 		wp_update_term_count_now();
 
+		// Clear transient dashboard stats
+		delete_transient( 'marker_posts_stats' );
+
 	}
 
 	/**
-	 * Update taxonomy count if posts get deleted
+	 * Update taxonomy count if posts get permanently deleted
 	 *
 	 * @since    1.0.7
 	 *
@@ -374,7 +379,21 @@ class Mark_Posts_Admin {
 			else :
 				wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
 			endif;
+			// Clear transient dashboard stats
+			delete_transient( 'marker_posts_stats' );
 		endif;
+	}
+
+	/**
+	 * Update dashboard stats if posts get trashed
+	 *
+	 * @since    1.0.7
+	 *
+	 * @param $post_id ID of the post e.g. '1'
+	 */
+	public function mark_posts_trash ( $post_id ) {
+		// Clear transient dashboard stats
+		delete_transient( 'marker_posts_stats' );
 	}
 
 	/**
@@ -455,6 +474,9 @@ class Mark_Posts_Admin {
 				else :
 					wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
 				endif;
+
+				// Clear transient dashboard stats
+				delete_transient( 'marker_posts_stats' );
 			endif;
 		endforeach;
 	}
@@ -487,6 +509,9 @@ class Mark_Posts_Admin {
 						// update terms
 						$term = get_term( $_POST[$mark_field], 'marker' );
 						wp_set_object_terms( $post_id, $term->name, 'marker' );
+
+						// Clear transient dashboard stats
+						delete_transient( 'marker_posts_stats' );
 					}
 
 				}
