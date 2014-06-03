@@ -47,6 +47,7 @@ class Mark_Posts_Admin {
 		 */
 		$plugin            = Mark_Posts::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
+		$get_mark_posts_setup = get_option( 'mark_posts_settings' );
 
 		// Load admin style sheet and JavaScript
 		add_action( 'admin_enqueue_scripts', array( $this, 'mark_posts_enqueue_admin_styles' ) );
@@ -55,8 +56,15 @@ class Mark_Posts_Admin {
 		// Add the options page and menu item
 		add_action( 'admin_menu', array( $this, 'mark_posts_add_plugin_admin_menu' ) );
 
-		// Add dashboard
-		add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+		/**
+		 * Add dashboard
+		 *
+		 * @since    1.0.8
+		 */
+		$mark_posts_dashboard = $get_mark_posts_setup['mark_posts_dashboard'];
+		if ( !empty($mark_posts_dashboard) ) :
+			add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+		endif;
 
 		// Add an action link pointing to the options page
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
@@ -76,6 +84,8 @@ class Mark_Posts_Admin {
 		add_action( 'save_post', array( $this, 'mark_posts_save_quick_edit' ), 10, 2 );
 		// Save action for bulk edit
 		add_action( 'wp_ajax_mark_posts_save_bulk_edit', array( $this, 'mark_posts_save_bulk_edit' ) );
+		// Trash action
+		add_action( 'trash_post', array( $this, 'mark_posts_trash' ), 1, 1 );
 		// Delete action
 		add_action( 'delete_post', array( $this, 'mark_posts_delete' ), 10 );
 
@@ -84,9 +94,7 @@ class Mark_Posts_Admin {
 		 *
 		 * @since    1.0.0
 		 */
-		$get_mark_posts_setup = get_option( 'mark_posts_settings' );
 		$mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
-
 		foreach ( $mark_posts_posttypes as $post_type ) {
 			add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'mark_posts_column_head' ), 10, 2 );
 			add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2 );
@@ -223,7 +231,7 @@ class Mark_Posts_Admin {
 		echo '<style>';
 
 		foreach ( $markers as $marker ) :
-			echo '.mark-posts-' . $marker->slug . ' span:before { color: ' . $marker->description . '} ';
+			echo '.mark-posts-' . $marker->slug . ' a:before { color: ' . $marker->description . '} ';
 		endforeach;
 
 		echo '</style>';
@@ -350,10 +358,13 @@ class Mark_Posts_Admin {
 		// Update taxonomy count
 		wp_update_term_count_now();
 
+		// Clear transient dashboard stats
+		delete_transient( 'marker_posts_stats' );
+
 	}
 
 	/**
-	 * Update taxonomy count if posts get deleted
+	 * Update taxonomy count if posts get permanently deleted
 	 *
 	 * @since    1.0.7
 	 *
@@ -368,7 +379,21 @@ class Mark_Posts_Admin {
 			else :
 				wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
 			endif;
+			// Clear transient dashboard stats
+			delete_transient( 'marker_posts_stats' );
 		endif;
+	}
+
+	/**
+	 * Update dashboard stats if posts get trashed
+	 *
+	 * @since    1.0.7
+	 *
+	 * @param $post_id ID of the post e.g. '1'
+	 */
+	public function mark_posts_trash ( $post_id ) {
+		// Clear transient dashboard stats
+		delete_transient( 'marker_posts_stats' );
 	}
 
 	/**
@@ -449,6 +474,9 @@ class Mark_Posts_Admin {
 				else :
 					wp_set_object_terms( $post_id, NULL, 'marker' ); // clear/remove all marker from post with $post_id
 				endif;
+
+				// Clear transient dashboard stats
+				delete_transient( 'marker_posts_stats' );
 			endif;
 		endforeach;
 	}
@@ -481,6 +509,9 @@ class Mark_Posts_Admin {
 						// update terms
 						$term = get_term( $_POST[$mark_field], 'marker' );
 						wp_set_object_terms( $post_id, $term->name, 'marker' );
+
+						// Clear transient dashboard stats
+						delete_transient( 'marker_posts_stats' );
 					}
 
 				}
