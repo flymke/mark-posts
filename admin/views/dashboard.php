@@ -14,40 +14,81 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-
 /**
- * Get marker
+ * Get available markers
  *
  * @since     1.0.0
  */
 $marker_args = array(
 	'hide_empty' => true
 );
-$markers = get_terms( 'marker', $marker_args );
+$markers     = get_terms( 'marker', $marker_args );
 
-?>
+/**
+ * Build marker stats for each post type
+ *
+ * @since     1.0.8
+ */
+function get_marker_stats() {
+	// attempt to get the stats from the transient
+	if ( false === ( $latest_marker_stats = get_transient( 'marker_posts_stats' ) ) ) {
+		$marker_args          = array(
+			'hide_empty' => true
+		);
+		$markers              = get_terms( 'marker', $marker_args );
+		$get_mark_posts_setup = get_option( 'mark_posts_settings' );
+		$mark_posts_posttypes = $get_mark_posts_setup['mark_posts_posttypes'];
+		$marker_stats         = '';
 
-<div class="main">
-	<ul id="markers_right_now">
-		<?php
-		if ( ! empty( $markers ) ) :
+		foreach ( $mark_posts_posttypes as $mark_posts_posttype ) :
+
+			$marked_posts = '';
+
 			foreach ( $markers as $marker ) :
-				/**
-				 * Get trashed marker and remove them from total count
-				 *
-				 * @since     1.0.7
-				 */
-				global $wpdb;
-				$trashed= $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts p JOIN $wpdb->term_relationships rl ON p.ID = rl.object_id WHERE rl.term_taxonomy_id = $marker->term_id AND p.post_status = 'trash' LIMIT 1");
-				$count = $marker->count - $trashed;
-				if ( $count > 0 ) :
-					echo '<li class="mark-posts-info mark-posts-' . $marker->slug . '"><span>' . $count . ' ' . $marker->name . '</span></li>';
+				$post_args   = array(
+					'post_type'      => $mark_posts_posttype,
+					'taxonomy'       => $marker->taxonomy,
+					'term'           => $marker->slug,
+					'post_status'    => 'publish',
+					'posts_per_page' => - 1,
+				);
+				$posts       = get_posts( $post_args );
+				$posts_count = count( $posts );
+
+				if ( ! empty( $posts_count ) ) :
+					$marked_posts .= '<li class="mark-posts-info mark-posts-' . $marker->slug . '">';
+					$marked_posts .= '<a a href="edit.php?post_type=' . $mark_posts_posttype . '&marker=' . $marker->slug . '">' . $posts_count . ' ' . $marker->name . '</a>';
+					$marked_posts .= '</li>';
 				endif;
-			endforeach;
-		else:
-			_e( 'No marked posts yet.', 'mark-posts' );
+
+			endforeach; // end of marker loop
+
+			$marker_post_type_object = get_post_type_object( $mark_posts_posttype );
+
+			if ( ! empty( $marked_posts ) ) :
+				$marker_stats .= '<h3 class="mark_posts_headline">' . $marker_post_type_object->labels->name . '</h3>';
+				$marker_stats .= '<ul class="markers_right_now">';
+				$marker_stats .= $marked_posts;
+				$marker_stats .= '</ul>';
+			endif;
+
+		endforeach; // end of post type loop
+
+		// set transient
+		set_transient( 'marker_posts_stats', $marker_stats, 60*60*12 );
+
+		if ( ! empty( $marker_stats ) ) :
+			return $marker_stats;
+		else :
+			return __( 'No marked posts yet.', 'mark-posts' );
 		endif;
-		?>
-	</ul>
-	<!-- /#markers_right_now -->
-</div><!-- /.main -->
+	} else {
+		return get_transient( 'marker_posts_stats' );
+	}
+}
+
+if ( ! empty( $markers ) ) :
+	echo get_marker_stats();
+else :
+	_e( 'No marked posts yet.', 'mark-posts' );
+endif;
