@@ -61,9 +61,11 @@ class Mark_Posts_Admin {
 		 *
 		 * @since    1.0.8
 		 */
-		$mark_posts_dashboard = $get_mark_posts_setup['mark_posts_dashboard'];
-		if ( !empty($mark_posts_dashboard) ) :
-			add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+		if(ISSET($get_mark_posts_setup['mark_posts_dashboard'])):
+			$mark_posts_dashboard = $get_mark_posts_setup['mark_posts_dashboard'];
+			if ( !empty($mark_posts_dashboard) ) :
+				add_action( 'wp_dashboard_setup', array( $this, 'mark_posts_dashboard_widget' ) );
+			endif;
 		endif;
 
 		// Add an action link pointing to the options page
