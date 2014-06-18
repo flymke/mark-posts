@@ -358,7 +358,7 @@ class Mark_Posts_Admin {
 		update_post_meta( $post_id, 'mark_posts_term_id', $mydata );
 
 		// Update taxonomy count
-		wp_update_term_count_now();
+		@wp_update_term_count_now( $mydata, 'marker' );
 
 		// Clear transient dashboard stats
 		delete_transient( 'marker_posts_stats' );
