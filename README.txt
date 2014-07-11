@@ -8,7 +8,7 @@ Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simply mark and highlight posts, pages and posts of custom post types within the posts overview
+Simply mark and highlight posts, pages and posts of custom post types within the posts overview.
 
 == Description ==
 
@@ -21,6 +21,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 * View them within the posts/pages/cpt overview lists
 * Quick edit, bulk edit and edit all markers
 * Dashboard widget with marker overview
+* Additional custom setup via [filters](https://github.com/flymke/mark-posts/wiki)
 
 = Languages =
 
@@ -59,15 +60,19 @@ If you find an issue, please [raise an issue](https://github.com/flymke/mark-pos
 
 = Can I set specific user roles for specific markers? =
 
-Check the [Custom Marker Limits](https://github.com/flymke/mark-posts/wiki/Custom-Marker-Limits) wiki page for further information
+Check the [Custom Marker Limits](https://github.com/flymke/mark-posts/wiki/Custom-Marker-Limits) wiki page for further information.
+
+= Can I set custom parameters for the posts displayed on the dashboard? =
+
+Check the [Custom Dashboard Queries](https://github.com/flymke/mark-posts/wiki/Custom-Dashboard-Queries) wiki page for further information.
 
 = Can I export/import markers? =
 
-Check the [Export & Import](https://github.com/flymke/mark-posts/wiki/Export-&-Import) wiki page for further information
+Check the [Export & Import](https://github.com/flymke/mark-posts/wiki/Export-&-Import) wiki page for further information.
 
 = I'm having issues getting the plugin to work what should I do? =
 
-See [Mark Posts on Github](https://github.com/flymke/mark-posts) for detailed rundown of common issues
+See [Mark Posts on Github](https://github.com/flymke/mark-posts) for detailed rundown of common issues.
 
 = Where can I get more information and support for this plugin? =
 
@@ -85,6 +90,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 == Changelog ==
 
 = 1.1.0 =
+* Add `mark_posts_dashboard_query` filter for custom dashboard stats
 * Dashboard Widget is activated per default
 * Code refactoring and minor fixes
 

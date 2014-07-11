@@ -49,10 +49,10 @@ function get_marker_stats() {
 					'post_type'      => $mark_posts_posttype,
 					'taxonomy'       => $marker->taxonomy,
 					'term'           => $marker->slug,
-					'post_status'    => 'publish',
+					'post_status'    => array( 'publish', 'pending', 'draft', 'future' ),
 					'posts_per_page' => - 1,
 				);
-				$posts       = get_posts( $post_args );
+				$posts       = get_posts( apply_filters( 'mark_posts_dashboard_query', $post_args ) );
 				$posts_count = count( $posts );
 
 				if ( ! empty( $posts_count ) ) :
