@@ -149,17 +149,17 @@ class Mark_Posts {
 	 * Fired for each blog when the plugin is activated.
 	 *
 	 * @since    1.0.0
+	 * @updated  1.1.0
 	 */
 	private static function single_activate() {
 		add_option(
 			'mark_posts_settings',
 			array(
-				'mark_posts_posttypes' => array( 'post', 'page' )
+				'mark_posts_posttypes' => array( 'post', 'page' ),
+				'mark_posts_dashboard' => array( 'dashboard' )
 			)
 		);
 
-		// @TODO: Define activation functionality here
-		// self::mark_posts_create_taxonomies();
 	}
 
 	/**
