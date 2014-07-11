@@ -21,7 +21,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 * View them within the posts/pages/cpt overview lists
 * Quick edit, bulk edit and edit all markers
 * Dashboard widget with marker overview
-* Additional custom setup via [filters](https://github.com/flymke/mark-posts/wiki)
+* Optional custom setup via filters (See [FAQ](https://wordpress.org/plugins/mark-posts/faq/))
 
 = Languages =
 
