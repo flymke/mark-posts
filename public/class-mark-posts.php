@@ -282,17 +282,17 @@ class Mark_Posts {
 
 		// Add new marker taxonomy
 		$labels = array(
-			'name'              => _x( 'Marker', 'taxonomy general name' ),
-			'singular_name'     => _x( 'Marker', 'taxonomy singular name' ),
-			'search_items'      => __( 'Search Marker' ),
-			'all_items'         => __( 'All Markers' ),
-			'parent_item'       => __( 'Parent Marker' ),
-			'parent_item_colon' => __( 'Parent Marker:' ),
-			'edit_item'         => __( 'Edit Marker' ),
-			'update_item'       => __( 'Update Marker' ),
-			'add_new_item'      => __( 'Add New Marker' ),
-			'new_item_name'     => __( 'New Marker Name' ),
-			'menu_name'         => __( 'Marker' ),
+			'name'              => __( 'Marker', 'mark-posts' ),
+			'singular_name'     => __( 'Marker', 'mark-posts' ),
+			'search_items'      => __( 'Search Marker', 'mark-posts' ),
+			'all_items'         => __( 'All Markers', 'mark-posts' ),
+			'parent_item'       => __( 'Parent Marker', 'mark-posts' ),
+			'parent_item_colon' => __( 'Parent Marker:', 'mark-posts' ),
+			'edit_item'         => __( 'Edit Marker', 'mark-posts' ),
+			'update_item'       => __( 'Update Marker', 'mark-posts' ),
+			'add_new_item'      => __( 'Add New Marker', 'mark-posts' ),
+			'new_item_name'     => __( 'New Marker Name', 'mark-posts' ),
+			'menu_name'         => __( 'Marker', 'mark-posts' ),
 		);
 
 		$args = array(
@@ -341,7 +341,5 @@ class Mark_Posts {
 		register_taxonomy( 'marker', 'null', $args );
 
 	}
-
-
 
 }
