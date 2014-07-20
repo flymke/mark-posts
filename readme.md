@@ -24,6 +24,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 * English
 * German
 * Hebrew
+* Italian
 
 ***
 

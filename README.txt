@@ -28,6 +28,7 @@ Mark Posts plugin provides an easy way to mark and highlight posts, pages and po
 * English
 * German
 * Hebrew
+* Italian
 
 == Installation ==
 
@@ -93,6 +94,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 * Add `mark_posts_dashboard_query` filter for custom dashboard stats
 * Dashboard Widget is activated per default
 * Code refactoring and minor fixes
+* Added italian localization
 
 = 1.0.9 =
 * Bugfix for Dashboard Widget
@@ -125,7 +127,7 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 = 1.0.2 =
 * Security fixes:
 	* Prevent direct access to files (thanks Sergej Müller for pointing it out and helping to fix)
-	
+
 = 1.0.1 =
 * Bugs fixed:
 	* Update marker count if markers get deleted
