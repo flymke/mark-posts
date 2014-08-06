@@ -7,11 +7,11 @@
   Website: hofmannsven.com
   Twitter: @hofmannsven
   From: Munich, Germany
-  
-  Localization: Yoram Schaffer 
+
+  Localization: Yoram Schaffer, Angelo Salvatore Scotto Rosato
 
 /* PLUGIN */
-  Language: English / German
+  Language: English / German / Hebrew / Italian
   Platform: WordPress
   GitHub Download: https://github.com/flymke/mark-posts
   WordPress Download: http://wordpress.org/plugins/mark-posts/
