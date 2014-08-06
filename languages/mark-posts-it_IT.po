@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Mark Posts 1.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/flymke/mark-posts\n"
 "POT-Creation-Date: 2014-07-11 11:38+0100\n"
-"PO-Revision-Date: 2014-07-11 11:50+0100\n"
+"PO-Revision-Date: 2014-07-20 17:41+0100\n"
 "Last-Translator: Sven Hofmann <info@hofmannsven.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;_n:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Poedit-Basepath: ../\n"
@@ -28,35 +28,35 @@ msgid ""
 "Simply mark and highlight posts, pages and posts of custom post types within "
 "the posts overview."
 msgstr ""
-"Ermöglicht das Markieren von Beiträge, Seiten und/oder eigene Beitragstypen "
-"im Admin-Bereich von WordPress."
+"Segna e evidenzia semplicemente i posts, le pagine e tutti gli altri tipi di "
+"posts all'interno del sommario dei posts."
 
 #: admin/class-mark-posts-admin.php:255
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr "Impostazioni"
 
 #: admin/class-mark-posts-admin.php:276 admin/views/admin.php:330
 #: public/class-mark-posts.php:258
 msgid "Mark Posts Options"
-msgstr "Mark Posts Optionen"
+msgstr "Scelte di Mark Post"
 
 #: admin/class-mark-posts-admin.php:297
 msgid "Mark this post as:"
-msgstr "Diesen Beitrag markieren als:"
+msgstr "Segna questo post come:"
 
 #: admin/class-mark-posts-admin.php:305
 #, php-format
 msgid "Click <a href=\"%s\">here</a> to manage Marker categories."
-msgstr "<a href=\"%s\">Hier</a> klicken um Marker Kategorien zu verwalten."
+msgstr "Clicca qui per gestire la sezione tipi <a href=\"%s\">here</a>."
 
 #: admin/class-mark-posts-admin.php:417 admin/class-mark-posts-admin.php:546
 #: public/class-mark-posts.php:295
 msgid "Marker"
-msgstr "Marker"
+msgstr "Tipo"
 
 #: admin/views/admin.php:183
 msgid "Settings saved"
-msgstr "Einstellungen gespeichert."
+msgstr "Impostazioni salvate"
 
 #: admin/views/admin.php:221
 msgid "Dashboard Widget"
@@ -64,11 +64,11 @@ msgstr "Dashboard Widget"
 
 #: admin/views/admin.php:249
 msgid "Markers"
-msgstr "Marker"
+msgstr "Tipi"
 
 #: admin/views/admin.php:269
 msgid "delete"
-msgstr "löschen"
+msgstr "Cancella"
 
 #: admin/views/admin.php:270
 msgid ""
@@ -76,83 +76,83 @@ msgid ""
 "override all your previous set markers. This will only effect the enabled "
 "post types."
 msgstr ""
-"Willst Du wirklich alle Beiträge mit diesem Marker markieren? Hinweis: Alle "
-"bestehenden Marker werden dadurch überschrieben. Dies betrifft nur die "
-"aktivierten Post Types."
+"Vuoi veramente segnare tutti i posts con questo tipo? Attenzione: ciò "
+"sostituirà tutte le tue precedenti impostazioni riguardo i tipi, e "
+"interesserà solo i posts abilitati."
 
 #: admin/views/admin.php:270
 msgid "Mark all posts with this marker"
-msgstr "Alle Beiträge mit diesem Marker markieren"
+msgstr "segna tutti i posts con questo tipo"
 
 #: admin/views/admin.php:285
 msgid "Add new Markers"
-msgstr "Neue Marker hinzufügen"
+msgstr "Aggiungi nuovi tipi"
 
 #: admin/views/admin.php:288
 msgid "Add new marker (please separate them by comma):"
-msgstr "Neue Marker hinzufügen (bitte mit Komma trennen):"
+msgstr "Aggiungi un nuovo tipo (separali con la virgola):"
 
 #: admin/views/admin.php:294
 msgid "Markers to add:"
-msgstr "Marker erstellen:"
+msgstr "Tipi da aggiungere:"
 
 #: admin/views/admin.php:301
 msgid "Enable/Disable Markers"
-msgstr "Marker aktivieren/deaktivieren"
+msgstr "Abilita/Disabilita i tipi"
 
 #: admin/views/admin.php:304
 msgid "Enable/Disable markers for specific post types:"
-msgstr "Marker für bestimmte Beitragstypen aktivieren:"
+msgstr "Abilita/Disabilita i tipi per specifici post"
 
 #: admin/views/admin.php:313
 msgid "Enable/Disable Dashboard Widget"
-msgstr "Dashboard Widget aktivieren/deaktivieren"
+msgstr "Abilita/Disabilita la Bacheca deu Widget"
 
 #: admin/views/dashboard.php:83 admin/views/dashboard.php:93
 msgid "No marked posts yet."
-msgstr "Keine markierten Beiträge vorhanden."
+msgstr "Nussun post ancora indicato."
 
 #: public/class-mark-posts.php:285
 msgctxt "taxonomy general name"
 msgid "Marker"
-msgstr "Marker"
+msgstr "Tipo"
 
 #: public/class-mark-posts.php:286
 msgctxt "taxonomy singular name"
 msgid "Marker"
-msgstr "Marker"
+msgstr "Tipo"
 
 #: public/class-mark-posts.php:287
 msgid "Search Marker"
-msgstr "Marker suchen"
+msgstr "Cerca un tipo"
 
 #: public/class-mark-posts.php:288
 msgid "All Markers"
-msgstr "Alle Marker"
+msgstr "Tutti i tipi"
 
 #: public/class-mark-posts.php:289
 msgid "Parent Marker"
-msgstr "Eltern Marker"
+msgstr "Sottotipo"
 
 #: public/class-mark-posts.php:290
 msgid "Parent Marker:"
-msgstr "Eltern Marker:"
+msgstr "Sottotipo:"
 
 #: public/class-mark-posts.php:291
 msgid "Edit Marker"
-msgstr "Marker bearbeiten"
+msgstr "Modifica il tipo"
 
 #: public/class-mark-posts.php:292
 msgid "Update Marker"
-msgstr "Marker aktualisieren"
+msgstr "Aggiornamento del tipo"
 
 #: public/class-mark-posts.php:293
 msgid "Add New Marker"
-msgstr "Neuen Marker hinzufügen"
+msgstr "Aggiungi un nuovo tipo"
 
 #: public/class-mark-posts.php:294
 msgid "New Marker Name"
-msgstr "Neuer Marker Name"
+msgstr "Nuovo tipo"
 
 #~ msgid "Marker Categories"
 #~ msgstr "Marker Kategorien"

@@ -1,7 +1,8 @@
 /* Mark Posts Dashboard Widget Styles */
 
 h3.mark_posts_headline {
-	padding: 0 2% 8px 2%;
+	padding:       0 2% 8px 2%;
+	border-bottom: 1px solid #eee;
 }
 
 .markers_right_now {

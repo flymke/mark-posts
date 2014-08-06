@@ -16,17 +16,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-
-/**
- * Create options
- *
- * @since     1.0.0
- * @updated   1.0.8
- */
-$default_marker_post_types = array( 'posts', 'pages' );
-add_option( 'default_mark_posts_posttypes', $default_marker_post_types );
-add_option( 'default_mark_posts_dashboard', array( 'dashboard') );
-
 /**
  * Declare default colors
  *
@@ -203,7 +192,6 @@ function mark_posts_display_settings_updated() {
 function mark_posts_get_all_types() {
 	$all_post_types = get_post_types();
 	$option         = get_option( 'mark_posts_settings' );
-	// $mark_posts_settings = isset( $option['mark_posts_posttypes'] ) ? $option['mark_posts_posttypes'] : 'post';
 
 	foreach ( $all_post_types as $one_post_type ) {
 		// do not show attachments, revisions, or nav menu items
