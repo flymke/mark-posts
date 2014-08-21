@@ -8,6 +8,8 @@ http://flymke.github.io/mark-posts/
 
 Mark Posts plugin provides an easy way to mark and highlight posts, pages and posts of custom post types within the posts overview.
 
+Tested up to WordPress 4.0.
+
 ### Features
 
 * Set up marker categories and colors
