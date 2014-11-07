@@ -195,7 +195,8 @@ function mark_posts_get_all_types() {
 
 	foreach ( $all_post_types as $one_post_type ) {
 		// do not show attachments, revisions, or nav menu items
-		if ( ! in_array( $one_post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ) {
+		$excluded_post_types = apply_filters( 'mark_posts_excluded_post_types', array( 'attachment', 'revision', 'nav_menu_item' ) );
+		if ( !in_array( $one_post_type, $excluded_post_types ) ) {
 			echo '<p><input name="markertypes[]" type="checkbox" value="' . $one_post_type . '"';
 			if ( isset( $option['mark_posts_posttypes'] ) ) :
 				if ( in_array( $one_post_type, $option['mark_posts_posttypes'] ) ) :

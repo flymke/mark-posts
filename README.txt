@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: mark, mark posts, highlight, highlight posts, status, post status, overview, post overview, featured, custom posts, featured posts, post, posts
 Requires at least: 3.7
 Tested up to: 4.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,13 @@ Visit [Mark Posts on Github](https://github.com/flymke/mark-posts)
 5. Shows a screenshot of the Mark Posts dashboard widget
 
 == Changelog ==
+
+= 1.1.2 =
+* Add support for media markers
+* Add `mark_posts_excluded_post_types` filter for custom post types
+
+= 1.1.1 =
+* Add [plugin installer icon](https://make.wordpress.org/core/2014/08/21/introducing-plugin-icons-in-the-plugin-installer/)
 
 = 1.1.0 =
 * Add `mark_posts_dashboard_query` filter for custom dashboard stats

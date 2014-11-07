@@ -84,6 +84,8 @@ class Mark_Posts_Admin {
 		add_action( 'save_post', array( $this, 'mark_posts_save' ) );
 		// Save action for quick edit
 		add_action( 'save_post', array( $this, 'mark_posts_save_quick_edit' ), 10, 2 );
+		// Save action for attachment metabox
+		add_action( 'edit_attachment', array( $this, 'mark_posts_save' ), 10, 1 );
 		// Save action for bulk edit
 		add_action( 'wp_ajax_mark_posts_save_bulk_edit', array( $this, 'mark_posts_save_bulk_edit' ) );
 		// Trash action
@@ -100,6 +102,16 @@ class Mark_Posts_Admin {
 		foreach ( $mark_posts_posttypes as $post_type ) {
 			add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'mark_posts_column_head' ), 10, 2 );
 			add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'mark_posts_column_content' ), 10, 2 );
+		}
+
+		/**
+		 * Custom admin post columns (attachments only)
+		 *
+		 * @since    1.1.2
+		 */
+		if ( in_array('attachment',$mark_posts_posttypes) ) {
+			add_filter('manage_media_columns', array( $this, 'mark_posts_column_head' ), 1);
+			add_action('manage_media_custom_column', array( $this, 'mark_posts_column_content' ), 1, 2);
 		}
 
 	}
@@ -152,7 +164,7 @@ class Mark_Posts_Admin {
 		}
 
 		global $pagenow;
-		if ( $pagenow == 'options-general.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) :
+		if ( $pagenow == 'options-general.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' || $pagenow == 'upload.php' ) :
 			wp_enqueue_style( 'wp-color-picker' ); // see http://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
 			wp_enqueue_script( $this->plugin_slug . '-post-list-marker', plugins_url( 'assets/js/markposts.js', __FILE__ ), array( 'wp-color-picker' ), WP_MARK_POSTS_VERSION, true );
 		endif;
